@@ -96,6 +96,18 @@ function isPersianOrArabic(text) {
     return persianArabicRegex.test(text);
 }
 
+// Check if text starts with Persian or Arabic characters
+function startsWithPersianOrArabic(text) {
+    if (!text) return false;
+    
+    // Trim leading whitespace and get the first word
+    const trimmedText = text.trim();
+    const firstWord = trimmedText.split(/\s+/)[0];
+    
+    // Check if the first word contains Persian or Arabic characters
+    return isPersianOrArabic(firstWord);
+}
+
 // Setup observers specifically for input fields
 function setupInputObservers() {
     // Find all input and textarea elements on the page
@@ -162,36 +174,40 @@ function setupInputElement(element) {
     element.setAttribute('data-rtl-listener', 'true');
     
     // Check if the input already has Persian/Arabic text
-    if (isPersianOrArabic(element.value) || 
-        (element.hasAttribute('placeholder') && isPersianOrArabic(element.getAttribute('placeholder')))) {
+    if (startsWithPersianOrArabic(element.value) || 
+        (element.hasAttribute('placeholder') && startsWithPersianOrArabic(element.getAttribute('placeholder')))) {
         element.setAttribute('data-rtl', 'true');
         element.classList.add('rtl-input-active');
     }
     
     // Add input event listener for real-time RTL detection
     element.addEventListener('input', function() {
-        if (isPersianOrArabic(this.value)) {
+        if (startsWithPersianOrArabic(this.value)) {
             this.setAttribute('data-rtl', 'true');
             this.classList.add('rtl-input-active');
         } else if (this.value.trim() === '') {
             // Only remove RTL if there's no placeholder with Persian/Arabic
-            if (!(this.hasAttribute('placeholder') && isPersianOrArabic(this.getAttribute('placeholder')))) {
+            if (!(this.hasAttribute('placeholder') && startsWithPersianOrArabic(this.getAttribute('placeholder')))) {
                 this.removeAttribute('data-rtl');
                 this.classList.remove('rtl-input-active');
             }
+        } else {
+            // If text doesn't start with Persian/Arabic, remove RTL
+            this.removeAttribute('data-rtl');
+            this.classList.remove('rtl-input-active');
         }
     });
     
     // Also check on focus and blur
     element.addEventListener('focus', function() {
-        if (isPersianOrArabic(this.value)) {
+        if (startsWithPersianOrArabic(this.value)) {
             this.setAttribute('data-rtl', 'true');
             this.classList.add('rtl-input-active');
         }
     });
     
     element.addEventListener('blur', function() {
-        if (isPersianOrArabic(this.value)) {
+        if (startsWithPersianOrArabic(this.value)) {
             this.setAttribute('data-rtl', 'true');
             this.classList.add('rtl-input-active');
         }
@@ -201,9 +217,12 @@ function setupInputElement(element) {
     element.addEventListener('paste', function() {
         // Use setTimeout to check the value after paste is complete
         setTimeout(() => {
-            if (isPersianOrArabic(this.value)) {
+            if (startsWithPersianOrArabic(this.value)) {
                 this.setAttribute('data-rtl', 'true');
                 this.classList.add('rtl-input-active');
+            } else {
+                this.removeAttribute('data-rtl');
+                this.classList.remove('rtl-input-active');
             }
         }, 0);
     });
@@ -217,15 +236,18 @@ function setupEditableElement(element) {
     element.setAttribute('data-rtl-listener', 'true');
     
     // Check if the element already has Persian/Arabic text
-    if (isPersianOrArabic(element.textContent)) {
+    if (startsWithPersianOrArabic(element.textContent)) {
         element.setAttribute('data-rtl', 'true');
     }
     
     // Add input event listeners for real-time RTL detection
     element.addEventListener('input', function() {
-        if (isPersianOrArabic(this.textContent)) {
+        if (startsWithPersianOrArabic(this.textContent)) {
             this.setAttribute('data-rtl', 'true');
         } else if (this.textContent.trim() === '') {
+            this.removeAttribute('data-rtl');
+        } else {
+            // If text doesn't start with Persian/Arabic, remove RTL
             this.removeAttribute('data-rtl');
         }
     });
@@ -234,8 +256,10 @@ function setupEditableElement(element) {
     element.addEventListener('paste', function() {
         // Use setTimeout to check the content after paste is complete
         setTimeout(() => {
-            if (isPersianOrArabic(this.textContent)) {
+            if (startsWithPersianOrArabic(this.textContent)) {
                 this.setAttribute('data-rtl', 'true');
+            } else {
+                this.removeAttribute('data-rtl');
             }
         }, 0);
     });
@@ -247,7 +271,7 @@ function applyRTL(element) {
 
     if (element.nodeType === Node.TEXT_NODE) {
         const text = element.textContent.trim();
-        if (isPersianOrArabic(text)) {
+        if (text && startsWithPersianOrArabic(text)) {
             let currentElement = element.parentElement;
             
             // Special handling for input and textarea elements
@@ -262,20 +286,16 @@ function applyRTL(element) {
                 return;
             }
             
-            // Traverse up to find the most appropriate container
-            while (currentElement &&
-                   currentElement !== document.body &&
-                   currentElement.children.length <= 1) {
-                currentElement.setAttribute('data-rtl', 'true');
-                currentElement = currentElement.parentElement;
-            }
-            if (currentElement && currentElement !== document.body) {
-                currentElement.setAttribute('data-rtl', 'true');
-            }
+            // Apply RTL only to the specific element containing the text
+            // that starts with Persian/Arabic, not to parent containers
+            currentElement.setAttribute('data-rtl', 'true');
+            
+            // Don't traverse up the DOM tree anymore
+            // This ensures only the specific text element gets RTL
         }
     } else if (element.nodeType === Node.ELEMENT_NODE) {
         // Check title attribute
-        if (element.hasAttribute('title') && isPersianOrArabic(element.getAttribute('title'))) {
+        if (element.hasAttribute('title') && startsWithPersianOrArabic(element.getAttribute('title'))) {
             element.setAttribute('data-rtl', 'true');
         }
         
