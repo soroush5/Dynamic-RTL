@@ -5,7 +5,7 @@ A Chrome extension that automatically detects Persian/Arabic text on web pages a
 ## Features
 
 - Automatically detects Persian and Arabic text on any webpage
-- Applies RTL direction and Vazirmatn font to detected text
+- Applies RTL direction and Vazirmatn font only to text blocks that start with Persian/Arabic words
 - Works with dynamic content that loads after the page is initially rendered
 - Enhanced real-time detection for input fields, text areas, and contenteditable elements
 - Option to disable the extension for specific websites
@@ -43,6 +43,7 @@ A Chrome extension that automatically detects Persian/Arabic text on web pages a
 - Multiple event listeners (input, focus, blur, paste) for better text detection
 - Implements Manifest V3 for Chrome extension compatibility
 - Uses the Vazirmatn font for optimal Persian/Arabic text display
+- Smart detection that only applies RTL to text blocks that start with Persian/Arabic words
 
 ## Recent Improvements
 
@@ -51,6 +52,7 @@ A Chrome extension that automatically detects Persian/Arabic text on web pages a
 - Improved handling of dynamically added input elements
 - Enhanced CSS styling for better compatibility with various websites
 - Added focus/blur/paste event handling for more reliable detection
+- **New**: Now only applies RTL to text blocks that start with Persian/Arabic words, preserving the layout of the rest of the page
 
 ## License
 
