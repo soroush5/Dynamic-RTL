@@ -10,6 +10,7 @@ A Chrome extension that automatically detects Persian/Arabic text on web pages a
 - Works with dynamic content that loads after the page is initially rendered
 - Enhanced real-time detection for input fields, text areas, and contenteditable elements
 - Option to disable the extension for specific websites
+- Option to choose between default-enabled or default-disabled mode for all sites
 - Compatible with Chrome's Manifest V3
 
 ## Installation
@@ -30,11 +31,26 @@ A Chrome extension that automatically detects Persian/Arabic text on web pages a
 
 ## Usage
 
-- The extension works automatically on all websites by default
-- To disable the extension for a specific website:
-  1. Click on the extension icon in the toolbar
-  2. Toggle the switch to disable it for the current site
-  3. Refresh the page for changes to take effect
+### Current Site Settings
+
+- To enable or disable the extension on the current site, click on the extension icon in the toolbar and toggle the "Enabled on this site" switch
+- Changes take effect immediately
+
+### Global Settings
+
+The extension has two default modes that you can switch between:
+
+1. **Default Enabled on All Sites (with option to disable on specific sites)**:
+   - In this mode, the extension is enabled on all sites unless you disable it on specific sites
+   - To disable on a specific site, turn off the "Enabled on this site" switch
+
+2. **Default Disabled on All Sites (with option to enable on specific sites)**:
+   - In this mode, the extension is disabled on all sites unless you enable it on specific sites
+   - To enable on a specific site, turn on the "Enabled on this site" switch
+
+To switch between these two modes:
+1. Click on the extension icon in the toolbar
+2. Select one of the two radio button options in the "Global Settings" section
 
 ## Technical Details
 
@@ -48,6 +64,14 @@ A Chrome extension that automatically detects Persian/Arabic text on web pages a
 
 ## Recent Improvements
 
+### Version 1.1.0
+- Changed the default mode selection from toggle switch to radio buttons
+- Added X (Twitter) profile link
+- Set "Default Enabled on All Sites" as the pre-selected option
+- Added Vazirmatn font to the extension's user interface
+
+### Version 1.0.0
+- Added option to choose between default-enabled or default-disabled mode for all sites
 - Added smart detection that only applies RTL to text starting with Persian/Arabic words
 - Added real-time RTL detection for input fields and text areas
 - Added support for contenteditable elements

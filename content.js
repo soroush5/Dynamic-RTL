@@ -12,21 +12,28 @@ function initExtension() {
     }
 
     // Check if the extension is enabled for this domain
-    chrome.storage.sync.get(['disabledSites'], function(result) {
+    chrome.storage.sync.get(['disabledSites', 'enabledSites', 'defaultEnabled'], function(result) {
         const currentHost = window.location.hostname;
+        const defaultEnabled = result.defaultEnabled !== undefined ? result.defaultEnabled : true;
         const disabledSites = result.disabledSites || [];
+        const enabledSites = result.enabledSites || [];
         
-        if (disabledSites.includes(currentHost)) {
-            isEnabled = false;
-            return;
+        if (defaultEnabled) {
+            // Default enabled mode: site is enabled unless in disabledSites
+            isEnabled = !disabledSites.includes(currentHost);
+        } else {
+            // Default disabled mode: site is disabled unless in enabledSites
+            isEnabled = enabledSites.includes(currentHost);
         }
         
-        // Add styles and start processing
-        addStyles();
-        loadFonts();
-        setupInputObservers();
-        setupObservers();
-        processDocument();
+        if (isEnabled) {
+            // Add styles and start processing
+            addStyles();
+            loadFonts();
+            setupInputObservers();
+            setupObservers();
+            processDocument();
+        }
     });
 }
 
