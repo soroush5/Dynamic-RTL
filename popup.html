@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Dynamic RTL</title>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" as="style" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" crossorigin="anonymous">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
       width: 300px;
       padding: 15px;
       direction: rtl;
@@ -22,28 +24,38 @@
       font-size: 18px;
       font-weight: bold;
       margin: 0;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
-    .site-info {
+    .section {
       margin-bottom: 15px;
       padding: 10px;
       background-color: #f5f5f5;
       border-radius: 5px;
     }
     
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    }
+    
     .site-name {
       font-weight: bold;
       margin-bottom: 10px;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .toggle-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 8px;
     }
     
     .toggle-label {
       font-size: 14px;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .switch {
@@ -91,11 +103,84 @@
       transform: translateX(26px);
     }
     
+    .divider {
+      height: 1px;
+      background-color: #ddd;
+      margin: 10px 0;
+    }
+    
     .footer {
       margin-top: 20px;
       font-size: 12px;
       color: #666;
       text-align: center;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    }
+    
+    .mode-description {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    }
+    
+    .mode-switch {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .mode-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    
+    .mode-option input[type="radio"] {
+      margin: 3px 0 0 0;
+    }
+    
+    .mode-option label {
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .radio-label {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .radio-description {
+      font-size: 12px;
+      color: #666;
+      margin-top: 3px;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      color: #1DA1F2;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    
+    .social-link:hover {
+      text-decoration: underline;
+    }
+    
+    .social-icon {
+      width: 16px;
+      height: 16px;
+      margin-left: 5px;
     }
   </style>
 </head>
@@ -104,7 +189,8 @@
     <h1 class="title">Dynamic RTL</h1>
   </div>
   
-  <div class="site-info">
+  <div class="section">
+    <div class="section-title">تنظیمات سایت فعلی</div>
     <div class="site-name" id="current-site">...</div>
     <div class="toggle-container">
       <span class="toggle-label">فعال در این سایت</span>
@@ -115,9 +201,36 @@
     </div>
   </div>
   
+  <div class="section">
+    <div class="section-title">تنظیمات کلی</div>
+    <div class="mode-switch">
+      <div class="mode-option">
+        <input type="radio" id="default-enabled" name="default-mode" value="enabled" checked>
+        <div class="radio-label">
+          <label for="default-enabled">پیش‌فرض فعال در همه سایت‌ها</label>
+          <span class="radio-description">امکان غیرفعال کردن در سایت‌های دلخواه</span>
+        </div>
+      </div>
+      <div class="mode-option">
+        <input type="radio" id="default-disabled" name="default-mode" value="disabled">
+        <div class="radio-label">
+          <label for="default-disabled">پیش‌فرض غیرفعال در همه سایت‌ها</label>
+          <span class="radio-description">امکان فعال کردن در سایت‌های دلخواه</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div class="footer">
-    <p>Dynamic RTL v1.0</p>
+    <p>Dynamic RTL v1.1.0</p>
     <p>تشخیص خودکار متن فارسی و عربی و تغییر جهت به راست به چپ</p>
+    <div class="social-links">
+      <a href="https://x.com/MrSoroushAhmadi" target="_blank" class="social-link">
+        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1DA1F2">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+    </div>
   </div>
   
   <script src="popup.js"></script>
