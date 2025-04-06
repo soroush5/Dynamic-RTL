@@ -7,8 +7,21 @@
 <br>
 
 <p align="center">
-  <a href="https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip" style="text-decoration:none;">
-    <img src="https://img.shields.io/badge/دریافت%20آخرین%20نسخه-%234CAF50?style=flat-square&logo=download" alt="دریافت آخرین نسخه">
+  <a href="https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip"
+     style="
+       display: inline-block;
+       padding: 12px 24px; /* Adjust padding */
+       font-size: 16px; /* Adjust font size */
+       font-weight: 600; /* Boldness */
+       line-height: 1.5;
+       color: #24292e; /* GitHub button text color */
+       background-color: #fafbfc; /* GitHub button background */
+       border: 1px solid rgba(27, 31, 35, 0.15);
+       border-radius: 6px;
+       text-decoration: none;
+       /* Note: height and shadow cannot be reliably controlled here */
+     ">
+    دریافت آخرین نسخه
   </a>
 </p>
 
