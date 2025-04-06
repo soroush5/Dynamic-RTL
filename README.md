@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip" style="text-decoration:none;">
-    <img src="https://img.shields.io/badge/دانلود%20آخرین%20نسخه%20(ZIP)-%234CAF50?style=for-the-badge&logo=download" alt="دانلود آخرین نسخه (ZIP)">
+    <img src="https://img.shields.io/badge/دریافت%20آخرین%20نسخه-%234CAF50?style=flat-square&logo=download" alt="دریافت آخرین نسخه">
   </a>
 </p>
 
