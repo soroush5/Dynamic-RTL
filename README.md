@@ -1,92 +1,77 @@
-# Dynamic RTL
+# Dynamic RTL (نسخه 1.2.0)
 
-A Chrome extension that automatically detects Persian/Arabic text on web pages and applies RTL (Right-to-Left) direction and appropriate font styling.
+افزونه کروم برای تشخیص خودکار متن فارسی و عربی در صفحات وب و اعمال جهت راست به چپ (RTL) و فونت مناسب (پیش‌فرض: وزیرمتن، قابل تنظیم).
 
-## Features
+[English README / توضیحات انگلیسی](README.en.md)
 
-- Automatically detects Persian and Arabic text on any webpage
-- Applies RTL direction and Vazirmatn font to detected text
-- Only applies RTL to paragraphs that start with Persian/Arabic words
-- Works with dynamic content that loads after the page is initially rendered
-- Enhanced real-time detection for input fields, text areas, and contenteditable elements
-- Option to disable the extension for specific websites
-- Option to choose between default-enabled or default-disabled mode for all sites
-- Compatible with Chrome's Manifest V3
+## ویژگی‌ها
 
-## Installation
+- تشخیص خودکار متن فارسی و عربی در هر صفحه وب.
+- اعمال جهت راست به چپ (RTL) و فونت مناسب به متن‌های تشخیص داده شده.
+- محدود کردن اعمال استایل به متن‌هایی که با کلمات فارسی یا عربی شروع می‌شوند.
+- پشتیبانی از محتوای پویا (متنی که بعداً در صفحه بارگذاری می‌شود).
+- تشخیص بهبود یافته برای فیلدهای ورودی (`input`, `textarea`) و المان‌های قابل ویرایش (`contenteditable`).
+- امکان غیرفعال کردن افزونه برای وب‌سایت‌های خاص.
+- امکان انتخاب حالت پیش‌فرض (فعال یا غیرفعال) برای همه سایت‌ها.
+- **جدید:** امکان آپلود و استفاده از فونت TTF سفارشی (ترجیحاً متغیر/Variable) به جای فونت پیش‌فرض وزیرمتن.
+- سازگار با Manifest V3 کروم.
 
-### From Chrome Web Store (Coming Soon)
+## نصب
 
-1. Visit the Chrome Web Store
-2. Search for "Dynamic RTL"
-3. Click "Add to Chrome"
+### روش پیشنهادی: نصب دستی
 
-### Manual Installation
+**به فارسی:**
 
-1. Download or clone this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked" and select the folder containing the extension files
-5. The extension should now be installed and active
+1.  **دانلود:** آخرین نسخه افزونه را از بخش [Releases](https://github.com/so-roush/Dynamic-RTL/releases) دانلود کنید (فایل `.zip`). یا اگر می‌خواهید از کد منبع استفاده کنید، سورس کد را به صورت ZIP از [اینجا](https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip) دانلود نمایید.
+2.  **اکسترکت:** فایل ZIP دانلود شده را در یک پوشه دلخواه از حالت فشرده خارج کنید (Extract کنید).
+3.  **باز کردن صفحه افزونه‌ها:** مرورگر کروم (یا مرورگرهای مشابه مانند Edge, Brave, Vivaldi) را باز کرده و به آدرس `chrome://extensions` بروید.
+4.  **فعال کردن حالت توسعه‌دهنده:** در گوشه بالا سمت راست صفحه افزونه‌ها، کلید "Developer mode" یا "حالت توسعه‌دهنده" را فعال کنید.
+5.  **بارگذاری افزونه:** روی دکمه "Load unpacked" یا "بارگذاری بسته بازشده" کلیک کنید.
+6.  **انتخاب پوشه:** پوشه‌ای که در مرحله ۲ اکسترکت کرده بودید را انتخاب کنید.
+7.  **تایید:** افزونه نصب شده و آیکون آن باید در نوار ابزار مرورگر شما ظاهر شود.
 
-## Usage
+**In English:**
 
-### Current Site Settings
+1.  **Download:** Download the latest release (the `.zip` file) from the [Releases](https://github.com/so-roush/Dynamic-RTL/releases) page. Alternatively, if you want the source code, download it as a ZIP file from [here](https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip).
+2.  **Extract:** Extract the downloaded ZIP file into a folder of your choice.
+3.  **Open Extensions Page:** Open your Chrome browser (or a similar Chromium-based browser like Edge, Brave, Vivaldi) and navigate to `chrome://extensions`.
+4.  **Enable Developer Mode:** In the top right corner of the extensions page, toggle on "Developer mode".
+5.  **Load Extension:** Click the "Load unpacked" button.
+6.  **Select Folder:** Select the folder where you extracted the extension files in step 2.
+7.  **Confirm:** The extension is now installed, and its icon should appear in your browser toolbar.
 
-- To enable or disable the extension on the current site, click on the extension icon in the toolbar and toggle the "Enabled on this site" switch
-- Changes take effect immediately
+### از فروشگاه وب کروم (به زودی)
 
-### Global Settings
+وقتی افزونه در فروشگاه وب کروم منتشر شود، می‌توانید آن را مستقیماً از آنجا نصب کنید.
 
-The extension has two default modes that you can switch between:
+## استفاده
 
-1. **Default Enabled on All Sites (with option to disable on specific sites)**:
-   - In this mode, the extension is enabled on all sites unless you disable it on specific sites
-   - To disable on a specific site, turn off the "Enabled on this site" switch
+### تنظیمات سایت فعلی
 
-2. **Default Disabled on All Sites (with option to enable on specific sites)**:
-   - In this mode, the extension is disabled on all sites unless you enable it on specific sites
-   - To enable on a specific site, turn on the "Enabled on this site" switch
+- برای فعال یا غیرفعال کردن افزونه در سایت فعلی، روی آیکون افزونه در نوار ابزار کلیک کنید و کلید "فعال در این سایت" را تغییر دهید.
+- تغییرات بلافاصله اعمال می‌شوند.
 
-To switch between these two modes:
-1. Click on the extension icon in the toolbar
-2. Select one of the two radio button options in the "Global Settings" section
+### تنظیمات کلی (داخل پاپ‌آپ افزونه)
 
-## Technical Details
+با کلیک روی عنوان "تنظیمات کلی" می‌توانید این بخش را باز یا بسته کنید.
 
-- Uses MutationObserver to detect and process dynamically added content
-- Enhanced text detection for input fields, text areas, and contenteditable elements
-- Real-time RTL detection during typing in input fields
-- Multiple event listeners (input, focus, blur, paste) for better text detection
-- Smart detection that only applies RTL to text starting with Persian/Arabic words
-- Implements Manifest V3 for Chrome extension compatibility
-- Uses the Vazirmatn font for optimal Persian/Arabic text display
+*   **حالت پیش‌فرض:**
+    *   **فعال در همه سایت‌ها:** افزونه در همه جا فعال است مگر اینکه آن را برای سایتی خاص غیرفعال کنید.
+    *   **غیرفعال در همه سایت‌ها:** افزونه در همه جا غیرفعال است مگر اینکه آن را برای سایتی خاص فعال کنید.
+*   **فونت سفارشی:**
+    *   کلید "استفاده از فونت سفارشی" را فعال کنید.
+    *   روی دکمه انتخاب فایل کلیک کرده و فونت `TTF` مورد نظر خود را انتخاب کنید.
+    *   **توصیه:** برای بهترین نتیجه، از فونت‌های متغیر (Variable Fonts) استفاده کنید.
+    *   با غیرفعال کردن این کلید، افزونه به فونت پیش‌فرض (وزیرمتن) بازمی‌گردد.
 
-## Recent Improvements
+## مجوز
 
-### Version 1.1.0
-- Changed the default mode selection from toggle switch to radio buttons
-- Added X (Twitter) profile link
-- Set "Default Enabled on All Sites" as the pre-selected option
-- Added Vazirmatn font to the extension's user interface
+این پروژه متن‌باز است و تحت مجوز MIT در دسترس است.
 
-### Version 1.0.0
-- Added option to choose between default-enabled or default-disabled mode for all sites
-- Added smart detection that only applies RTL to text starting with Persian/Arabic words
-- Added real-time RTL detection for input fields and text areas
-- Added support for contenteditable elements
-- Improved handling of dynamically added input elements
-- Enhanced CSS styling for better compatibility with various websites
-- Added focus/blur/paste event handling for more reliable detection
+## اعتبارات
 
-## License
-
-This project is open source and available under the MIT License.
-
-## Credits
-
-- Original script by Sorou-sh
-- Vazirmatn font by Saber Rastikerdar
+- توسعه‌دهنده: [so-roush](https://github.com/so-roush)
+- فونت پیش‌فرض: [وزیرمتن](https://github.com/rastikerdar/vazirmatn) توسط صابر راستی‌کردار
 
 ## Language
 

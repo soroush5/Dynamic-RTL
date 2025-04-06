@@ -3,14 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Dynamic RTL</title>
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" as="style" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" crossorigin="anonymous">
   <style>
+    @font-face {
+      font-family: 'Vazirmatn';
+      src: url('fonts/Vazirmatn[wght].ttf') format('truetype-variations');
+      font-weight: 100 900; /* Specify the supported weight range for variable fonts */
+      font-display: block;
+    }
+
     body {
       font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
       width: 300px;
       padding: 15px;
       direction: rtl;
+      text-align: right;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      color: #333;
     }
     
     .header {
@@ -182,6 +191,29 @@
       height: 16px;
       margin-left: 5px;
     }
+    
+    .collapsible-header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .collapsible-header::after {
+      content: '\25BC'; /* Down arrow */
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .collapsible-header.active::after {
+      transform: rotate(180deg); /* Up arrow */
+    }
+
+    .collapsible-content {
+      display: none; /* Hidden by default */
+      padding-top: 10px;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -202,27 +234,48 @@
   </div>
   
   <div class="section">
-    <div class="section-title">تنظیمات کلی</div>
-    <div class="mode-switch">
-      <div class="mode-option">
-        <input type="radio" id="default-enabled" name="default-mode" value="enabled" checked>
-        <div class="radio-label">
-          <label for="default-enabled">پیش‌فرض فعال در همه سایت‌ها</label>
-          <span class="radio-description">امکان غیرفعال کردن در سایت‌های دلخواه</span>
+    <div class="section-title collapsible-header" id="general-settings-header">تنظیمات کلی</div>
+    <div class="collapsible-content" id="general-settings-content">
+      <div class="mode-switch">
+        <div class="mode-option">
+          <input type="radio" id="default-enabled" name="default-mode" value="enabled" checked>
+          <div class="radio-label">
+            <label for="default-enabled">پیش‌فرض فعال در همه سایت‌ها</label>
+            <span class="radio-description">امکان غیرفعال کردن در سایت‌های دلخواه</span>
+          </div>
+        </div>
+        <div class="mode-option">
+          <input type="radio" id="default-disabled" name="default-mode" value="disabled">
+          <div class="radio-label">
+            <label for="default-disabled">پیش‌فرض غیرفعال در همه سایت‌ها</label>
+            <span class="radio-description">امکان فعال کردن در سایت‌های دلخواه</span>
+          </div>
         </div>
       </div>
-      <div class="mode-option">
-        <input type="radio" id="default-disabled" name="default-mode" value="disabled">
-        <div class="radio-label">
-          <label for="default-disabled">پیش‌فرض غیرفعال در همه سایت‌ها</label>
-          <span class="radio-description">امکان فعال کردن در سایت‌های دلخواه</span>
+      
+      <div class="divider"></div>
+
+      <div id="custom-font-section" style="padding-top: 10px;">
+        <div class="section-title" style="margin-bottom: 10px;">فونت سفارشی</div>
+        <div class="toggle-container">
+          <span class="toggle-label">استفاده از فونت سفارشی</span>
+          <label class="switch">
+            <input type="checkbox" id="custom-font-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="custom-font-controls" style="display: none; margin-top: 10px;">
+          <input type="file" id="custom-font-input" accept=".ttf" style="display: block; margin-bottom: 10px;">
+          <div style="font-size: 11px; color: #666; margin-bottom: 10px;">فرمت فونت شما باید TTF باشد. اگر فونت متغیر (Variable Font) وارد کنید، تجربه بهتری خواهید داشت.</div>
+          <div id="custom-font-status" style="margin-bottom: 10px; font-size: 12px;">فونت فعلی: <span id="current-font-name">پیش‌فرض (وزیرمتن)</span></div>
         </div>
       </div>
+      
     </div>
   </div>
   
   <div class="footer">
-    <p>Dynamic RTL v1.1.0</p>
+    <p>Dynamic RTL v1.2.0</p>
     <p>تشخیص خودکار متن فارسی و عربی و تغییر جهت به راست به چپ</p>
     <div class="social-links">
       <a href="https://x.com/MrSoroushAhmadi" target="_blank" class="social-link">
@@ -230,7 +283,13 @@
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
         </svg>
       </a>
+      <a href="https://github.com/so-roush/Dynamic-RTL" target="_blank" class="social-link">
+        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="#333">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+      </a>
     </div>
+    <span class="version">نسخه 1.2.0</span>
   </div>
   
   <script src="popup.js"></script>
