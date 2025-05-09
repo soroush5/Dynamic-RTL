@@ -161,63 +161,51 @@ function startsWithPersianOrArabic(text) {
     return isPersianOrArabic(firstWord);
 }
 
-// Function to process a single text node (Simplified Logic)
+// Function to process a single text node (More Conservative: Apply to direct parent)
 function processNode(node) {
     const parent = node.parentElement;
-    // Basic checks (already filtered by TreeWalker for script/style/contenteditable)
-    // We no longer filter based on processed state, only on applied RTL state.
-    if (!parent || parent.closest('[data-rtl="true"]')) {
-        // If parent itself or any ancestor already has data-rtl, ignore this node.
+    // Basic checks
+    if (!parent || parent.tagName === 'BODY' || parent.tagName === 'HTML') {
+        // Avoid applying directly to body/html or if no parent
         return; 
+    }
+    // Also skip if parent is already RTL (avoids redundant checks/setting)
+    if (parent.hasAttribute('data-rtl')) {
+        return;
     }
 
     const text = node.textContent;
 
     // Check for Persian/Arabic starting text
     if (text && text.trim() !== '' && isPersianOrArabic(text) && startsWithPersianOrArabic(text)) {
-        let container = parent;
-        const blockTags = ['P', 'DIV', 'LI', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'ARTICLE', 'SECTION', 'MAIN', 'ASIDE', 'HEADER', 'FOOTER', 'TD', 'BLOCKQUOTE', 'PRE'];
-        let depth = 0;
-        const maxDepth = 5; 
-
-        // Find suitable container, ensuring we don't cross into an existing RTL boundary upwards
-        while (container && container.tagName !== 'BODY' && container.tagName !== 'HTML' && depth < maxDepth) {
-            const parentIsRtl = container.parentElement?.closest('[data-rtl="true"]');
-            if (parentIsRtl) {
-                // Stop if we are about to cross into an already defined RTL zone
-                container = null; 
-                break;
-            }
-            if (blockTags.includes(container.tagName)) {
-                break; // Found potential block container
-            }
-            container = container.parentElement;
-            depth++;
-        }
-
-        // Apply RTL to the found container if valid and not already RTL
-        if (container && !container.hasAttribute('data-rtl')) {
-             container.setAttribute('data-rtl', 'true');
-        } else if (parent && !parent.hasAttribute('data-rtl')) {
-             // Fallback to direct parent only if no container found and parent isn't already RTL
-             parent.setAttribute('data-rtl', 'true');
-        }
+        // Apply data-rtl directly to the immediate parent element
+        // This is more conservative and less likely to affect large page sections.
+        parent.setAttribute('data-rtl', 'true');
+        // console.log('Applied data-rtl to:', parent.tagName, parent.id ? `#${parent.id}` : '', parent.className ? `.${parent.className}` : ''); // Debugging
     } 
-    // No need to mark as processed if it wasn't RTL
+    // If text is not RTL, we currently do nothing (don't remove attributes applied by other text nodes)
 }
 
-// New function to walk and process a specific subtree
+// New function to walk and process a specific subtree (Uses the conservative processNode)
 function walkAndProcessSubtree(rootElement) {
     if (!rootElement || !isEnabled) return;
-
+    // Ensure we don't process inside elements that should be ignored
+    if (rootElement.closest('script, style, noscript, textarea, input, [contenteditable]')){
+        return;
+    }
+    
     const walker = document.createTreeWalker(
         rootElement,
         NodeFilter.SHOW_TEXT,
         {
             acceptNode: function(node) {
                 const parent = node.parentElement;
-                // Basic filter: ignore scripts/styles/inputs and nodes within already RTL elements
-                if (parent?.closest('script, style, noscript, textarea, input, [contenteditable], [data-rtl="true"]')) {
+                // Basic filter: ignore scripts/styles/inputs/etc.
+                if (parent?.closest('script, style, noscript, textarea, input, [contenteditable]')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                // Skip nodes whose direct parent already got RTL (optimization)
+                if (parent?.hasAttribute('data-rtl')) {
                     return NodeFilter.FILTER_REJECT;
                 }
                 if (!node.textContent || node.textContent.trim() === '') {
@@ -230,7 +218,7 @@ function walkAndProcessSubtree(rootElement) {
     );
     let node;
     while (node = walker.nextNode()) {
-        processNode(node);
+        processNode(node); // Uses the conservative version now
     }
 }
 
@@ -315,7 +303,7 @@ function setupInputObservers() {
     });
 }
 
-// Process the entire document body using TreeWalker (Initial Scan Only)
+// Process the entire document body using TreeWalker (Uses the conservative processNode)
 function processDocument() {
     if (!isEnabled) return;
     // console.log('Processing document...');
@@ -325,8 +313,12 @@ function processDocument() {
         {
             acceptNode: function(node) {
                 const parent = node.parentElement;
-                // Reject if inside script/style/input/etc. OR if parent/ancestor already has data-rtl
-                if (parent?.closest('script, style, noscript, textarea, input, [contenteditable], [data-rtl="true"]')) {
+                // Basic filter: ignore scripts/styles/inputs/etc.
+                if (parent?.closest('script, style, noscript, textarea, input, [contenteditable]')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                // Skip nodes whose direct parent already got RTL (optimization)
+                if (parent?.hasAttribute('data-rtl')) {
                     return NodeFilter.FILTER_REJECT;
                 }
                 // Reject if the text content is purely whitespace
@@ -341,7 +333,7 @@ function processDocument() {
 
     let node;
     while (node = walker.nextNode()) {
-        processNode(node);
+        processNode(node); // Uses the conservative version now
     }
 }
 

@@ -34,49 +34,80 @@ document.addEventListener('DOMContentLoaded', () => {
   const customFontInput = document.getElementById('custom-font-input');
   const customFontStatus = document.getElementById('current-font-name');
 
+  // New Translator elements
+  const apiKeyInput = document.getElementById('api-key-input');
+  const testApiButton = document.getElementById('test-api-button');
+  const apiTestResultSpan = document.getElementById('api-test-result');
+  const toneSelect = document.getElementById('translation-tone');
+  const modelSelect = document.getElementById('translation-model');
+  const translateButton = document.getElementById('translate-button');
+
   let currentHost = '';
+  let currentTabId = null;
 
   // --- Load initial state --- 
   function loadInitialState() {
-    // Get active tab URL
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0] && tabs[0].url) {
-        try {
-          const url = new URL(tabs[0].url);
-          currentHost = url.hostname;
-          currentSiteSpan.textContent = currentHost;
+      if (tabs[0]) {
+        currentTabId = tabs[0].id;
+        if (tabs[0].url) {
+           try {
+              const url = new URL(tabs[0].url);
+              currentHost = url.hostname;
+              currentSiteSpan.textContent = currentHost;
+              // Load sync settings (RTL)
+              chrome.storage.sync.get(['disabledSites', 'enabledSites', 'defaultEnabled'], (syncResult) => {
+                 const defaultEnabled = syncResult.defaultEnabled !== undefined ? syncResult.defaultEnabled : true;
+                 const disabledSites = syncResult.disabledSites || [];
+                 const enabledSites = syncResult.enabledSites || [];
 
-          // Load sync settings (site toggle, default mode)
-          chrome.storage.sync.get(['disabledSites', 'enabledSites', 'defaultEnabled'], (syncResult) => {
-            const defaultEnabled = syncResult.defaultEnabled !== undefined ? syncResult.defaultEnabled : true;
-            const disabledSites = syncResult.disabledSites || [];
-            const enabledSites = syncResult.enabledSites || [];
+                 defaultEnabledRadio.checked = defaultEnabled;
+                 defaultDisabledRadio.checked = !defaultEnabled;
 
-            defaultEnabledRadio.checked = defaultEnabled;
-            defaultDisabledRadio.checked = !defaultEnabled;
-
-            siteToggle.checked = defaultEnabled ? !disabledSites.includes(currentHost) : enabledSites.includes(currentHost);
-            siteToggle.disabled = false;
-          });
-        } catch (e) {
-          currentSiteSpan.textContent = 'Invalid URL';
-          siteToggle.disabled = true;
-          console.error("Error parsing URL:", e);
+                 siteToggle.checked = defaultEnabled ? !disabledSites.includes(currentHost) : enabledSites.includes(currentHost);
+                 siteToggle.disabled = false;
+              });
+           } catch(e) {
+               currentSiteSpan.textContent = 'Invalid URL';
+               siteToggle.disabled = true;
+               translateButton.disabled = true; // Disable translate on invalid URL
+           }
+        } else {
+           currentSiteSpan.textContent = 'N/A';
+           siteToggle.disabled = true;
+           translateButton.disabled = true; // Disable translate on non-http pages
+        }
+        // Enable translate button only for valid http/https tabs
+        if (!tabs[0].url?.startsWith('http')) {
+            translateButton.disabled = true;
         }
       } else {
-        currentSiteSpan.textContent = 'N/A';
-        siteToggle.disabled = true;
+           currentSiteSpan.textContent = 'N/A';
+           siteToggle.disabled = true;
+           translateButton.disabled = true; // Disable if no active tab
       }
     });
 
-    // Load local settings (custom font)
-    chrome.storage.local.get(['useCustomFont', 'customFontName'], (localResult) => {
+    // Load local settings (custom font and API key)
+    chrome.storage.local.get(['useCustomFont', 'customFontName', 'geminiApiKey'], (localResult) => {
+      // Custom font part
       const useCustomFont = localResult.useCustomFont || false;
       const fontName = localResult.customFontName || 'پیش‌فرض (وزیرمتن)';
-      
       customFontToggle.checked = useCustomFont;
       customFontStatus.textContent = fontName;
       customFontControls.style.display = useCustomFont ? 'block' : 'none';
+      // API Key part
+      if (localResult.geminiApiKey) {
+        apiKeyInput.value = localResult.geminiApiKey;
+      }
+    });
+
+    // Load sync settings (tone preference and model preference)
+    chrome.storage.sync.get(['translationTone', 'translationModel'], (syncResult) => {
+        toneSelect.value = syncResult.translationTone || 'رسمی';
+        modelSelect.value = syncResult.translationModel || 'gemini-2.5-flash-preview-04-17';
+        // Remove redundant font setting - handled by CSS now
+        // document.querySelectorAll('.setting-description').forEach(el => el.style.fontFamily = '"Vazirmatn", sans-serif');
     });
   }
 
@@ -232,54 +263,157 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
   });
 
-  // --- Helper Functions --- 
-
-  // Function to clear custom font data from storage
-  function clearCustomFontData(notifyScripts = false) {
-    chrome.storage.local.remove(['useCustomFont', 'customFontData', 'customFontName', 'customFontFamily'], () => {
-      customFontStatus.textContent = 'پیش‌فرض (وزیرمتن)';
-      customFontInput.value = '';
-      customFontToggle.checked = false;
-      customFontControls.style.display = 'none';
-      if (notifyScripts) {
-        triggerFontUpdate();
-      }
-      console.log('Custom font reset to default.');
-    });
-  }
-
-  // Function to send a message to the content script in the active tab
-  function notifyContentScript(command, data) {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0] && tabs[0].id && tabs[0].url && !tabs[0].url.startsWith('chrome://')) {
-        chrome.tabs.sendMessage(tabs[0].id, { command: command, ...data })
-          .catch(error => {
-            if (error.message.includes('Receiving end does not exist')) {
-              // console.log(`Content script not available in active tab ${tabs[0].id}`);
-            } else {
-              console.error(`Error sending ${command} to active tab ${tabs[0].id}:`, error);
-            }
+  // API Key Input
+  apiKeyInput.addEventListener('input', () => {
+       apiTestResultSpan.textContent = '';
+  });
+  apiKeyInput.addEventListener('change', () => {
+      const apiKey = apiKeyInput.value.trim();
+      if (apiKey) {
+          chrome.storage.local.set({ geminiApiKey: apiKey }, () => {
+              console.log('Gemini API Key saved.');
+              // Optional: Add visual feedback (e.g., a temporary checkmark)
+          });
+      } else {
+          // If cleared, remove from storage
+          chrome.storage.local.remove('geminiApiKey', () => {
+              console.log('Gemini API Key removed.');
           });
       }
-    });
-  }
-  
-  // Function to notify ALL content scripts to update their font
-  function triggerFontUpdate() {
-      chrome.tabs.query({}, (tabs) => {
-          tabs.forEach(tab => {
-              if (tab.id && tab.url && !tab.url.startsWith('chrome://')) {
-                  chrome.tabs.sendMessage(tab.id, { command: 'updateFont' }).catch(error => {
-                      if (!error.message.includes('Receiving end does not exist')) {
-                          console.error(`Error sending updateFont to tab ${tab.id} (${tab.url}):`, error);
-                      }
-                  });
+  });
+
+  // Test API Key Button
+  testApiButton.addEventListener('click', () => {
+      const apiKey = apiKeyInput.value.trim();
+      if (!apiKey) {
+          apiTestResultSpan.textContent = 'کلید خالی است';
+          apiTestResultSpan.style.color = 'red';
+          return;
+      }
+      apiTestResultSpan.textContent = 'درحال تست...';
+      apiTestResultSpan.style.color = 'grey';
+      testApiButton.disabled = true;
+
+      // Send message to background script to test the key
+      chrome.runtime.sendMessage({ command: 'testApiKey', apiKey: apiKey })
+          .then(response => {
+              if (response.success) {
+                  apiTestResultSpan.textContent = 'معتبر ✅';
+                  apiTestResultSpan.style.color = 'green';
+              } else {
+                  // Display specific error from background script
+                  const errorMessage = response.error || 'خطای نامشخص'; 
+                  apiTestResultSpan.textContent = `نامعتبر ❌ (${errorMessage})`; 
+                  apiTestResultSpan.style.color = 'red';
+              }
+          })
+          .catch(error => {
+              console.error("Error testing API key (message sending failed):", error);
+              // Error sending the message itself
+              apiTestResultSpan.textContent = 'خطا در ارسال پیام تست'; 
+              apiTestResultSpan.style.color = 'red';
+          })
+          .finally(() => {
+              testApiButton.disabled = false;
+          });
+  });
+
+  // Tone Selection
+  toneSelect.addEventListener('change', () => {
+      const selectedTone = toneSelect.value;
+      chrome.storage.sync.set({ translationTone: selectedTone }, () => {
+          console.log(`Translation tone set to: ${selectedTone}`);
+      });
+  });
+
+  // Model Selection
+  modelSelect.addEventListener('change', () => {
+      const selectedModel = modelSelect.value;
+      chrome.storage.sync.set({ translationModel: selectedModel }, () => {
+          console.log(`Translation model set to: ${selectedModel}`);
+      });
+  });
+
+  // Translate Button
+  translateButton.addEventListener('click', () => {
+      if (translateButton.disabled) return;
+      
+      // 1. Get API Key from storage
+      chrome.storage.local.get('geminiApiKey', (localResult) => {
+          const apiKey = localResult.geminiApiKey;
+          if (!apiKey) {
+              alert('لطفا ابتدا کلید API گوگل خود را در تنظیمات وارد کنید.');
+              // Optionally focus the API key input
+              apiKeyInput.focus();
+              // Open the settings if collapsed
+              if (generalSettingsContent.style.display !== 'block') {
+                  generalSettingsHeader.click();
+              }
+              return;
+          }
+
+          // 2. Get Tone and Model
+          chrome.storage.sync.get(['translationTone'], (syncResult) => { // Only get tone from storage here
+              const tone = syncResult.translationTone || 'رسمی';
+              // *** Get the currently selected model DIRECTLY from the dropdown ***
+              const model = modelSelect.value; 
+
+              // 3. Send message to content script
+              if (currentTabId) {
+                  notifyContentScript('translatePage', { apiKey, tone, model });
+                  // Optional: Close popup after initiating translation
+                  // window.close(); 
+              } else {
+                  console.error("No active tab ID found to send translation request.");
+                  alert("خطا: تب فعالی برای ارسال درخواست ترجمه یافت نشد.");
               }
           });
       });
-      // TODO: Update popup's own style if needed
+  });
+
+  // --- Helper Functions --- 
+  
+  function clearCustomFontData(notifyContent) {
+    chrome.storage.local.remove(['customFontData', 'customFontName', 'customFontFamily'], () => {
+      customFontStatus.textContent = 'پیش‌فرض (وزیرمتن)';
+      customFontInput.value = ''; // Clear file input visually
+      console.log('Custom font data cleared.');
+      if (notifyContent) {
+        triggerFontUpdate(); // Notify content script to revert to default
+      }
+    });
   }
 
-  // --- Initialize --- 
+  function triggerFontUpdate() {
+    console.log('Triggering font update in content scripts...');
+    notifyContentScript('updateFont', {}); // Send empty object, content script will fetch from storage
+  }
+
+  function notifyContentScript(command, data) {
+     if (currentTabId) {
+        chrome.tabs.sendMessage(currentTabId, { command: command, data: data })
+          .then(response => {
+             // Handle potential response from content script if needed
+             if (response && response.status) {
+                console.log(`Content script responded to ${command}:`, response.status);
+             } else if(response && response.error) {
+                console.error(`Content script error for ${command}:`, response.error);
+             }
+          })
+          .catch(error => {
+             // Check if the error is due to no receiving end (content script not injected/ready)
+             if (error.message?.includes("Could not establish connection") || error.message?.includes("Receiving end does not exist")) {
+                console.warn(`Could not send message '${command}' to content script (tab ID: ${currentTabId}). It might not be injected or ready yet.`);
+             } else {
+                console.error(`Error sending message '${command}' to content script (tab ID: ${currentTabId}):`, error);
+             }
+          });
+     } else {
+        console.warn("Cannot notify content script: No active tab ID.");
+     }
+  }
+
+  // Initialize
   loadInitialState();
-}); 
+
+}); // Closing parenthesis for DOMContentLoaded listener

@@ -7,21 +7,18 @@
 <br>
 
 <p align="center">
-  <a href="https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip"
-     style="
-       display: inline-block;
-       padding: 12px 24px; /* Adjust padding */
-       font-size: 16px; /* Adjust font size */
-       font-weight: 600; /* Boldness */
-       line-height: 1.5;
-       color: #24292e; /* GitHub button text color */
-       background-color: #fafbfc; /* GitHub button background */
-       border: 1px solid rgba(27, 31, 35, 0.15);
-       border-radius: 6px;
-       text-decoration: none;
-       /* Note: height and shadow cannot be reliably controlled here */
-     ">
-    دریافت آخرین نسخه
+  <a href="https://github.com/so-roush/Dynamic-RTL/archive/refs/heads/main.zip" style="text-decoration:none;">
+    <svg width="280" height="100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="button-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="3" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.3"/>
+        </filter>
+      </defs>
+      <rect x="5" y="5" width="270" height="90" rx="10" ry="10" fill="#FFFFFF" filter="url(#button-shadow)" stroke="#CCCCCC" stroke-width="1"/>
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">
+        دریافت آخرین نسخه
+      </text>
+    </svg>
   </a>
 </p>
 
