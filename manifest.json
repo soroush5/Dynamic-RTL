@@ -1,18 +1,32 @@
 {
   "manifest_version": 3,
-  "name": "Dynamic RTL",
+  "name": "Dynamic RTL & Translator",
   "version": "1.2.0",
-  "description": "Automatically applies RTL direction and Persian/Arabic font to detected text",
-  "permissions": ["storage", "scripting"],
-  "host_permissions": ["<all_urls>"],
+  "description": "Automatically applies RTL and translates web pages using Gemini",
+  "permissions": [
+    "storage",
+    "scripting",
+    "contextMenus",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
+      "id": "dynamic-rtl",
       "matches": ["<all_urls>"],
       "js": ["content.js"],
       "run_at": "document_start"
+    },
+    {
+      "id": "translator",
+      "matches": ["<all_urls>"],
+      "js": ["translate.js"],
+      "run_at": "document_idle"
     }
   ],
   "action": {

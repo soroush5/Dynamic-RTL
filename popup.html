@@ -22,6 +22,29 @@
       color: #333;
     }
     
+    /* Ensure Vazirmatn applies to common elements */
+    body,
+    button,
+    input,
+    select,
+    textarea,
+    label,
+    .title,
+    .section-title,
+    .site-name,
+    .toggle-label,
+    .mode-option label,
+    .setting-description,
+    .translate-button,
+    .test-api-button {
+        font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Specific override for monospace API key input */
+    .api-key-input {
+        font-family: monospace; /* Keep API key monospace */
+    }
+    
     .header {
       display: flex;
       align-items: center;
@@ -33,7 +56,6 @@
       font-size: 18px;
       font-weight: bold;
       margin: 0;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .section {
@@ -46,13 +68,11 @@
     .section-title {
       font-weight: bold;
       margin-bottom: 10px;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .site-name {
       font-weight: bold;
       margin-bottom: 10px;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .toggle-container {
@@ -64,7 +84,6 @@
     
     .toggle-label {
       font-size: 14px;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .switch {
@@ -123,14 +142,12 @@
       font-size: 12px;
       color: #666;
       text-align: center;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .mode-description {
       font-size: 12px;
       color: #666;
       margin-top: 5px;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
     }
     
     .mode-switch {
@@ -152,7 +169,6 @@
     }
     
     .mode-option label {
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
       font-size: 14px;
       line-height: 1.4;
     }
@@ -214,6 +230,75 @@
       padding-top: 10px;
       overflow: hidden;
     }
+    
+    .api-key-input {
+      width: 95%; 
+      padding: 6px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .setting-description {
+      font-size: 11px;
+      color: #666;
+      margin-top: 3px;
+      margin-bottom: 8px;
+    }
+    .setting-description a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .setting-description a:hover {
+      text-decoration: underline;
+    }
+    .translate-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #dcdcdc;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        text-align: center;
+    }
+    .translate-button:hover {
+        background-color: #e0e0e0;
+    }
+    select {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-left: 0;
+      width: 100%;
+      margin-top: 5px;
+    }
+     .divider {
+        height: 1px;
+        background-color: #e0e0e0;
+        margin: 15px 0;
+     }
+     .model-option-description {
+        font-size: 10px;
+        color: #777;
+        padding-right: 25px;
+        margin-top: -3px;
+        margin-bottom: 5px;
+     }
+     .test-api-button {
+        padding: 4px 8px;
+        font-size: 11px;
+        margin-right: 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background-color: #f8f8f8;
+        border-radius: 3px;
+    }
+    .test-api-button:hover {
+        background-color: #eee;
+    }
   </style>
 </head>
 <body>
@@ -221,11 +306,11 @@
     <h1 class="title">Dynamic RTL</h1>
   </div>
   
+  <button id="translate-button" class="translate-button">ترجمه فارسی این صفحه</button>
+
   <div class="section">
-    <div class="section-title">تنظیمات سایت فعلی</div>
-    <div class="site-name" id="current-site">...</div>
+    <div class="section-title">فعال‌سازی در سایت فعلی (<span id="current-site">Loading...</span>)</div>
     <div class="toggle-container">
-      <span class="toggle-label">فعال در این سایت</span>
       <label class="switch">
         <input type="checkbox" id="site-toggle">
         <span class="slider"></span>
@@ -234,29 +319,32 @@
   </div>
   
   <div class="section">
-    <div class="section-title collapsible-header" id="general-settings-header">تنظیمات کلی</div>
+    <div class="section-title collapsible-header" id="general-settings-header">تنظیمات کلی و مترجم</div>
     <div class="collapsible-content" id="general-settings-content">
-      <div class="mode-switch">
-        <div class="mode-option">
-          <input type="radio" id="default-enabled" name="default-mode" value="enabled" checked>
-          <div class="radio-label">
-            <label for="default-enabled">پیش‌فرض فعال در همه سایت‌ها</label>
-            <span class="radio-description">امکان غیرفعال کردن در سایت‌های دلخواه</span>
+      <div class="setting-group">
+          <label style="font-weight: bold;">حالت پیش‌فرض فعال‌سازی:</label>
+          <div class="mode-switch">
+            <div class="mode-option">
+              <input type="radio" id="default-enabled" name="default-mode" value="enabled" checked>
+              <div class="radio-label">
+                <label for="default-enabled">فعال در همه سایت‌ها</label>
+                <span class="radio-description">(غیرفعال‌سازی دستی برای سایت دلخواه)</span>
+              </div>
+            </div>
+            <div class="mode-option">
+              <input type="radio" id="default-disabled" name="default-mode" value="disabled">
+              <div class="radio-label">
+                <label for="default-disabled">غیرفعال در همه سایت‌ها</label>
+                <span class="radio-description">(فعال‌سازی دستی برای سایت دلخواه)</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="mode-option">
-          <input type="radio" id="default-disabled" name="default-mode" value="disabled">
-          <div class="radio-label">
-            <label for="default-disabled">پیش‌فرض غیرفعال در همه سایت‌ها</label>
-            <span class="radio-description">امکان فعال کردن در سایت‌های دلخواه</span>
-          </div>
-        </div>
       </div>
       
       <div class="divider"></div>
 
-      <div id="custom-font-section" style="padding-top: 10px;">
-        <div class="section-title" style="margin-bottom: 10px;">فونت سفارشی</div>
+      <div id="custom-font-section" style="padding-top: 5px;">
+        <div class="section-title" style="margin-bottom: 10px;">فونت سفارشی:</div>
         <div class="toggle-container">
           <span class="toggle-label">استفاده از فونت سفارشی</span>
           <label class="switch">
@@ -266,9 +354,47 @@
         </div>
         <div id="custom-font-controls" style="display: none; margin-top: 10px;">
           <input type="file" id="custom-font-input" accept=".ttf" style="display: block; margin-bottom: 10px;">
-          <div style="font-size: 11px; color: #666; margin-bottom: 10px;">فرمت فونت شما باید TTF باشد. اگر فونت متغیر (Variable Font) وارد کنید، تجربه بهتری خواهید داشت.</div>
+          <div class="setting-description" style="margin-bottom: 10px;">فرمت فونت شما باید TTF باشد. اگر فونت متغیر (Variable Font) وارد کنید، تجربه بهتری خواهید داشت.</div>
           <div id="custom-font-status" style="margin-bottom: 10px; font-size: 12px;">فونت فعلی: <span id="current-font-name">پیش‌فرض (وزیرمتن)</span></div>
         </div>
+      </div>
+      
+      <div class="divider"></div>
+
+      <div class="setting-group">
+           <label style="font-weight: bold;">تنظیمات مترجم (Gemini):</label>
+           <div style="margin-top: 8px;">
+               <label for="api-key-input">کلید API گوگل:</label>
+               <input type="password" id="api-key-input" class="api-key-input" placeholder="کلید خود را اینجا وارد کنید">
+               <button id="test-api-button" class="test-api-button">تست کلید</button>
+               <span id="api-test-result" style="font-size:11px; margin-right: 5px;"></span>
+               <div class="setting-description">
+                   برای استفاده از مترجم، نیاز به کلید API از Google AI Studio دارید.
+                   <a href="https://makersuite.google.com/app/apikey" target="_blank">کلید خود را از اینجا دریافت کنید</a>.
+                   کلید شما به صورت محلی ذخیره می‌شود.
+               </div>
+           </div>
+           <div style="margin-top: 10px;">
+               <label for="translation-tone">لحن ترجمه:</label>
+               <select id="translation-tone">
+                   <option value="خودمونی">خودمونی</option>
+                   <option value="رسمی" selected>رسمی</option>
+                   <option value="تخصصی">تخصصی</option>
+                   <option value="قابل فهم">قابل فهم</option>
+               </select>
+           </div>
+           <div style="margin-top: 15px;">
+               <label for="translation-model">مدل ترجمه:</label>
+               <select id="translation-model">
+                   <option value="gemini-2.5-pro-preview-03-25">Gemini 2.5 Pro Preview (حدود ۲۵ درخواست در روز)</option>
+                   <option value="gemini-2.5-flash-preview-04-17" selected>Gemini 2.5 Flash Preview (حدود ۵۰۰ درخواست در روز)</option>
+                   <option value="gemini-2.0-flash">Gemini 2.0 Flash (حدود ۱۵۰۰ درخواست در روز)</option> 
+                   <!-- <option value="gemini-1.0-pro">Gemini 1.0 Pro (کیفیت: ۹/۱۰ - حدود ۱۵۰۰ درخواست در روز)</option> --> <!-- Keep old one commented out for reference -->
+               </select>
+               <div class="setting-description">
+                    محدودیت روزانه تقریبی است. مدل پیش‌فرض Flash Preview است (سریع و محدودیت بالا).
+               </div>
+           </div>
       </div>
       
     </div>
@@ -289,7 +415,12 @@
         </svg>
       </a>
     </div>
-    <span class="version">نسخه 1.2.0</span>
+    <!-- Geek Alerts Support Link -->
+    <p style="margin-top: 8px; font-size: 11px; color: #777;">
+      حمایت شده توسط 
+      <a href="https://t.me/geekalerts" target="_blank" style="color: #007bff; text-decoration: none;">گیک‌الرتس</a>
+    </p>
+    <span class="version">نسخه 1.3.0</span>
   </div>
   
   <script src="popup.js"></script>
