@@ -1,0 +1,18 @@
+{
+  "name": "dynamic-rtl",
+  "version": "1.0.0",
+  "description": "Dynamic RTL Chrome extension with modern TypeScript architecture",
+  "type": "module",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.269",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "lit": "^3.1.2"
+  }
+}
