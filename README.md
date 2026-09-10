@@ -45,9 +45,8 @@ Repository: https://github.com/soroush5/Dynamic-RTL
 
 When a Dynamic RTL build is active:
 
-1. **Browsers** — at `document_start` (before the body is parsed) it injects a stylesheet that registers the bundled Vazirmatn variable font and a CSS class called `.dynrtl-rtl`. As the DOM is parsed and as new content streams in (chat messages, tweets, search results), a `TreeWalker` + `MutationObserver` finds Persian / Arabic text and tags the nearest block ancestor.
-2. **Obsidian** — a markdown post-processor decorates rendered paragraphs / headings / list items, and a CodeMirror 6 `ViewPlugin` decorates per-line in the editor.
-3. **Inputs / contenteditable** — a capture-phase listener flips `dir="auto"` and `text-align` on `<input>`, `<textarea>` and `[contenteditable]` as you type, even on a single Persian character. The CSS class never sets `direction: rtl !important` on editors, which would break editor frameworks like Slate / Lexical / ProseMirror used by Claude, Notion, X, Gemini, etc.
+1. **Pages** — at `document_start` (before the body is parsed) it injects a stylesheet that registers the bundled Vazirmatn variable font and a CSS class called `.dynrtl-rtl`. As the DOM is parsed and as new content streams in (chat messages, tweets, search results), a `TreeWalker` + `MutationObserver` finds Persian / Arabic text and tags the nearest block ancestor.
+2. **Inputs / contenteditable** — a capture-phase listener flips `dir="auto"` and `text-align` on `<input>`, `<textarea>` and `[contenteditable]` as you type, even on a single Persian character. The CSS class never sets `direction: rtl !important` on editors, which would break editor frameworks like Slate / Lexical / ProseMirror used by Claude, Notion, X, Gemini, etc.
 
 It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unicode blocks (`U+0600-U+06FF`, `U+0750-U+077F`, `U+08A0-U+08FF`, `U+FB50-U+FDFF`, `U+FE70-U+FEFF`).
 
@@ -57,8 +56,8 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 - **Native look per host**: each build follows the design language of its host:
   - **Chrome** popup / options use Material 3 (Chrome 130+ tokens): rounded surfaces, sliding switches, pill-shaped chips, primary blue `#0b57d0`, subtle scale + fade entrance.
   - **Firefox** popup / options use Acorn / Proton (Firefox 130+ tokens): tighter 4-8 px radii, thin-bordered cards, outlined switches and radio rings, accent `#0061e0` / `#00ddff`.
-  - **Obsidian** plugin uses Obsidian's own CSS variables (`--background-primary`, `--text-normal`, `--text-accent`, …) so it matches whatever theme the user has installed.
-- **Per-site control** (browsers): click the toolbar icon to toggle the current site. Choose between two default modes:
+
+- **Per-site control**: click the toolbar icon to toggle the current site. Choose between two default modes:
   - *Enable on all sites* (default) - sites you turn off are remembered as `domain*off`.
   - *Disable on all sites* - sites you turn on are remembered as `domain*on`.
 - **Local font**: Vazirmatn is bundled with every build. No external request, no CDN dependency.
@@ -67,12 +66,12 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 - **Built for dynamic apps**: ChatGPT, Claude, X.com, Notion, Google services, Gemini - dynamic content gets RTL'd as it streams in.
 - **URL-aware bidi**: inline `cite / code / kbd / samp / var / pre` inside RTL blocks keep their own LTR context, so URLs in Google search results no longer read backwards.
 - **Shadow DOM aware**: the content script descends into open shadow roots, so Web-Component-based UIs get the same treatment as light DOM.
-- **Performance budget**: idle-callback batching, mutation throttling, `WeakSet` deduping and a 30 ms-per-batch ceiling keep everything responsive.
+- **Performance budget**: observer only queues, a debounced flush walks with a 10 ms / 1000-node ceiling, expando flags replace WeakSets, and `all_frames` stays off — tagging never blocks the page.
 - **Diagnostic logging**: a debug toggle prints labelled traces to DevTools.
 
 ## Install
 
-> Pre-built bundles for v2.2 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.2.zip`, `dynamic-rtl-firefox-v2.2.zip` and `dynamic-rtl-obsidian-v2.2.zip`. They are also checked in under [`resources/`](./resources) for offline access.
+> Pre-built bundles for v2.2 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.2.zip` and `dynamic-rtl-firefox-v2.2.zip`. They are also checked in under [`resources/`](./resources) for offline access.
 
 ### Install on Chrome / Edge / Brave / Arc
 
