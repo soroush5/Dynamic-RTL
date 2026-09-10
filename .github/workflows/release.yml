@@ -1,6 +1,6 @@
 name: Release
 
-# Builds the Chrome, Firefox and Obsidian zips and publishes (or updates)
+# Builds the Chrome and Firefox zips and publishes (or updates)
 # a GitHub Release whenever a build-affecting file changes on the default
 # branch.
 #
@@ -19,10 +19,8 @@ on:
     paths:
       - 'chrome/manifest.json'
       - 'firefox/manifest.json'
-      - 'obsidian/manifest.json'
       - 'chrome/**'
       - 'firefox/**'
-      - 'obsidian/**'
       - 'scripts/build-zips.sh'
       - '.github/workflows/release.yml'
   workflow_dispatch:
@@ -77,13 +75,12 @@ jobs:
           body: |
             ## Dynamic RTL ${{ steps.version.outputs.tag }}
 
-            Auto-detects Persian and Arabic text and applies right-to-left direction with the **Vazirmatn** variable font (customizable). Three builds in this release - one each for Chrome, Firefox and Obsidian.
+            Auto-detects Persian and Arabic text and applies right-to-left direction with the **Vazirmatn** variable font (customizable). Two builds in this release - one each for Chrome and Firefox.
 
             ### Downloads
 
             - **Chrome / Edge / Brave / Arc / Opera** — `dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip`
             - **Firefox 121+** — `dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip`
-            - **Obsidian 1.4+** — `dynamic-rtl-obsidian-v${{ steps.version.outputs.version }}.zip`
 
             ### Install on Chrome / Edge / Brave / Arc
 
@@ -102,12 +99,6 @@ jobs:
             1. Open `about:config`, set `xpinstall.signatures.required` to `false`.
             2. Rename the zip to `.xpi` and drag it into Firefox.
 
-            ### Install for Obsidian
-
-            1. Download the Obsidian zip and extract it.
-            2. Drop the extracted folder into `<your-vault>/.obsidian/plugins/dynamic-rtl/` (the folder must contain `manifest.json` directly).
-            3. In Obsidian: **Settings → Community plugins → Reload plugins**, then enable **Dynamic RTL**.
-
             ### Highlights
 
             - No flash of LTR — styles register at `document_start` (browser builds).
@@ -115,15 +106,14 @@ jobs:
             - Per-site toggle from the toolbar popup (browser builds), with global enable/disable modes. Toolbar icon switches between **colored** (active) and **grayscale** (inactive).
             - URL-like content (cite, code, kbd) inside RTL blocks keeps its own LTR bidi context — fixes Google search results.
             - Bundled Vazirmatn variable font (no network calls), or upload your own.
-            - Native browser look: Material 3 for Chrome, Acorn / Proton for Firefox, Obsidian's own theme variables for the plugin.
+            - Native browser look: Material 3 for Chrome, Acorn / Proton for Firefox.
 
             See the [README](https://github.com/${{ github.repository }}/blob/main/README.md) for full details.
 
             ---
 
-            **Developer:** [so-roush](https://github.com/so-roush)
+            **Developer:** [soroush5](https://github.com/soroush5)
             **Default font:** [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar (SIL OFL 1.1)
           files: |
             resources/dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip
             resources/dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip
-            resources/dynamic-rtl-obsidian-v${{ steps.version.outputs.version }}.zip

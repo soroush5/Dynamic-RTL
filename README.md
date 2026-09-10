@@ -1,22 +1,21 @@
 # Dynamic RTL
 
-> Auto-detects Persian and Arabic text on web pages and inside Obsidian notes, then instantly applies the right direction (RTL) and a comfortable font - before you even see the page.
+> Auto-detects Persian and Arabic text on web pages, then instantly applies the right direction (RTL) and a comfortable font - before you even see the page.
 
 [![Version](https://img.shields.io/badge/version-2.2-5b6cff)](#release)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?logo=googlechrome&logoColor=white)](#install-on-chrome--edge--brave--arc)
 [![Firefox](https://img.shields.io/badge/Firefox-MV3-FF7139?logo=firefox&logoColor=white)](#install-on-firefox)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.4+-7c3aed?logo=obsidian&logoColor=white)](#install-for-obsidian)
 
-Dynamic RTL watches every page and note you open and, the moment it spots Persian or Arabic text - in a paragraph, a chat bubble, a tweet, or even an input field - it switches that element to right-to-left direction and renders it with the **Vazirmatn** variable font.
 
-It is shipped as **three separate builds** that share the same detection logic and default font, but each follows the design language of its host application:
+Dynamic RTL watches every page you open and, the moment it spots Persian or Arabic text - in a paragraph, a chat bubble, a tweet, or even an input field - it switches that element to right-to-left direction and renders it with the **Vazirmatn** variable font.
+
+It is shipped as **two separate builds** that share the same detection logic and default font, but each follows the design language of its host application:
 
 | Build | Target | Manifest |
 | --- | --- | --- |
 | **`chrome/`** | Chrome, Edge, Brave, Arc, Opera (Chromium) | MV3 |
 | **`firefox/`** | Firefox 121 and newer | MV3 |
-| **`obsidian/`** | Obsidian 1.4 and newer | Community plugin |
 
 Repository: https://github.com/soroush5/Dynamic-RTL
 
@@ -29,9 +28,7 @@ Repository: https://github.com/soroush5/Dynamic-RTL
 - [Install](#install)
   - [Install on Chrome / Edge / Brave / Arc](#install-on-chrome--edge--brave--arc)
   - [Install on Firefox](#install-on-firefox)
-  - [Install for Obsidian](#install-for-obsidian)
 - [Using the browser extensions](#using-the-browser-extensions)
-- [Using the Obsidian plugin](#using-the-obsidian-plugin)
 - [Custom variable font](#custom-variable-font)
 - [Sites we keep an eye on](#sites-we-keep-an-eye-on)
 - [Performance](#performance)
@@ -101,16 +98,10 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 **Path B — permanent install (Developer Edition / Nightly / ESR):**
 
 1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
-2. Rename `dynamic-rtl-firefox-v2.2.zip` to `dynamic-rtl-firefox-v2.0.xpi`.
+Rename `dynamic-rtl-firefox-v2.2.zip` to `dynamic-rtl-firefox-v2.2.xpi`.
 3. Drag the `.xpi` file into Firefox and click **Add**.
 
 **Path C — regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
-
-### Install for Obsidian
-
-1. Download `dynamic-rtl-obsidian-v2.2.zip` and extract it.
-2. Move the extracted folder to `<your-vault>/.obsidian/plugins/dynamic-rtl/`. The path must contain `manifest.json`, `main.js`, `styles.css` and the `fonts/` folder directly (no extra subfolder).
-3. Open Obsidian → **Settings → Community plugins**, click **Reload plugins**, then enable **Dynamic RTL**.
 
 ## Using the browser extensions
 
@@ -118,20 +109,6 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 - The toggle at the top enables / disables RTL on the current site. Each toggle is recorded as an explicit override (`domain*on` or `domain*off`) in the custom site list.
 - Use the segmented control to flip between *Enable on all sites* and *Disable on all sites*. This default applies to sites without an explicit entry. Your custom site list is preserved when you switch modes.
 - Click **Settings & custom font** to open the full options page. There you can edit the custom site list directly, change fonts, and turn on debug logging.
-
-## Using the Obsidian plugin
-
-Open **Settings → Dynamic RTL** in Obsidian to configure:
-
-- **Enable plugin** — master switch.
-- **Apply to editor** — turn off if you only want the reading view to use RTL.
-- **Apply to reading view** — turn off if you only want the editor to use RTL.
-- **Active font** — *Vazirmatn (default)* or *Custom font*.
-- **Upload a custom font** — same accepted formats as the browser builds.
-- **Verbose logging** — prints labelled traces to the developer console.
-- **Refresh open notes** — re-runs detection on every open editor and reading-view pane.
-
-There is also a "Refresh Dynamic RTL on all open notes" command in the Command Palette and a status-bar pill that shows whether the plugin is currently active.
 
 ## Custom variable font
 
@@ -157,21 +134,22 @@ If you hit a site that misbehaves, turn on **Verbose logging** in the options pa
 ## Performance
 
 - Tagging is done by adding a single CSS class — never inline styles — so style recalculation is fast and reversible.
-- Every element we touch is recorded in a `WeakSet` so we never re-process it. Garbage collection kicks in as soon as the DOM removes the element.
-- Mutation work is queued into a `Set` of "pending roots" and flushed inside `requestIdleCallback`, with a hard 30 ms-per-batch ceiling.
-- The text walk uses a `TreeWalker` with `acceptNode` that rejects descendants of `<script>`, `<style>`, `<code>`, `<pre>`, canvas-driven editors and contenteditable subtrees.
-- The MutationObserver is rooted at `document.body`; we attach a separate observer per open shadow root we encounter.
-- The Obsidian editor extension is rebuilt only when the document changes or the viewport scrolls, never on every keystroke.
+- Touched elements carry a tiny expando flag, so already-tagged subtrees bail out in a few pointer hops with zero GC pressure.
+- The observer callback only queues dirty roots; a debounced flush walks them with a 10 ms / 1000-node budget, then yields the thread.
+- While the page is still parsing, the first flush runs pre-paint (no idle wait), so pages render with RTL already applied; idle scheduling only applies after load.
+- The text walk is a single `TreeWalker` pass that also discovers open shadow roots and rejects `<script>`, `<style>`, `<code>`, `<pre>`, canvas editors and contenteditable subtrees.
+- `all_frames` is off, so ads and iframes cost nothing.
+- The font uses a `unicode-range` limited to Arabic-script blocks, so English-only pages never download it.
 
 ## Privacy
 
 Dynamic RTL does not call the network. Ever.
 
 - The Vazirmatn font is bundled inside every build.
-- Per-site list, custom font, and other preferences live in `chrome.storage.local` (browsers) or your vault's `data.json` (Obsidian) on your machine.
+- Per-site list, custom font, and other preferences live in `chrome.storage.local` on your machine.
 - There is no telemetry, no analytics, and no remote configuration.
 
-The browser builds request `storage`, `tabs`, `scripting`, `activeTab` and `<all_urls>` host permission. The host permission is required because the extension needs to run a content script on every site you visit to detect Persian / Arabic text.
+The browser builds request `storage`, `tabs` and `activeTab` permission, plus host permission for `http://*/*` and `https://*/*`. The host permission is required because the extension needs to run a content script on every site you visit to detect Persian / Arabic text.
 
 ## Troubleshooting and the log system
 
@@ -187,8 +165,8 @@ Common fixes:
 | Font does not change but direction is correct | Make sure the toolbar icon is colored (active). Reload the page once to give the font cache a chance. |
 | A specific site looks wrong | Click the toolbar icon to toggle it off. The site is recorded in your custom site list. |
 | Custom font does not load | The file must be `.woff2`, `.woff`, `.ttf` or `.otf` and smaller than 8 MB. Variable fonts must include the `wght` axis. |
-| Nothing happens at all (browser) | Open the options page, check the default mode and the custom site list. Then enable verbose logging and look for errors in DevTools. |
-| Editor in Obsidian does not RTL | Settings → Dynamic RTL → make sure both "Enable plugin" and "Apply to editor" are on. Use the "Refresh open notes" command after toggling. |
+| Nothing happens at all | Open the options page, check the default mode and the custom site list. Then enable verbose logging and look for errors in DevTools. |
+
 
 ## Repository layout
 
@@ -197,21 +175,13 @@ Common fixes:
 +-- chrome/                     Chrome MV3 build (use this for Chromium browsers)
 |   +-- manifest.json
 |   +-- background/service-worker.js
-|   +-- content/                early-inject.js, core.js, main.js
+|   +-- content/                early-inject.js, main.js
 |   +-- popup/                  popup.html / popup.css / popup.js  (Material 3)
 |   +-- options/                options.html / options.css / options.js
 |   +-- fonts/                  Vazirmatn-Variable.woff2
 |   +-- icons/                  active + inactive icons (16 / 32 / 48 / 128)
 +-- firefox/                    Firefox MV3 build (Acorn / Proton styling)
-+-- obsidian/                   Obsidian community plugin
-|   +-- manifest.json
-|   +-- main.js                 plain JS, no build step
-|   +-- styles.css              uses Obsidian theme variables
-|   +-- versions.json
-|   +-- fonts/                  Vazirmatn-Variable.woff2
-|   +-- icons/icon.png
-|   +-- README.md
-+-- resources/                  Pre-built zip packages for all three builds
++-- resources/                  Pre-built zip packages for both builds
 +-- scripts/build-zips.sh       Re-create the release packages
 +-- LICENSE
 +-- README.md
@@ -230,7 +200,6 @@ This produces:
 ```text
 resources/dynamic-rtl-chrome-v2.2.zip
 resources/dynamic-rtl-firefox-v2.2.zip
-resources/dynamic-rtl-obsidian-v2.2.zip
 ```
 
 ## Credits

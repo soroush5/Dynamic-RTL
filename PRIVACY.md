@@ -2,8 +2,8 @@
 
 > Last updated: 2026-05-23
 
-Dynamic RTL is a browser extension and Obsidian plugin that auto-detects
-Persian and Arabic text on web pages or in your notes and applies right-to-left
+Dynamic RTL is a browser extension that auto-detects
+Persian and Arabic text on web pages and applies right-to-left
 direction with the bundled Vazirmatn font.
 
 ## What Data We Collect
@@ -21,8 +21,7 @@ Dynamic RTL collects **no personal data**. Specifically, it does not record:
 ## What We Store Locally
 
 The extension stores the following on **your own device only**, in
-`chrome.storage.local` (browser builds) or your Obsidian vault's plugin data
-folder (Obsidian build). None of it leaves the device.
+`chrome.storage.local`. None of it leaves the device.
 
 | Stored item | Why |
 |-------------|-----|
@@ -57,15 +56,14 @@ Dynamic RTL does not use any third-party services, SDKs, analytics or APIs.
 
 Dynamic RTL does not share any data with anyone, because it does not collect
 any data in the first place. The "user-private" data you create (custom site
-list, uploaded font) stays in your browser profile / vault.
+list, uploaded font) stays in your browser profile.
 
 ## Data Retention and Deletion
 
 - Per-site list, font choice and the optional custom font live in your
-  browser profile or Obsidian vault. Removing the extension or the plugin
-  removes them with it.
+  browser profile. Removing the extension removes them with it.
 - You can also clear the custom site list and remove the uploaded font from
-  the extension's Options page (or the Obsidian Settings tab) at any time.
+  the extension's Options page at any time.
 
 ## Children's Privacy
 

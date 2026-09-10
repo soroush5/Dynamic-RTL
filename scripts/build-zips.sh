@@ -5,7 +5,6 @@
 # Output:
 #   resources/dynamic-rtl-chrome-v<VERSION>.zip      (Chrome MV3 unpacked bundle)
 #   resources/dynamic-rtl-firefox-v<VERSION>.zip     (Firefox MV3 unpacked bundle)
-#   resources/dynamic-rtl-obsidian-v<VERSION>.zip    (Obsidian community plugin)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -13,7 +12,6 @@ cd "$ROOT"
 
 CHROME_VER="$(python3 -c "import json; print(json.load(open('chrome/manifest.json'))['version'])")"
 FF_VER="$(python3 -c "import json; print(json.load(open('firefox/manifest.json'))['version'])")"
-OBSIDIAN_VER="$(python3 -c "import json; print(json.load(open('obsidian/manifest.json'))['version'])")"
 
 if [ "$CHROME_VER" != "$FF_VER" ]; then
   echo "Chrome ($CHROME_VER) and Firefox ($FF_VER) manifests disagree; aborting." >&2
@@ -21,7 +19,7 @@ if [ "$CHROME_VER" != "$FF_VER" ]; then
 fi
 
 VERSION="$CHROME_VER"
-echo "Packaging Dynamic RTL v${VERSION} (Chrome=${CHROME_VER}, Firefox=${FF_VER}, Obsidian=${OBSIDIAN_VER})"
+echo "Packaging Dynamic RTL v${VERSION} (Chrome=${CHROME_VER}, Firefox=${FF_VER})"
 
 mkdir -p resources
 
@@ -43,18 +41,6 @@ rm -f "resources/dynamic-rtl-firefox-v${VERSION}.zip"
     "../resources/dynamic-rtl-firefox-v${VERSION}.zip" \
     . \
     -x "*.DS_Store" "*/.*"
-)
-
-# --- Obsidian ---
-# Obsidian release zips conventionally tag with the plugin's own version,
-# but we keep the v<VERSION> suffix consistent across all three artifacts.
-rm -f "resources/dynamic-rtl-obsidian-v${VERSION}.zip"
-(
-  cd obsidian
-  zip -r -q -X \
-    "../resources/dynamic-rtl-obsidian-v${VERSION}.zip" \
-    . \
-    -x "*.DS_Store" "*/.*" "README.md"
 )
 
 echo "Done:"
