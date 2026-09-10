@@ -101,7 +101,7 @@ async function refresh() {
   try {
     if (tab && tab.url) {
       const u = new URL(tab.url);
-      if (/^https?:|^file:|^ftp:/.test(u.protocol)) {
+      if (/^https?:/.test(u.protocol)) {
         host = u.hostname;
         supported = !!host;
       }
