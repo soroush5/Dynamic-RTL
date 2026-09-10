@@ -2,7 +2,7 @@
 
 > Auto-detects Persian and Arabic text on web pages and inside Obsidian notes, then instantly applies the right direction (RTL) and a comfortable font - before you even see the page.
 
-[![Version](https://img.shields.io/badge/version-2.1-5b6cff)](#release)
+[![Version](https://img.shields.io/badge/version-2.2-5b6cff)](#release)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?logo=googlechrome&logoColor=white)](#install-on-chrome--edge--brave--arc)
 [![Firefox](https://img.shields.io/badge/Firefox-MV3-FF7139?logo=firefox&logoColor=white)](#install-on-firefox)
@@ -75,11 +75,11 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 
 ## Install
 
-> Pre-built bundles for v2.1 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.1.zip`, `dynamic-rtl-firefox-v2.1.zip` and `dynamic-rtl-obsidian-v2.1.zip`. They are also checked in under [`resources/`](./resources) for offline access.
+> Pre-built bundles for v2.2 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.2.zip`, `dynamic-rtl-firefox-v2.2.zip` and `dynamic-rtl-obsidian-v2.2.zip`. They are also checked in under [`resources/`](./resources) for offline access.
 
 ### Install on Chrome / Edge / Brave / Arc
 
-1. Download `dynamic-rtl-chrome-v2.1.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
+1. Download `dynamic-rtl-chrome-v2.2.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`, etc.).
 3. Turn on **Developer mode** in the top-right corner.
 4. Click **Load unpacked** and select the extracted folder.
@@ -93,7 +93,7 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 
 **Path A — temporary install (any Firefox):**
 
-1. Download `dynamic-rtl-firefox-v2.1.zip`.
+1. Download `dynamic-rtl-firefox-v2.2.zip`.
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on...** and select the `manifest.json` file inside the (extracted) zip.
 4. The extension stays installed until you restart Firefox.
@@ -101,14 +101,14 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 **Path B — permanent install (Developer Edition / Nightly / ESR):**
 
 1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
-2. Rename `dynamic-rtl-firefox-v2.1.zip` to `dynamic-rtl-firefox-v2.0.xpi`.
+2. Rename `dynamic-rtl-firefox-v2.2.zip` to `dynamic-rtl-firefox-v2.0.xpi`.
 3. Drag the `.xpi` file into Firefox and click **Add**.
 
 **Path C — regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
 
 ### Install for Obsidian
 
-1. Download `dynamic-rtl-obsidian-v2.1.zip` and extract it.
+1. Download `dynamic-rtl-obsidian-v2.2.zip` and extract it.
 2. Move the extracted folder to `<your-vault>/.obsidian/plugins/dynamic-rtl/`. The path must contain `manifest.json`, `main.js`, `styles.css` and the `fonts/` folder directly (no extra subfolder).
 3. Open Obsidian → **Settings → Community plugins**, click **Reload plugins**, then enable **Dynamic RTL**.
 
@@ -228,9 +228,9 @@ You do not need a build step. To recreate the release zips:
 This produces:
 
 ```text
-resources/dynamic-rtl-chrome-v2.1.zip
-resources/dynamic-rtl-firefox-v2.1.zip
-resources/dynamic-rtl-obsidian-v2.1.zip
+resources/dynamic-rtl-chrome-v2.2.zip
+resources/dynamic-rtl-firefox-v2.2.zip
+resources/dynamic-rtl-obsidian-v2.2.zip
 ```
 
 ## Credits
