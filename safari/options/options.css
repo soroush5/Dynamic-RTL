@@ -1,11 +1,4 @@
-/* Dynamic RTL - Chrome options page
- * Rebuilt to mirror the *real* chrome://settings (cr-elements / GM3):
- *   - Sticky top app-bar with the page title (like chrome://settings)
- *   - Grey page background (#f8f9fa) with white cards, Google shadow rgba(60,64,67)
- *   - cr-radio-button rows (outlined circle + filled dot)
- *   - Authentic cr-toggle (thin bar + fixed knob)
- *   - Google grey/blue token scale, Roboto-first type, modest radii
- */
+/* Chrome options page, styled after chrome://settings. */
 
 :root {
   color-scheme: light dark;

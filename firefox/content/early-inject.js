@@ -1,4 +1,4 @@
-/* Dynamic RTL v2.1 - early CSS (document_start). One <style>, zero JS after paint. */
+/* Font and base styles, registered before first paint. */
 (()=>{'use strict';if(window.__DYNRTL_EARLY__)return;window.__DYNRTL_EARLY__=1;
 const api=(typeof chrome!='undefined'&&chrome.runtime)?chrome:browser;
 let fontUrl='';try{fontUrl=api.runtime.getURL('fonts/Vazirmatn-Variable.woff2')}catch(_){}

@@ -46,9 +46,7 @@ function getCurrentTab() {
   });
 }
 
-// Ask the page's content script (top frame) for the real state. It knows
-// whether the page is an already-RTL Persian/Arabic site we auto-skip.
-// Resolves null when no content script is reachable.
+// Ask the top frame for the live state (it knows about auto-skipped RTL pages).
 function getTabState(tabId) {
   return new Promise(resolve => {
     try {
@@ -125,8 +123,7 @@ async function refresh() {
   els.toggle.disabled = false;
   els.status.classList.remove('is-disabled');
 
-  // Prefer the content script's real state (covers Persian/Arabic
-  // auto-skip); fall back to the storage-only computation.
+  // Trust the page when reachable, storage math otherwise.
   const state = tab && tab.id != null ? await getTabState(tab.id) : null;
   let enabled, autoSkipped = false;
   if (state && typeof state.active === 'boolean') {
@@ -154,7 +151,7 @@ async function refresh() {
 els.toggle.addEventListener('change', async () => {
   const tab = await getCurrentTab();
   if (!tab || !tab.id) return;
-  // Optimistic: reflect the new state on the hero card immediately.
+  // Show the new state right away; refresh confirms it.
   els.status.classList.toggle('is-active', els.toggle.checked);
   api.runtime.sendMessage({ type: 'DYNRTL_TOGGLE_CURRENT', tabId: tab.id }, () => {
     refresh();

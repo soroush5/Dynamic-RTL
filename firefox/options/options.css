@@ -1,12 +1,4 @@
-/* Dynamic RTL - Firefox options page
- * Mirrors about:preferences on Firefox 130+ (Acorn / Proton):
- *   - Single-column flat layout, sections divided by hairlines
- *   - 8px radius cards with thin borders, no big shadows
- *   - Acorn accent (#0061e0 light / #00ddff dark)
- *   - Compact spacing
- *   - System font stack
- *   - Subtle hover states using surface-2
- */
+/* Firefox options page, styled after about:preferences. */
 
 :root {
   color-scheme: light dark;

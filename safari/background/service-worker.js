@@ -1,7 +1,4 @@
-/* Dynamic RTL v2.1 - background (MV3 service worker / Firefox background page).
- * Event-driven only: icon paint + toggle + install migration. No per-tab
- * badge churn, no callback-pyramid helpers; tiny promise wrappers.
- */
+/* Background: toolbar icon, per-site toggle, install migration. Event-driven only. */
 'use strict';
 const api=(typeof chrome!='undefined'&&chrome.runtime)?chrome:browser;
 const DEF={mode:'enable_all',siteOverrides:{},font:'vazirmatn',customFontDataUrl:'',customFontName:'',customFontFormat:'',debug:!1};

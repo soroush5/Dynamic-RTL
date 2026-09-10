@@ -122,7 +122,7 @@ function normalizeHost(h) {
     .replace(/\/.*$/, '');
 }
 
-// ----- List rendering -------------------------------------------------
+// Site list
 
 function renderList(overrides) {
   const entries = Object.entries(overrides || {})
@@ -208,7 +208,7 @@ async function addEntry() {
   flash(els.listStatus, `Added ${host}*${state}.`);
 }
 
-// ----- Refresh / wire-up ---------------------------------------------
+// Init
 
 async function refresh() {
   const settings = await loadSettings();

@@ -1,11 +1,4 @@
-/* Dynamic RTL - Chrome popup
- * Authentic desktop-Chrome look (chrome://settings / cr-elements) with an
- * extra layer of polish:
- *   - Google grey/blue token scale + signature rgba(60,64,67) shadows
- *   - A prominent "status" hero card that tints blue when active
- *   - Real cr-toggle (thin bar + fixed knob) and cr-radio-button rows
- *   - Crisp Roboto-first type, soft entrance animation, icon-led buttons
- */
+/* Chrome popup, styled after chrome://settings. */
 
 :root {
   color-scheme: light dark;

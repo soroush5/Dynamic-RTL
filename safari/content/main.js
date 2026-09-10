@@ -1,8 +1,4 @@
-/* Dynamic RTL v2.1 - ultra-light content script (replaces core.js + main.js).
- * Hot-path rules: observer only queues (no per-node tree walks), flush walks
- * with a 10ms budget, expando flags instead of WeakSets/WeakMaps, one
- * matches() for skip checks, no boot-time querySelectorAll sweep, idle boot.
- */
+/* Dynamic RTL: finds Persian/Arabic text on the page and flips it RTL. */
 (()=>{'use strict';if(window.__DYNRTL__)return;window.__DYNRTL__=1;
 const api=(typeof chrome!='undefined'&&chrome.runtime)?chrome:browser;
 const RTL_RE=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
@@ -60,10 +56,7 @@ function loadS(){return new Promise((res)=>{try{api.storage.local.get(null,(st)=
 api.storage.onChanged.addListener((ch,area)=>{if(area!=='local')return;let t=!1;for(const k of Object.keys(ch)){if(k in DEF){S[k]=ch[k].newValue!==undefined?ch[k].newValue:DEF[k];t=!0}}if(t)reconcile()});
 api.runtime.onMessage.addListener((msg,sender,sendResponse)=>{if(!msg||!msg.type)return;if(msg.type==='DYNRTL_GET_STATE'){if(!top)return;sendResponse({host:location.hostname,active:on,autoSkipped:autoSkipped(),settings:S});return!0}if(msg.type==='DYNRTL_RECONCILE'){loadS().then(reconcile);sendResponse({ok:!0});return!0}});
 function boot(){if(boot.done)return;boot.done=!0;reconcile()}
-// Instant start: observe + tag DURING parsing (pre-paint) with default
-// settings instead of waiting for storage + idle. loadS() below corrects us
-// within milliseconds if this site is configured off. Already-RTL pages are
-// skipped upfront so they never flicker.
+// Tag right away with defaults; settings arrive a moment later and correct us.
 try{if(!docIsRtl())activate()}catch(_){}
 loadS().then(()=>{boot()});
 window.addEventListener('pagehide',()=>{stopObs();detInput();if(timer)clearTimeout(timer);if(coolT)clearTimeout(coolT)},{once:!0})})();

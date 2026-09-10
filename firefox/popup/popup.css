@@ -1,12 +1,4 @@
-/* Dynamic RTL - Firefox popup
- * Mirrors Firefox 130+ Acorn / Proton design system:
- *   - Tighter, less rounded surfaces (4-8px radius, no big pills on cards)
- *   - Minimal elevation (single thin border instead of shadow)
- *   - Acorn accent: #0061e0 light / #00ddff dark
- *   - Vertical row layout, more compact spacing
- *   - System font stack (matches about:preferences look)
- *   - Subtle fade entrance (no scale - Firefox prefers calm motion)
- */
+/* Firefox popup, styled after about:preferences. */
 
 :root {
   color-scheme: light dark;
