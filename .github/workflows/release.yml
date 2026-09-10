@@ -75,12 +75,13 @@ jobs:
           body: |
             ## Dynamic RTL ${{ steps.version.outputs.tag }}
 
-            Auto-detects Persian and Arabic text and applies right-to-left direction with the **Vazirmatn** variable font (customizable). Two builds in this release - one each for Chrome and Firefox.
+            Auto-detects Persian and Arabic text and applies right-to-left direction with the **Vazirmatn** variable font (customizable). Three builds in this release - one each for Chrome, Firefox and Safari.
 
             ### Downloads
 
             - **Chrome / Edge / Brave / Arc / Opera** — `dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip`
             - **Firefox 121+** — `dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip`
+            - **Safari 26+** — `dynamic-rtl-safari-v${{ steps.version.outputs.version }}.zip` (folder for temporary load)
 
             ### Install on Chrome / Edge / Brave / Arc
 
@@ -98,6 +99,12 @@ jobs:
             **Permanent install (Developer Edition / Nightly / ESR):**
             1. Open `about:config`, set `xpinstall.signatures.required` to `false`.
             2. Rename the zip to `.xpi` and drag it into Firefox.
+
+            ### Install on Safari 26+ (temporary load, no Xcode needed)
+
+            1. Download the Safari zip and extract it.
+            2. Safari → Settings → Developer tab → **Add Temporary Extension…**, pick the extracted folder, confirm with Touch ID / password.
+            3. Settings → Extensions → enable it with Always Allow. Note: it unloads when Safari quits.
 
             ### Highlights
 
@@ -117,3 +124,4 @@ jobs:
           files: |
             resources/dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip
             resources/dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip
+            resources/dynamic-rtl-safari-v${{ steps.version.outputs.version }}.zip

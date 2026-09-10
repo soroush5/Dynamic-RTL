@@ -4,7 +4,8 @@
 #
 # Output:
 #   resources/dynamic-rtl-chrome-v<VERSION>.zip      (Chrome MV3 unpacked bundle)
-#   resources/dynamic-rtl-firefox-v<VERSION>.zip     (Firefox MV3 unpacked bundle)
+#   resources/dynamic-rtl-firefox-v<VERSION>.zip    (Firefox MV3 unpacked bundle)
+#   resources/dynamic-rtl-safari-v<VERSION>.zip      (Safari MV3 folder for temporary load)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -39,6 +40,16 @@ rm -f "resources/dynamic-rtl-firefox-v${VERSION}.zip"
   cd firefox
   zip -r -q -X \
     "../resources/dynamic-rtl-firefox-v${VERSION}.zip" \
+    . \
+    -x "*.DS_Store" "*/.*"
+)
+
+# --- Safari (folder for Safari 26 temporary load) ---
+rm -f "resources/dynamic-rtl-safari-v${VERSION}.zip"
+(
+  cd safari
+  zip -r -q -X \
+    "../resources/dynamic-rtl-safari-v${VERSION}.zip" \
     . \
     -x "*.DS_Store" "*/.*"
 )
