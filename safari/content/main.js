@@ -19,7 +19,7 @@ const normH=(h)=>(h||'').toLowerCase().replace(/^www\./,'');
 function findOv(o,h){if(!o)return null;h=normH(h);if(!h)return null;if(o[h])return o[h];const p=h.split('.');for(let i=1;i<p.length-1;i++){const q=p.slice(i).join('.');if(o[q])return o[q]}return null}
 function isRtlLang(v){if(!v)return!1;return v==='fa'||v==='ar'}
 function docIsRtl(){try{const h=document.documentElement;if(!h)return!1;const l=(h.getAttribute('lang')||'').toLowerCase().trim().split(/[-_]/)[0];if(isRtlLang(l))return!0;if((h.getAttribute('dir')||'').toLowerCase()==='rtl')return!0}catch(_){}return!1}
-function skippable(el){if(!el||el.nodeType!==1)return!0;const t=el.tagName;if(t&&SKIP.has(t))return!0;try{if(el.matches(SKIP_SEL))return!0}catch(_){}return!1}
+function skippable(el){if(!el||el.nodeType!==1)return!0;const t=el.tagName;if(t&&SKIP.has(t))return!0;if(el.hasAttribute&&el.hasAttribute('data-dynrtl-skip'))return!0;try{if(el.matches(SKIP_SEL))return!0}catch(_){}return!1}
 function inEditor(el){let c=el;for(let i=0;c&&c.nodeType===1&&i<4;i++){const ce=c.getAttribute&&c.getAttribute('contenteditable');if(ce==='false')return!1;if(ce==='true'||ce===''||ce==='plaintext-only')return!0;c=c.parentNode}return!1}
 function hasTagged(el){let c=el;for(let i=0;c&&i<8;i++){if(c.__d)return!0;c=c.parentElement}return!1}
 function blockAnc(el){if(!el)return null;let c=el,li=null;for(let i=0;c&&i<5;i++){if(c.nodeType!==1){c=c.parentNode;continue}if(LAND.has(c.tagName))return li;if(!INLINE.has(c.tagName))return c;li=c;c=c.parentNode}return null}
