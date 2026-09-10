@@ -125,3 +125,6 @@ jobs:
             resources/dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip
             resources/dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip
             resources/dynamic-rtl-safari-v${{ steps.version.outputs.version }}.zip
+            resources/dynamic-rtl-chrome-latest.zip
+            resources/dynamic-rtl-firefox-latest.zip
+            resources/dynamic-rtl-safari-latest.zip
