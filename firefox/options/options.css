@@ -1,0 +1,457 @@
+/* Dynamic RTL - Firefox options page
+ * Mirrors about:preferences on Firefox 130+ (Acorn / Proton):
+ *   - Single-column flat layout, sections divided by hairlines
+ *   - 8px radius cards with thin borders, no big shadows
+ *   - Acorn accent (#0061e0 light / #00ddff dark)
+ *   - Compact spacing
+ *   - System font stack
+ *   - Subtle hover states using surface-2
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --fx-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --fx-bg:           #f9f9fb;
+  --fx-surface:      #ffffff;
+  --fx-surface-2:    #f0f0f4;
+  --fx-on-surface:   #15141a;
+  --fx-on-surface-soft: #5b5b66;
+  --fx-divider:      rgba(0,0,0,0.10);
+  --fx-border:       rgba(0,0,0,0.10);
+
+  --fx-accent:        #0061e0;
+  --fx-accent-hover:  #0250bb;
+  --fx-on-accent:     #ffffff;
+  --fx-accent-soft:   color-mix(in srgb, #0061e0 12%, transparent);
+  --fx-error:         #c50042;
+
+  --fx-radius-card:   8px;
+  --fx-radius-input:  4px;
+  --fx-radius-pill:   4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fx-bg:           #1c1b22;
+    --fx-surface:      #2b2a33;
+    --fx-surface-2:    #42414d;
+    --fx-on-surface:   #fbfbfe;
+    --fx-on-surface-soft: #cfcfd8;
+    --fx-divider:      rgba(255,255,255,0.10);
+    --fx-border:       rgba(255,255,255,0.10);
+
+    --fx-accent:        #00ddff;
+    --fx-accent-hover:  #80ebff;
+    --fx-on-accent:     #1c1b22;
+    --fx-accent-soft:   color-mix(in srgb, #00ddff 18%, transparent);
+    --fx-error:         #ff9aa2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--fx-bg);
+  color: var(--fx-on-surface);
+  font-family: var(--fx-font);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.do-shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+/* ---------- Header ---------- */
+.do-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 18px;
+  border-bottom: 1px solid var(--fx-divider);
+  margin-bottom: 18px;
+}
+
+.do-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+}
+
+.do-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.do-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--fx-on-surface-soft);
+}
+
+.do-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--fx-radius-pill);
+  font-size: 11px;
+  background: var(--fx-accent-soft);
+  color: var(--fx-accent);
+  font-weight: 500;
+}
+
+/* ---------- Cards ---------- */
+.do-card {
+  background: var(--fx-surface);
+  border: 1px solid var(--fx-border);
+  border-radius: var(--fx-radius-card);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: none;
+}
+
+.do-card-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.do-card-hint {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--fx-on-surface-soft);
+  line-height: 1.5;
+}
+
+/* ---------- Rows ---------- */
+.do-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid var(--fx-divider);
+}
+.do-row:first-of-type { border-top: none; padding-top: 2px; }
+
+.do-row-label {
+  margin: 0;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.do-row-hint {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--fx-on-surface-soft);
+  line-height: 1.4;
+}
+
+/* ---------- Firefox-style radios (vertical, with native circle indicator) ---------- */
+.do-radio-group {
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+}
+
+.do-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--fx-radius-input);
+  cursor: pointer;
+  font-size: 13px;
+  background: transparent;
+  color: var(--fx-on-surface);
+  transition: background 100ms ease;
+}
+.do-radio:hover { background: var(--fx-surface-2); }
+
+.do-radio input { display: none; }
+.do-radio::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--fx-on-surface-soft);
+  flex-shrink: 0;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.do-radio:has(input:checked)::before {
+  border-color: var(--fx-accent);
+  background: radial-gradient(circle, var(--fx-accent) 40%, transparent 45%);
+}
+.do-radio:has(input:checked) {
+  color: var(--fx-on-surface);
+  font-weight: 500;
+}
+
+/* ---------- Inputs ---------- */
+.do-textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: 8px 10px;
+  border-radius: var(--fx-radius-input);
+  border: 1px solid var(--fx-border);
+  background: var(--fx-surface);
+  color: var(--fx-on-surface);
+  font-family: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.do-textarea:focus {
+  outline: 2px solid var(--fx-accent);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.do-input {
+  padding: 7px 10px;
+  border-radius: var(--fx-radius-input);
+  border: 1px solid var(--fx-border);
+  background: var(--fx-surface);
+  color: var(--fx-on-surface);
+  font-family: inherit;
+  font-size: 13px;
+}
+.do-input:focus {
+  outline: 2px solid var(--fx-accent);
+  outline-offset: -1px;
+}
+
+/* ---------- Buttons (Firefox flat outlined) ---------- */
+.do-btn {
+  border: 1px solid var(--fx-border);
+  padding: 7px 14px;
+  border-radius: var(--fx-radius-pill);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--fx-surface-2);
+  color: var(--fx-on-surface);
+  transition: background 100ms ease, border-color 100ms ease;
+}
+.do-btn:hover {
+  background: color-mix(in srgb, var(--fx-on-surface) 6%, var(--fx-surface-2));
+  border-color: var(--fx-on-surface-soft);
+}
+/* The "primary" save/add button is the Firefox-blue variant. */
+.do-btn:not(.do-btn-ghost):not(.do-btn-danger) {
+  background: var(--fx-accent);
+  color: var(--fx-on-accent);
+  border-color: var(--fx-accent);
+}
+.do-btn:not(.do-btn-ghost):not(.do-btn-danger):hover {
+  background: var(--fx-accent-hover);
+  border-color: var(--fx-accent-hover);
+}
+
+.do-btn-ghost {
+  background: transparent;
+  color: var(--fx-on-surface);
+  border: 1px solid var(--fx-border);
+}
+.do-btn-ghost:hover {
+  background: var(--fx-surface-2);
+  border-color: var(--fx-on-surface-soft);
+}
+
+.do-btn-danger {
+  background: transparent;
+  color: var(--fx-error);
+  border: 1px solid var(--fx-border);
+}
+.do-btn-danger:hover {
+  background: color-mix(in srgb, var(--fx-error) 12%, transparent);
+  border-color: var(--fx-error);
+}
+
+.do-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ---------- Switch (small, rectangular - Firefox style) ---------- */
+.do-switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.do-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.do-switch-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--fx-surface-2);
+  border: 1px solid var(--fx-border);
+  border-radius: 18px;
+  transition: background 120ms ease;
+}
+.do-switch-slider::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--fx-on-surface-soft);
+  border-radius: 50%;
+  transition: transform 120ms ease, background 120ms ease;
+}
+.do-switch input:checked + .do-switch-slider {
+  background: var(--fx-accent);
+  border-color: var(--fx-accent);
+}
+.do-switch input:checked + .do-switch-slider::before {
+  transform: translate(14px, -50%);
+  background: var(--fx-on-accent);
+}
+
+/* ---------- Status / preview ---------- */
+.do-status {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--fx-on-surface-soft);
+  min-height: 16px;
+}
+
+.do-preview {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: var(--fx-radius-card);
+  background: var(--fx-bg);
+  border: 1px solid var(--fx-border);
+  direction: rtl;
+  text-align: right;
+  font-family: var(--do-preview-font, 'Vazirmatn DynRTL', 'Vazirmatn', 'Tahoma', sans-serif);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* ---------- Footer ---------- */
+.do-footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--fx-on-surface-soft);
+}
+.do-footer a { color: var(--fx-accent); text-decoration: none; }
+.do-footer a:hover { text-decoration: underline; }
+
+.do-credit {
+  font-size: 11px;
+  color: var(--fx-on-surface-soft);
+  margin: 2px 0;
+}
+
+/* ---------- Custom site list ---------- */
+.do-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 6px;
+  border-radius: var(--fx-radius-card);
+  background: var(--fx-bg);
+  border: 1px solid var(--fx-border);
+  min-height: 50px;
+}
+
+.do-list-empty {
+  margin: 0;
+  padding: 14px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--fx-on-surface-soft);
+}
+
+.do-row-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: var(--fx-radius-input);
+  background: var(--fx-surface);
+  border: 1px solid var(--fx-border);
+}
+
+.do-row-text {
+  font-family: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--fx-on-surface);
+  user-select: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.do-row-state {
+  border: 1px solid var(--fx-border);
+  padding: 2px 10px;
+  border-radius: var(--fx-radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+  cursor: pointer;
+  min-width: 40px;
+  text-transform: lowercase;
+  transition: background 100ms ease;
+  background: transparent;
+  color: var(--fx-on-surface);
+}
+.do-row-state-on {
+  background: var(--fx-accent-soft);
+  color: var(--fx-accent);
+  border-color: var(--fx-accent);
+}
+.do-row-state-off {
+  background: var(--fx-surface-2);
+  color: var(--fx-on-surface-soft);
+}
+.do-row-state:hover {
+  filter: brightness(0.97);
+}
+
+.do-row-del {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fx-on-surface-soft);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+}
+.do-row-del:hover {
+  background: color-mix(in srgb, var(--fx-error) 14%, transparent);
+  color: var(--fx-error);
+}
+
+.do-add-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.do-select {
+  width: 78px;
+  cursor: pointer;
+}

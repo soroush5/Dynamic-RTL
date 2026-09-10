@@ -1,0 +1,66 @@
+{
+  "manifest_version": 3,
+  "name": "Dynamic RTL",
+  "version": "2.1",
+  "description": "Auto-detects Persian and Arabic text on web pages and applies right-to-left direction with the Vazirmatn font (customizable).",
+  "author": "so-roush",
+  "homepage_url": "https://github.com/so-roush/Dynamic-RTL",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dynamic-rtl@so-roush.github.io",
+      "strict_min_version": "121.0"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-active-16.png",
+    "32": "icons/icon-active-32.png",
+    "48": "icons/icon-active-48.png",
+    "128": "icons/icon-active-128.png"
+  },
+  "action": {
+    "default_title": "Dynamic RTL",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-active-16.png",
+      "32": "icons/icon-active-32.png",
+      "48": "icons/icon-active-48.png",
+      "128": "icons/icon-active-128.png"
+    }
+  },
+  "background": {
+    "scripts": ["background/service-worker.js"]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "content/early-inject.js",
+        "content/main.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false,
+      "match_about_blank": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/Vazirmatn-Variable.woff2"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

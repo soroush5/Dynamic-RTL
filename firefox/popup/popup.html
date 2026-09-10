@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dynamic RTL</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body data-browser="firefox">
+  <header class="dr-header">
+    <img class="dr-logo" src="../icons/icon48.png" alt="">
+    <div class="dr-titlebox">
+      <h1 class="dr-title">Dynamic RTL</h1>
+      <p class="dr-subtitle" id="dr-host">--</p>
+    </div>
+  </header>
+
+  <section class="dr-card dr-toggle-card">
+    <div class="dr-toggle-row">
+      <div>
+        <p class="dr-toggle-label">Active on this site</p>
+        <p class="dr-toggle-hint" id="dr-mode-hint">Following global mode</p>
+      </div>
+      <label class="dr-switch">
+        <input type="checkbox" id="dr-site-toggle">
+        <span class="dr-switch-slider"></span>
+      </label>
+    </div>
+  </section>
+
+  <section class="dr-card">
+    <p class="dr-card-title">Global mode</p>
+    <div class="dr-segmented" role="radiogroup" aria-label="Global mode">
+      <label>
+        <input type="radio" name="dr-mode" value="enable_all">
+        <span>Enable on all sites</span>
+      </label>
+      <label>
+        <input type="radio" name="dr-mode" value="disable_all">
+        <span>Disable on all sites</span>
+      </label>
+    </div>
+    <p class="dr-card-hint" id="dr-mode-explainer">
+      RTL applies everywhere except the per-site exceptions below.
+    </p>
+  </section>
+
+  <section class="dr-card">
+    <button class="dr-btn dr-btn-secondary" id="dr-open-options">
+      Settings &amp; custom font
+    </button>
+  </section>
+
+  <footer class="dr-footer">
+    <span>v<span id="dr-version">2.0</span></span>
+    <span>&middot;</span>
+    <a href="https://github.com/so-roush/Dynamic-RTL" id="dr-repo-link" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

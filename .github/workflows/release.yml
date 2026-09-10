@@ -1,0 +1,129 @@
+name: Release
+
+# Builds the Chrome, Firefox and Obsidian zips and publishes (or updates)
+# a GitHub Release whenever a build-affecting file changes on the default
+# branch.
+#
+# action-gh-release@v2 is idempotent for us: if no release exists for the
+# current version tag it creates one; if a release does exist it rewrites
+# the body and overwrites any assets with matching filenames. So the v
+# <version> release on GitHub is always in lockstep with the sources of
+# the default branch.
+#
+# It can also be triggered manually from the Actions tab via
+# workflow_dispatch.
+
+on:
+  push:
+    branches: [main, feat/dynamic-rtl-v2]
+    paths:
+      - 'chrome/manifest.json'
+      - 'firefox/manifest.json'
+      - 'obsidian/manifest.json'
+      - 'chrome/**'
+      - 'firefox/**'
+      - 'obsidian/**'
+      - 'scripts/build-zips.sh'
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version from manifest
+        id: version
+        run: |
+          VERSION=$(node -p "require('./chrome/manifest.json').version")
+          FF_VERSION=$(node -p "require('./firefox/manifest.json').version")
+          if [ "$VERSION" != "$FF_VERSION" ]; then
+            echo "::error::Chrome ($VERSION) and Firefox ($FF_VERSION) manifest versions disagree."
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build extension zips
+        run: |
+          chmod +x scripts/build-zips.sh
+          ./scripts/build-zips.sh
+          ls -lh resources/
+
+      # softprops/action-gh-release@v2 creates the release if the tag is new,
+      # otherwise it UPDATES the existing release in place: the body is
+      # rewritten and the listed files are uploaded (overwriting any asset
+      # that already exists with the same name). This means every push that
+      # touches a build-related path keeps the v<version> release in sync
+      # with the latest sources, without us needing a manual "force update"
+      # toggle.
+      - name: Create or update Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Dynamic RTL ${{ steps.version.outputs.tag }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+          # Fail loudly if the build script didn't produce one of the
+          # expected zip files, instead of silently publishing a partial
+          # release.
+          fail_on_unmatched_files: true
+          body: |
+            ## Dynamic RTL ${{ steps.version.outputs.tag }}
+
+            Auto-detects Persian and Arabic text and applies right-to-left direction with the **Vazirmatn** variable font (customizable). Three builds in this release - one each for Chrome, Firefox and Obsidian.
+
+            ### Downloads
+
+            - **Chrome / Edge / Brave / Arc / Opera** — `dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip`
+            - **Firefox 121+** — `dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip`
+            - **Obsidian 1.4+** — `dynamic-rtl-obsidian-v${{ steps.version.outputs.version }}.zip`
+
+            ### Install on Chrome / Edge / Brave / Arc
+
+            1. Download the Chrome zip and extract it.
+            2. Open `chrome://extensions`, enable **Developer mode**.
+            3. Click **Load unpacked** and pick the extracted folder.
+
+            ### Install on Firefox
+
+            **Temporary install (any Firefox):**
+            1. Download the Firefox zip and extract it.
+            2. Open `about:debugging#/runtime/this-firefox`.
+            3. Click **Load Temporary Add-on...** and pick the `manifest.json` file.
+
+            **Permanent install (Developer Edition / Nightly / ESR):**
+            1. Open `about:config`, set `xpinstall.signatures.required` to `false`.
+            2. Rename the zip to `.xpi` and drag it into Firefox.
+
+            ### Install for Obsidian
+
+            1. Download the Obsidian zip and extract it.
+            2. Drop the extracted folder into `<your-vault>/.obsidian/plugins/dynamic-rtl/` (the folder must contain `manifest.json` directly).
+            3. In Obsidian: **Settings → Community plugins → Reload plugins**, then enable **Dynamic RTL**.
+
+            ### Highlights
+
+            - No flash of LTR — styles register at `document_start` (browser builds).
+            - Live RTL on inputs, textareas and `contenteditable` editors as you type. Editors get `dir="auto"` and dynamic `text-align` (no CSS direction override) — safe for Slate / Lexical / ProseMirror used by Claude, Notion, X, Gemini, etc.
+            - Per-site toggle from the toolbar popup (browser builds), with global enable/disable modes. Toolbar icon switches between **colored** (active) and **grayscale** (inactive).
+            - URL-like content (cite, code, kbd) inside RTL blocks keeps its own LTR bidi context — fixes Google search results.
+            - Bundled Vazirmatn variable font (no network calls), or upload your own.
+            - Native browser look: Material 3 for Chrome, Acorn / Proton for Firefox, Obsidian's own theme variables for the plugin.
+
+            See the [README](https://github.com/${{ github.repository }}/blob/main/README.md) for full details.
+
+            ---
+
+            **Developer:** [so-roush](https://github.com/so-roush)
+            **Default font:** [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar (SIL OFL 1.1)
+          files: |
+            resources/dynamic-rtl-chrome-v${{ steps.version.outputs.version }}.zip
+            resources/dynamic-rtl-firefox-v${{ steps.version.outputs.version }}.zip
+            resources/dynamic-rtl-obsidian-v${{ steps.version.outputs.version }}.zip

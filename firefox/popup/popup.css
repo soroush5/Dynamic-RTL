@@ -1,0 +1,288 @@
+/* Dynamic RTL - Firefox popup
+ * Mirrors Firefox 130+ Acorn / Proton design system:
+ *   - Tighter, less rounded surfaces (4-8px radius, no big pills on cards)
+ *   - Minimal elevation (single thin border instead of shadow)
+ *   - Acorn accent: #0061e0 light / #00ddff dark
+ *   - Vertical row layout, more compact spacing
+ *   - System font stack (matches about:preferences look)
+ *   - Subtle fade entrance (no scale - Firefox prefers calm motion)
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --fx-font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --fx-bg:           #fbfbfe;          /* about:preferences background */
+  --fx-surface:      #ffffff;
+  --fx-surface-2:    #f0f0f4;          /* hovered button bg */
+  --fx-on-surface:   #15141a;
+  --fx-on-surface-soft: #5b5b66;
+  --fx-divider:      rgba(0,0,0,0.10);
+  --fx-border:       rgba(0,0,0,0.10);
+
+  --fx-accent:        #0061e0;
+  --fx-accent-hover:  #0250bb;
+  --fx-on-accent:     #ffffff;
+  --fx-accent-soft:   color-mix(in srgb, #0061e0 14%, transparent);
+
+  --fx-radius-card:   8px;
+  --fx-radius-input:  4px;
+  --fx-radius-pill:   4px;            /* Firefox buttons are NOT pills */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fx-bg:           #1c1b22;
+    --fx-surface:      #2b2a33;
+    --fx-surface-2:    #42414d;
+    --fx-on-surface:   #fbfbfe;
+    --fx-on-surface-soft: #cfcfd8;
+    --fx-divider:      rgba(255,255,255,0.10);
+    --fx-border:       rgba(255,255,255,0.10);
+
+    --fx-accent:       #00ddff;
+    --fx-accent-hover: #80ebff;
+    --fx-on-accent:    #1c1b22;
+    --fx-accent-soft:  color-mix(in srgb, #00ddff 18%, transparent);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--fx-bg);
+  color: var(--fx-on-surface);
+  font-family: var(--fx-font);
+  font-size: 13px;
+  line-height: 1.4;
+  width: 300px;
+  animation: fx-popup-in 140ms ease-out both;
+}
+
+@keyframes fx-popup-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Header ---------- */
+.dr-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--fx-divider);
+}
+
+.dr-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.dr-titlebox { min-width: 0; flex: 1; }
+
+.dr-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fx-on-surface);
+}
+
+.dr-subtitle {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: var(--fx-on-surface-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+}
+
+/* ---------- Sections (no cards - flat list) ---------- */
+.dr-section {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--fx-divider);
+}
+.dr-section:last-of-type { border-bottom: none; }
+
+/* Backwards-compat: treat .dr-card as a flat section in Firefox. */
+.dr-card {
+  margin: 0;
+  padding: 10px 14px;
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--fx-divider);
+}
+.dr-card:last-of-type { border-bottom: none; }
+
+.dr-card-title {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fx-on-surface-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dr-card-hint {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: var(--fx-on-surface-soft);
+  line-height: 1.4;
+}
+
+/* ---------- Toggle row ---------- */
+.dr-toggle-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dr-toggle-label {
+  margin: 0;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--fx-on-surface);
+}
+
+.dr-toggle-hint {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: var(--fx-on-surface-soft);
+}
+
+/* Firefox-style switch: smaller, more rectangular */
+.dr-switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.dr-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.dr-switch-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--fx-surface-2);
+  border-radius: 18px;
+  transition: background 120ms ease;
+  border: 1px solid var(--fx-divider);
+}
+.dr-switch-slider::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--fx-on-surface-soft);
+  border-radius: 50%;
+  transition: transform 120ms ease, background 120ms ease;
+}
+.dr-switch input:checked + .dr-switch-slider {
+  background: var(--fx-accent);
+  border-color: var(--fx-accent);
+}
+.dr-switch input:checked + .dr-switch-slider::before {
+  transform: translate(14px, -50%);
+  background: var(--fx-on-accent);
+}
+.dr-switch input:focus-visible + .dr-switch-slider {
+  outline: 2px solid var(--fx-accent);
+  outline-offset: 1px;
+}
+
+/* ---------- Firefox-style segmented (looks like grouped radio buttons) ---------- */
+.dr-segmented {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+.dr-segmented label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  font-size: 13px;
+  border-radius: var(--fx-radius-input);
+  color: var(--fx-on-surface);
+  transition: background 100ms ease;
+}
+.dr-segmented label:hover {
+  background: var(--fx-surface-2);
+}
+.dr-segmented label::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--fx-on-surface-soft);
+  flex-shrink: 0;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.dr-segmented label:has(input:checked)::before {
+  border-color: var(--fx-accent);
+  background: radial-gradient(circle, var(--fx-accent) 40%, transparent 45%);
+}
+.dr-segmented input { display: none; }
+
+/* ---------- Buttons ---------- */
+.dr-btn {
+  width: 100%;
+  border: 1px solid var(--fx-border);
+  padding: 7px 12px;
+  border-radius: var(--fx-radius-pill);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--fx-surface-2);
+  color: var(--fx-on-surface);
+  transition: background 100ms ease, border-color 100ms ease;
+}
+.dr-btn:hover {
+  background: color-mix(in srgb, var(--fx-on-surface) 5%, var(--fx-surface-2));
+  border-color: var(--fx-on-surface-soft);
+}
+.dr-btn:focus-visible {
+  outline: 2px solid var(--fx-accent);
+  outline-offset: 1px;
+}
+.dr-btn-primary {
+  background: var(--fx-accent);
+  color: var(--fx-on-accent);
+  border-color: var(--fx-accent);
+}
+.dr-btn-primary:hover {
+  background: var(--fx-accent-hover);
+  border-color: var(--fx-accent-hover);
+}
+
+/* ---------- Footer ---------- */
+.dr-footer {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px 10px;
+  font-size: 10px;
+  color: var(--fx-on-surface-soft);
+  border-top: 1px solid var(--fx-divider);
+  font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+}
+.dr-footer a {
+  color: var(--fx-accent);
+  text-decoration: none;
+}
+.dr-footer a:hover { text-decoration: underline; }
+
+/* Backwards-compat selectors used by popup.html (.dr-card etc. defined above). */
+.dr-toggle-card { /* same as section */ }

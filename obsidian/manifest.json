@@ -1,0 +1,11 @@
+{
+  "id": "dynamic-rtl",
+  "name": "Dynamic RTL",
+  "version": "2.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Auto-detects Persian and Arabic text and applies right-to-left direction with the bundled Vazirmatn variable font.",
+  "author": "so-roush",
+  "authorUrl": "https://github.com/so-roush/Dynamic-RTL",
+  "fundingUrl": "https://github.com/so-roush/Dynamic-RTL",
+  "isDesktopOnly": false
+}

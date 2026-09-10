@@ -1,0 +1,11 @@
+# Working / scratch files
+.tmp/
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
+
+# Build artifacts (we keep the prebuilt zips in releases/ on purpose)
+*.crx
+*.pem
+*.xpi.unsigned
