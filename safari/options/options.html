@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dynamic RTL - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body data-browser="chrome">
+  <div class="do-topbar">
+    <img class="do-topbar-logo" src="../icons/icon-active-128.png" alt="">
+    <h1 class="do-topbar-title">Dynamic RTL</h1>
+  </div>
+
+  <main class="do-shell">
+    <!-- Default mode -->
+    <section class="do-card">
+      <h2 class="do-card-title">Default mode</h2>
+      <p class="do-card-hint">
+        How Dynamic RTL behaves on sites that have no explicit entry in the
+        list below. Use the toolbar icon on any page to add or update an
+        entry instantly. Sites that are already Persian or Arabic
+        (<code>&lt;html lang="fa"&gt;</code> / <code>"ar"</code>, or
+        <code>dir="rtl"</code>) stay off by default &mdash; turn them on with
+        the toolbar toggle if you ever need to.
+      </p>
+      <div class="do-radio-group">
+        <label class="do-radio">
+          <input type="radio" name="do-mode" value="enable_all">
+          <span class="do-radio-mark"></span>
+          Enable on all sites
+        </label>
+        <label class="do-radio">
+          <input type="radio" name="do-mode" value="disable_all">
+          <span class="do-radio-mark"></span>
+          Disable on all sites
+        </label>
+      </div>
+    </section>
+
+    <!-- Font -->
+    <section class="do-card">
+      <h2 class="do-card-title">Font</h2>
+      <p class="do-card-hint">
+        The default font is <strong>Vazirmatn</strong>, designed by
+        <a href="https://github.com/rastikerdar/vazirmatn" target="_blank" rel="noopener">Saber Rastikerdar</a>
+        and bundled with the extension - no internet required.
+      </p>
+
+      <div class="do-row">
+        <div>
+          <p class="do-row-label">Active font</p>
+          <p class="do-row-hint">Switch to a custom font you upload below.</p>
+        </div>
+        <div class="do-radio-group">
+          <label class="do-radio">
+            <input type="radio" name="do-font" value="vazirmatn">
+            <span class="do-radio-mark"></span>
+            Vazirmatn (default)
+          </label>
+          <label class="do-radio">
+            <input type="radio" name="do-font" value="custom">
+            <span class="do-radio-mark"></span>
+            Custom font
+          </label>
+        </div>
+      </div>
+
+      <div class="do-row" style="display:block">
+        <p class="do-row-label">Upload a custom font</p>
+        <p class="do-row-hint">
+          Variable fonts (<code>.woff2</code> with weight axis) are recommended -
+          a single file covers every weight, looks crisp at all sizes, and
+          keeps memory usage low. Static <code>.woff2</code>, <code>.ttf</code>
+          and <code>.otf</code> files are also accepted.
+        </p>
+        <div style="margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <input type="file" id="do-font-file" class="do-input"
+                 accept=".woff2,.woff,.ttf,.otf,font/woff2,font/woff,font/ttf,font/otf">
+          <button class="do-btn-ghost do-btn" id="do-clear-font">Remove custom font</button>
+        </div>
+        <p class="do-status" id="do-font-status"></p>
+
+        <div class="do-preview" id="do-preview">
+          نمونه متن فارسی - این یک پیش‌نمایش از فونت انتخاب‌شده است.
+          The quick brown fox jumps over the lazy dog. ١٢٣٤٥٦٧٨٩٠
+        </div>
+      </div>
+    </section>
+
+    <!-- Diagnostics -->
+    <section class="do-card">
+      <h2 class="do-card-title">Diagnostics</h2>
+      <p class="do-card-hint">
+        Turn this on if something looks off on a site. Logs print to the
+        page's DevTools console with the prefix <code>[Dynamic RTL]</code>.
+      </p>
+      <div class="do-row">
+        <div>
+          <p class="do-row-label">Verbose logging</p>
+          <p class="do-row-hint">Always-on errors still print regardless of this setting.</p>
+        </div>
+        <label class="do-switch">
+          <input type="checkbox" id="do-debug">
+          <span class="do-switch-slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Custom site list (last) -->
+    <section class="do-card">
+      <h2 class="do-card-title">Custom site list</h2>
+      <p class="do-card-hint">
+        Every site you toggle from the toolbar shows up here. Each row is an
+        explicit override that wins over the default mode. Subdomains
+        inherit automatically (e.g. <code>google.com*off</code> covers
+        <code>mail.google.com</code> too).
+      </p>
+
+      <div class="do-list" id="do-list" aria-live="polite">
+        <p class="do-list-empty" id="do-list-empty">
+          No sites yet. Click the Dynamic RTL icon on any page to add one.
+        </p>
+      </div>
+
+      <div class="do-add-row">
+        <input type="text" id="do-add-domain" class="do-input"
+               placeholder="example.com" autocomplete="off" spellcheck="false">
+        <select id="do-add-state" class="do-input do-select">
+          <option value="on">on</option>
+          <option value="off">off</option>
+        </select>
+        <button class="do-btn" id="do-add-btn">Add</button>
+      </div>
+      <p class="do-status" id="do-list-status"></p>
+
+      <div class="do-actions">
+        <button class="do-btn-ghost do-btn" id="do-list-export">Export list</button>
+        <button class="do-btn-ghost do-btn" id="do-list-import">Import list</button>
+        <input type="file" id="do-list-import-file" accept="application/json,.json,.txt" hidden>
+        <button class="do-btn-danger do-btn" id="do-list-clear">Clear list</button>
+      </div>
+    </section>
+
+    <footer class="do-footer">
+      <p class="do-credit">
+        Default font: <strong>Vazirmatn</strong> by Saber Rastikerdar -
+        <a href="https://github.com/rastikerdar/vazirmatn" target="_blank" rel="noopener">vazirmatn</a>
+      </p>
+      <p class="do-credit">
+        Developer: <strong>soroush5</strong> -
+        <a href="https://github.com/soroush5/Dynamic-RTL" target="_blank" rel="noopener">github.com/soroush5/Dynamic-RTL</a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>

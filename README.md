@@ -180,6 +180,7 @@ Common fixes:
 |   +-- fonts/                  Vazirmatn-Variable.woff2
 |   +-- icons/                  active + inactive icons (16 / 32 / 48 / 128)
 +-- firefox/                    Firefox MV3 build (Acorn / Proton styling)
++-- safari/                     Safari MV3 build (same code as chrome/, load as Temporary Extension)
 +-- resources/                  Pre-built zip packages for both builds
 +-- scripts/build-zips.sh       Re-create the release packages
 +-- LICENSE

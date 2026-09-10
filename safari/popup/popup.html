@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dynamic RTL</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body data-browser="chrome">
+  <header class="dr-header">
+    <img class="dr-logo" src="../icons/icon48.png" alt="">
+    <div class="dr-titlebox">
+      <h1 class="dr-title">Dynamic RTL</h1>
+      <p class="dr-tagline">Auto RTL &amp; Persian font</p>
+    </div>
+  </header>
+
+  <!-- Prominent site status / toggle -->
+  <section class="dr-status" id="dr-status">
+    <div class="dr-site">
+      <span class="dr-favicon" id="dr-favicon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"></path>
+        </svg>
+      </span>
+      <span class="dr-host" id="dr-host">--</span>
+    </div>
+
+    <div class="dr-toggle-row">
+      <div class="dr-toggle-text">
+        <p class="dr-toggle-label">Active on this site</p>
+        <p class="dr-toggle-hint" id="dr-mode-hint">Following global mode</p>
+      </div>
+      <label class="dr-switch">
+        <input type="checkbox" id="dr-site-toggle">
+        <span class="dr-switch-slider"></span>
+      </label>
+    </div>
+  </section>
+
+  <section class="dr-card">
+    <p class="dr-card-title">GLOBAL MODE</p>
+    <div class="dr-radio-group" role="radiogroup" aria-label="Global mode">
+      <label class="dr-radio">
+        <input type="radio" name="dr-mode" value="enable_all">
+        <span class="dr-radio-mark"></span>
+        <span>Enable on all sites</span>
+      </label>
+      <label class="dr-radio">
+        <input type="radio" name="dr-mode" value="disable_all">
+        <span class="dr-radio-mark"></span>
+        <span>Disable on all sites</span>
+      </label>
+    </div>
+    <p class="dr-card-hint" id="dr-mode-explainer">
+      RTL applies everywhere except the per-site exceptions below.
+    </p>
+  </section>
+
+  <section class="dr-card dr-actions">
+    <button class="dr-btn dr-btn-secondary" id="dr-open-options">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      <span>Settings &amp; custom font</span>
+    </button>
+  </section>
+
+  <footer class="dr-footer">
+    <a href="https://github.com/soroush5/Dynamic-RTL" id="dr-repo-link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+        <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"></path>
+      </svg>
+      <span>GitHub</span>
+    </a>
+    <span class="dr-version" id="dr-version"></span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
