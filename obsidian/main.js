@@ -491,10 +491,10 @@ class DynRtlSettingTab extends PluginSettingTab {
       cls: 'setting-item-description'
     });
     const repoP = footer.createEl('p', { cls: 'setting-item-description' });
-    repoP.appendText('Developer: so-roush  -  ');
+    repoP.appendText('Developer: soroush5  -  ');
     repoP.createEl('a', {
-      text: 'github.com/so-roush/Dynamic-RTL',
-      href: 'https://github.com/so-roush/Dynamic-RTL'
+      text: 'github.com/soroush5/Dynamic-RTL',
+      href: 'https://github.com/soroush5/Dynamic-RTL'
     });
   }
 }

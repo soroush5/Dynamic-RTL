@@ -18,7 +18,7 @@ This is the Obsidian companion to the Dynamic RTL browser extensions. The browse
 
 ### Manual install (community plugins not yet listed)
 
-1. Download `dynamic-rtl-obsidian-v2.0.zip` from the [Releases page](https://github.com/so-roush/Dynamic-RTL/releases).
+1. Download `dynamic-rtl-obsidian-v2.1.zip` from the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases).
 2. Extract the contents into `<your-vault>/.obsidian/plugins/dynamic-rtl/` so that `manifest.json`, `main.js`, `styles.css` and the `fonts/` folder all sit at that path.
 3. Open Obsidian → Settings → Community plugins → enable **Dynamic RTL**.
 
@@ -62,5 +62,5 @@ The plugin is plain JavaScript - no build step needed.
 
 ## Credits
 
-- Plugin: [so-roush](https://github.com/so-roush) — see the main repo at https://github.com/so-roush/Dynamic-RTL
+- Plugin: [soroush5](https://github.com/soroush5) — see the main repo at https://github.com/soroush5/Dynamic-RTL
 - Default font: [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar (SIL OFL 1.1)

@@ -18,7 +18,7 @@ It is shipped as **three separate builds** that share the same detection logic a
 | **`firefox/`** | Firefox 121 and newer | MV3 |
 | **`obsidian/`** | Obsidian 1.4 and newer | Community plugin |
 
-Repository: https://github.com/so-roush/Dynamic-RTL
+Repository: https://github.com/soroush5/Dynamic-RTL
 
 ---
 
@@ -75,7 +75,7 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 
 ## Install
 
-> Pre-built bundles for v2.1 live on the [Releases page](https://github.com/so-roush/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.1.zip`, `dynamic-rtl-firefox-v2.1.zip` and `dynamic-rtl-obsidian-v2.1.zip`. They are also checked in under [`resources/`](./resources) for offline access.
+> Pre-built bundles for v2.1 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.1.zip`, `dynamic-rtl-firefox-v2.1.zip` and `dynamic-rtl-obsidian-v2.1.zip`. They are also checked in under [`resources/`](./resources) for offline access.
 
 ### Install on Chrome / Edge / Brave / Arc
 
@@ -235,7 +235,7 @@ resources/dynamic-rtl-obsidian-v2.1.zip
 
 ## Credits
 
-- **Developer:** [so-roush](https://github.com/so-roush)
+- **Developer:** [soroush5](https://github.com/soroush5)
 - **Default font:** [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar (Open Font License)
 
 ## License

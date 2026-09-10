@@ -180,3 +180,8 @@ els.optionsBtn.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', refresh);
+
+try {
+  const vn = document.getElementById('dr-version');
+  if (vn && api.runtime.getManifest) vn.textContent = 'v' + api.runtime.getManifest().version;
+} catch (_) {}

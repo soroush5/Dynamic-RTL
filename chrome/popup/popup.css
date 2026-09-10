@@ -324,10 +324,17 @@ body {
 /* ---------- Footer ---------- */
 .dr-footer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1px;
   padding: 8px 16px 10px;
   margin-top: 2px;
+}
+.dr-version {
+  font-size: 11px;
+  color: var(--text-soft);
+  opacity: 0.7;
 }
 .dr-footer a {
   display: inline-flex;

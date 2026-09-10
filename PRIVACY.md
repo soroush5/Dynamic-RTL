@@ -82,4 +82,4 @@ the change will be noted in the Chrome Web Store version history. The
 ## Contact
 
 Issues, questions, or privacy reports: please open an issue at
-https://github.com/so-roush/Dynamic-RTL/issues
+https://github.com/soroush5/Dynamic-RTL/issues

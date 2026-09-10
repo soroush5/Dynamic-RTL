@@ -67,7 +67,7 @@ PERMISSIONS
 
 SUPPORT
 Source code, issue tracker and feature requests:
-https://github.com/so-roush/Dynamic-RTL
+https://github.com/soroush5/Dynamic-RTL
 
 Version 2.0 - first public release. See the GitHub releases page for the changelog.
 ```
@@ -140,7 +140,7 @@ behaviour.
 
 **Privacy Policy URL** [REQUIRED]
 
-https://github.com/so-roush/Dynamic-RTL/blob/main/PRIVACY.md
+https://github.com/soroush5/Dynamic-RTL/blob/main/PRIVACY.md
 
 The full text of the policy is also stored at the project root in `PRIVACY.md`.
 
@@ -154,7 +154,7 @@ The full text of the policy is also stored at the project root in `PRIVACY.md`.
 
 **Publisher Name** [REQUIRED]
 
-so-roush
+soroush5
 
 **Contact Email** [REQUIRED]
 
@@ -162,11 +162,11 @@ so-roush
 
 **Support URL** [RECOMMENDED]
 
-https://github.com/so-roush/Dynamic-RTL/issues
+https://github.com/soroush5/Dynamic-RTL/issues
 
 **Homepage URL**
 
-https://github.com/so-roush/Dynamic-RTL
+https://github.com/soroush5/Dynamic-RTL
 
 ## Version History
 
