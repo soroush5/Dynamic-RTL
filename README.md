@@ -2,7 +2,7 @@
 
 > Auto-detects Persian and Arabic text on web pages, then instantly applies the right direction (RTL) and a comfortable font - before you even see the page.
 
-[![Version](https://img.shields.io/badge/version-2.2-5b6cff)](#release)
+[![Version](https://img.shields.io/badge/version-2.3-5b6cff)](#release)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?logo=googlechrome&logoColor=white)](#install-on-chrome--edge--brave--arc)
 [![Firefox](https://img.shields.io/badge/Firefox-MV3-FF7139?logo=firefox&logoColor=white)](#install-on-firefox)
@@ -33,7 +33,7 @@ Repository: https://github.com/soroush5/Dynamic-RTL
 - [Sites we keep an eye on](#sites-we-keep-an-eye-on)
 - [Performance](#performance)
 - [Privacy](#privacy)
-- [Troubleshooting and the log system](#troubleshooting-and-the-log-system)
+- [Troubleshooting](#troubleshooting)
 - [Repository layout](#repository-layout)
 - [Building from source](#building-from-source)
 - [Credits](#credits)
@@ -71,11 +71,11 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 
 ## Install
 
-> Pre-built bundles for v2.2 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.2.zip` and `dynamic-rtl-firefox-v2.2.zip`. They are also checked in under [`resources/`](./resources) for offline access.
+> Pre-built bundles for v2.3 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v2.3.zip` and `dynamic-rtl-firefox-v2.3.zip`. They are also checked in under [`resources/`](./resources) for offline access.
 
 ### Install on Chrome / Edge / Brave / Arc
 
-1. Download `dynamic-rtl-chrome-v2.2.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
+1. Download `dynamic-rtl-chrome-v2.3.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`, etc.).
 3. Turn on **Developer mode** in the top-right corner.
 4. Click **Load unpacked** and select the extracted folder.
@@ -89,7 +89,7 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 
 **Path A — temporary install (any Firefox):**
 
-1. Download `dynamic-rtl-firefox-v2.2.zip`.
+1. Download `dynamic-rtl-firefox-v2.3.zip`.
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on...** and select the `manifest.json` file inside the (extracted) zip.
 4. The extension stays installed until you restart Firefox.
@@ -97,7 +97,7 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 **Path B — permanent install (Developer Edition / Nightly / ESR):**
 
 1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
-Rename `dynamic-rtl-firefox-v2.2.zip` to `dynamic-rtl-firefox-v2.2.xpi`.
+Rename `dynamic-rtl-firefox-v2.3.zip` to `dynamic-rtl-firefox-v2.3.xpi`.
 3. Drag the `.xpi` file into Firefox and click **Add**.
 
 **Path C — regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
@@ -128,7 +128,7 @@ Special care has been taken to make Dynamic RTL behave on heavy SPAs:
 - **Google Docs / Sheets / Slides** — the canvas-rendered document area is intentionally skipped; comments, sidebars and menus are styled normally.
 - **Telegram Web, WhatsApp Web, Discord, Slack, Reddit, Stack Overflow, GitHub, app.kiro.dev** — covered by the generic mutation observer + shadow-DOM walker.
 
-If you hit a site that misbehaves, turn on **Verbose logging** in the options page, reload the page, open DevTools and grab the `[Dynamic RTL]` log lines for the bug report.
+If you hit a site that misbehaves, reload the page, open DevTools and check the console for errors for the bug report.
 
 ## Performance
 
@@ -150,12 +150,9 @@ Dynamic RTL does not call the network. Ever.
 
 The browser builds request `storage`, `tabs` and `activeTab` permission, plus host permission for `http://*/*` and `https://*/*`. The host permission is required because the extension needs to run a content script on every site you visit to detect Persian / Arabic text.
 
-## Troubleshooting and the log system
+## Troubleshooting
 
-Every log line is prefixed with a styled `[Dynamic RTL]` badge, which makes filtering trivial in DevTools.
-
-- **Errors** (failed font load, bad settings, etc.) always print, regardless of settings.
-- **Verbose logs** (activation, mutations, batch timings) only print when *Verbose logging* is enabled in the relevant settings page.
+The content script stays silent by design. If something looks wrong, work through these:
 
 Common fixes:
 
@@ -164,7 +161,7 @@ Common fixes:
 | Font does not change but direction is correct | Make sure the toolbar icon is colored (active). Reload the page once to give the font cache a chance. |
 | A specific site looks wrong | Click the toolbar icon to toggle it off. The site is recorded in your custom site list. |
 | Custom font does not load | The file must be `.woff2`, `.woff`, `.ttf` or `.otf` and smaller than 8 MB. Variable fonts must include the `wght` axis. |
-| Nothing happens at all | Open the options page, check the default mode and the custom site list. Then enable verbose logging and look for errors in DevTools. |
+| Nothing happens at all | Open the options page, check the default mode and the custom site list. Then open DevTools and look for errors. |
 
 
 ## Repository layout
@@ -198,8 +195,8 @@ You do not need a build step. To recreate the release zips:
 This produces:
 
 ```text
-resources/dynamic-rtl-chrome-v2.2.zip
-resources/dynamic-rtl-firefox-v2.2.zip
+resources/dynamic-rtl-chrome-v2.3.zip
+resources/dynamic-rtl-firefox-v2.3.zip
 ```
 
 ## Credits
