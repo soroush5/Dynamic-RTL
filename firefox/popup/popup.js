@@ -44,6 +44,19 @@ function getCurrentTab() {
     api.tabs.query({ active: true, currentWindow: true }, tabs => resolve(tabs[0]));
   });
 }
+// Ask the top frame for the live state (it knows about auto-skipped RTL pages).
+function getTabState(tabId) {
+  return new Promise(resolve => {
+    try {
+      api.tabs.sendMessage(tabId, { type: 'DYNRTL_GET_STATE' }, { frameId: 0 }, resp => {
+        void api.runtime.lastError;
+        resolve(resp || null);
+      });
+    } catch (_) {
+      resolve(null);
+    }
+  });
+}
 function loadSettings() {
   return new Promise(resolve => {
     api.storage.local.get(null, stored => {
@@ -82,7 +95,7 @@ async function refresh() {
   try {
     if (tab && tab.url) {
       const u = new URL(tab.url);
-      if (/^https?:|^file:|^ftp:/.test(u.protocol)) {
+      if (/^https?:/.test(u.protocol)) {
         host = u.hostname;
         supported = !!host;
       }
@@ -97,13 +110,23 @@ async function refresh() {
   }
   els.host.textContent = host;
   els.toggle.disabled = false;
-  const enabled = isSiteEnabled(settings, host);
+  // Trust the page when reachable, storage math otherwise.
+  const state = tab && tab.id != null ? await getTabState(tab.id) : null;
+  let enabled, autoSkipped = false;
+  if (state && typeof state.active === 'boolean') {
+    enabled = state.active;
+    autoSkipped = !!state.autoSkipped;
+  } else {
+    enabled = isSiteEnabled(settings, host);
+  }
   els.toggle.checked = enabled;
   const override = findOverride(settings.siteOverrides, host);
   if (override) {
     els.modeHint.textContent = enabled
       ? 'Active here (explicitly on)'
       : 'Inactive here (explicitly off)';
+  } else if (autoSkipped) {
+    els.modeHint.textContent = 'Off by default · already a Persian/Arabic site';
   } else {
     els.modeHint.textContent = enabled ? 'Active on this page' : 'Inactive on this page';
   }
