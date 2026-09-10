@@ -56,3 +56,8 @@ rm -f "resources/dynamic-rtl-safari-v${VERSION}.zip"
 
 echo "Done:"
 ls -lh resources/dynamic-rtl-*-v${VERSION}.zip
+
+# Unversioned aliases for evergreen download buttons (README + release notes).
+cp "resources/dynamic-rtl-chrome-v${VERSION}.zip" resources/dynamic-rtl-chrome-latest.zip
+cp "resources/dynamic-rtl-firefox-v${VERSION}.zip" resources/dynamic-rtl-firefox-latest.zip
+cp "resources/dynamic-rtl-safari-v${VERSION}.zip" resources/dynamic-rtl-safari-latest.zip
