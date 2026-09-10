@@ -22,7 +22,6 @@ const els = {
   fontStatus: $('do-font-status'),
   clearFont: $('do-clear-font'),
   preview: $('do-preview'),
-  debug: $('do-debug'),
   list: $('do-list'),
   listEmpty: $('do-list-empty'),
   listStatus: $('do-list-status'),
@@ -223,7 +222,6 @@ async function refresh() {
   const settings = await loadSettings();
   for (const r of els.modeRadios) r.checked = (r.value === settings.mode);
   for (const r of els.fontRadios) r.checked = (r.value === settings.font);
-  els.debug.checked = !!settings.debug;
   els.fontStatus.textContent = explainCustomFontStatus(settings);
   applyPreviewFont(settings);
   renderList(settings.siteOverrides || {});
@@ -275,7 +273,6 @@ els.clearFont.addEventListener('click', async () => {
   flash(els.fontStatus, 'Custom font removed.');
 });
 
-els.debug.addEventListener('change', () => saveSettings({ debug: els.debug.checked }));
 
 els.addBtn.addEventListener('click', addEntry);
 els.addDomain.addEventListener('keydown', (e) => {

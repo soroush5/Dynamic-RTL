@@ -28,7 +28,7 @@ The extension stores the following on **your own device only**, in
 | Default mode (`enable_all` / `disable_all`) | Remembers whether RTL applies on every site by default or only on the sites you opted in. |
 | Custom site list | Per-host overrides you toggled from the toolbar (`google.com -> on`, `gmail.com -> off`, etc.). |
 | Font choice and the optional uploaded font file | When you upload a custom font from the options page, the file's bytes are stored locally so the extension can `@font-face` it. The file is never uploaded anywhere. |
-| Verbose-logging flag | Off by default. When on, prints labelled traces to the page DevTools console. |
+
 
 ## What Leaves Your Device
 
