@@ -47,8 +47,8 @@ Repository: https://github.com/soroush5/Dynamic-RTL
 
 When a Dynamic RTL build is active:
 
-1. **Pages** — at `document_start` (before the body is parsed) it injects a stylesheet that registers the bundled Vazirmatn variable font and a CSS class called `.dynrtl-rtl`. As the DOM is parsed and as new content streams in (chat messages, tweets, search results), a `TreeWalker` + `MutationObserver` finds Persian / Arabic text and tags the nearest block ancestor.
-2. **Inputs / contenteditable** — a capture-phase listener flips `dir="auto"` and `text-align` on `<input>`, `<textarea>` and `[contenteditable]` as you type, even on a single Persian character. The CSS class never sets `direction: rtl !important` on editors, which would break editor frameworks like Slate / Lexical / ProseMirror used by Claude, Notion, X, Gemini, etc.
+1. **Pages**: at `document_start` (before the body is parsed) it injects a stylesheet that registers the bundled Vazirmatn variable font and a CSS class called `.dynrtl-rtl`. As the DOM is parsed and as new content streams in (chat messages, tweets, search results), a `TreeWalker` + `MutationObserver` finds Persian / Arabic text and tags the nearest block ancestor.
+2. **Inputs / contenteditable**: a capture-phase listener flips `dir="auto"` and `text-align` on `<input>`, `<textarea>` and `[contenteditable]` as you type, even on a single Persian character. The CSS class never sets `direction: rtl !important` on editors, which would break editor frameworks like Slate / Lexical / ProseMirror used by Claude, Notion, X, Gemini, etc.
 
 It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unicode blocks (`U+0600-U+06FF`, `U+0750-U+077F`, `U+08A0-U+08FF`, `U+FB50-U+FDFF`, `U+FE70-U+FEFF`).
 
@@ -68,7 +68,7 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 - **Built for dynamic apps**: ChatGPT, Claude, X.com, Notion, Google services, Gemini - dynamic content gets RTL'd as it streams in.
 - **URL-aware bidi**: inline `cite / code / kbd / samp / var / pre` inside RTL blocks keep their own LTR context, so URLs in Google search results no longer read backwards.
 - **Shadow DOM aware**: the content script descends into open shadow roots, so Web-Component-based UIs get the same treatment as light DOM.
-- **Performance budget**: observer only queues, a debounced flush walks with a 10 ms / 1000-node ceiling, expando flags replace WeakSets, and `all_frames` stays off — tagging never blocks the page.
+- **Performance budget**: observer only queues, a debounced flush walks with a 10 ms / 1000-node ceiling, expando flags replace WeakSets, and `all_frames` stays off, tagging never blocks the page.
 - **Diagnostic logging**: a debug toggle prints labelled traces to DevTools.
 
 ## Install
@@ -89,20 +89,20 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 
 Firefox blocks unsigned extensions on the regular release channel. Three supported paths:
 
-**Path A — temporary install (any Firefox):**
+**Path A: temporary install (any Firefox):**
 
 1. Download `dynamic-rtl-firefox-v3.zip`.
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on...** and select the `manifest.json` file inside the (extracted) zip.
 4. The extension stays installed until you restart Firefox.
 
-**Path B — permanent install (Developer Edition / Nightly / ESR):**
+**Path B: permanent install (Developer Edition / Nightly / ESR):**
 
 1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
 Rename `dynamic-rtl-firefox-v3.zip` to `dynamic-rtl-firefox-v3.xpi`.
 3. Drag the `.xpi` file into Firefox and click **Add**.
 
-**Path C — regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
+**Path C: regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
 
 ### Install on Safari
 
@@ -121,7 +121,7 @@ Safari 26 can load the extension straight from a folder, no Xcode needed:
 
 ## Custom variable font
 
-Every build ships with **Vazirmatn** — the variable cut, with a continuous `wght` axis from 100 to 900. To replace it, use the **Font** section of the settings page in your build of choice and upload a `.woff2 / .woff / .ttf / .otf` file (up to 8 MB).
+Every build ships with **Vazirmatn**: the variable cut, with a continuous `wght` axis from 100 to 900. To replace it, use the **Font** section of the settings page in your build of choice and upload a `.woff2 / .woff / .ttf / .otf` file (up to 8 MB).
 
 > **Why variable fonts?** A single variable font file covers every weight, looks crisp at every size, and uses less memory than shipping nine static cuts.
 
@@ -129,20 +129,20 @@ Every build ships with **Vazirmatn** — the variable cut, with a continuous `wg
 
 Special care has been taken to make Dynamic RTL behave on heavy SPAs:
 
-- **ChatGPT** (`chat.openai.com`, `chatgpt.com`) — streamed message tokens, ProseMirror composer.
-- **Claude** (`claude.ai`) — streamed conversations, prompt editor.
-- **Gemini** (`gemini.google.com`) — composer + streamed responses.
-- **X / Twitter** (`x.com`, `twitter.com`) — virtualised timelines, replies, the composer.
-- **Notion** — per-block contenteditable, slash menu.
-- **Google services** — Gmail composer (contenteditable), Calendar, Search, YouTube comments. URL / breadcrumb fragments inside RTL search results stay in LTR via `unicode-bidi: isolate`.
-- **Google Docs / Sheets / Slides** — the canvas-rendered document area is intentionally skipped; comments, sidebars and menus are styled normally.
-- **Telegram Web, WhatsApp Web, Discord, Slack, Reddit, Stack Overflow, GitHub, app.kiro.dev** — covered by the generic mutation observer + shadow-DOM walker.
+- **ChatGPT** (`chat.openai.com`, `chatgpt.com`): streamed message tokens, ProseMirror composer.
+- **Claude** (`claude.ai`): streamed conversations, prompt editor.
+- **Gemini** (`gemini.google.com`): composer + streamed responses.
+- **X / Twitter** (`x.com`, `twitter.com`): virtualised timelines, replies, the composer.
+- **Notion**: per-block contenteditable, slash menu.
+- **Google services**: Gmail composer (contenteditable), Calendar, Search, YouTube comments. URL / breadcrumb fragments inside RTL search results stay in LTR via `unicode-bidi: isolate`.
+- **Google Docs / Sheets / Slides**: the canvas-rendered document area is intentionally skipped; comments, sidebars and menus are styled normally.
+- **Telegram Web, WhatsApp Web, Discord, Slack, Reddit, Stack Overflow, GitHub, app.kiro.dev**: covered by the generic mutation observer + shadow-DOM walker.
 
 If you hit a site that misbehaves, reload the page, open DevTools and check the console for errors for the bug report.
 
 ## Performance
 
-- Tagging is done by adding a single CSS class — never inline styles — so style recalculation is fast and reversible.
+- Tagging is done by adding a single CSS class, never inline styles, so style recalculation is fast and reversible.
 - Touched elements carry a tiny expando flag, so already-tagged subtrees bail out in a few pointer hops with zero GC pressure.
 - The observer callback only queues dirty roots; a debounced flush walks them with a 10 ms / 1000-node budget, then yields the thread.
 - While the page is still parsing, the first flush runs pre-paint (no idle wait), so pages render with RTL already applied; idle scheduling only applies after load.

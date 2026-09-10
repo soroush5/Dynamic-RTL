@@ -3,9 +3,9 @@
 > متن فارسی و عربی را در صفحه‌های وب به‌صورت خودکار پیدا می‌کند و راست‌چین نمایش می‌دهد؛ با فونت وزیرمتن و پیش از آنکه صفحه دیده شود.
 
 <p>
-  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-chrome-latest.zip"><img src="https://img.shields.io/badge/دانلود_کروم-Dynamic_RTL-4285F4?logo=googlechrome&logoColor=white" alt="دانلود برای کروم"></a>
-  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-firefox-latest.zip"><img src="https://img.shields.io/badge/دانلود_فایرفاکس-Dynamic_RTL-FF7139?logo=firefox&logoColor=white" alt="دانلود برای فایرفاکس"></a>
-  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-safari-latest.zip"><img src="https://img.shields.io/badge/دانلود_سافاری-Dynamic_RTL-000000?logo=safari&logoColor=white" alt="دانلود برای سافاری"></a>
+  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-chrome-latest.zip"><img src="https://img.shields.io/badge/Download-Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Download for Chrome"></a>
+  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-firefox-latest.zip"><img src="https://img.shields.io/badge/Download-Firefox-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Download for Firefox"></a>
+  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-safari-latest.zip"><img src="https://img.shields.io/badge/Download-Safari-000000?style=for-the-badge&logo=safari&logoColor=white" alt="Download for Safari"></a>
 </p>
 
 [English README / توضیحات انگلیسی](README.en.md) · [صفحه Releases](https://github.com/soroush5/Dynamic-RTL/releases)
@@ -14,7 +14,7 @@
 
 ## معرفی
 
-هر صفحه‌ای که باز می‌کنید بررسی می‌شود و به‌محض مشاهده متن فارسی یا عربی — در پاراگراف، پیام چت، توییت یا حتی محل تایپ شما — همان بخش راست‌چین شده و با فونت **وزیرمتن** نمایش داده می‌شود.
+هر صفحه‌ای که باز می‌کنید بررسی می‌شود و به‌محض مشاهده متن فارسی یا عربی (در پاراگراف، پیام چت، توییت یا حتی محل تایپ شما) همان بخش راست‌چین شده و با فونت **وزیرمتن** نمایش داده می‌شود.
 
 این افزونه در سه نسخه عرضه می‌شود که منطق تشخیص یکسانی دارند:
 
@@ -37,14 +37,14 @@
 
 نسخه معمولی فایرفاکس افزونه امضانشده را قبول نمی‌کند. سه روش پشتیبانی می‌شود:
 
-**روش اول — نصب موقت (همه نسخه‌های فایرفاکس):**
+**روش اول: نصب موقت (همه نسخه‌های فایرفاکس):**
 
 1. فایل `dynamic-rtl-firefox-v3.zip` را دانلود کنید.
 2. وارد آدرس `about:debugging#/runtime/this-firefox` شوید.
 3. روی **Load Temporary Add-on...** کلیک کنید و فایل `manifest.json` داخل پوشه استخراج‌شده را انتخاب نمایید.
 4. افزونه تا زمان بستن فایرفاکس فعال می‌ماند.
 
-**روش دوم — نصب دائمی (Developer Edition / Nightly / ESR):**
+**روش دوم: نصب دائمی (Developer Edition / Nightly / ESR):**
 
 1. در صفحه `about:config` گزینه `xpinstall.signatures.required` را `false` کنید.
 2. نام فایل زیپ را به `dynamic-rtl-firefox-v3.xpi` تغییر دهید و آن را داخل فایرفاکس بکشید.
@@ -70,7 +70,7 @@
 
 ## حریم خصوصی
 
-افزونه هیچ ارتباطی با اینترنت برقرار نمی‌کند. فهرست سایت‌ها و فونت سفارشی صرفاً در حافظه محلی دستگاه شما (`chrome.storage.local`) ذخیره می‌شوند. هیچ‌گونه آمار یا ردیابی وجود ندارد.
+افزونه هیچ ارتباطی با اینترنت برقرار نمی‌کند. فهرست سایت‌ها و فونت سفارشی صرفا در حافظه محلی دستگاه شما (`chrome.storage.local`) ذخیره می‌شوند. هیچ‌گونه آمار یا ردیابی وجود ندارد.
 
 ## ساخت از روی سورس
 
