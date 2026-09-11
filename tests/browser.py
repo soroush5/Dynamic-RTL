@@ -142,7 +142,12 @@ def main():
             page.goto(BASE + "en.html")
             worker = get_worker(ctx, 25)
         if not worker:
-            print("FATAL: service worker never loaded"); sys.exit(2)
+            print("FATAL: service worker never loaded")
+            try: browser.close()
+            except Exception: pass
+            try: proc.terminate()
+            except Exception: pass
+            sys.exit(2)
         ext_id = worker.url.split("/")[2]
         print(f"extension loaded: id={ext_id} mode={headed_mode}", flush=True)
         check("sw-single-worker", len(our_workers(ctx)) == 1, f"count={len(our_workers(ctx))}")
@@ -235,7 +240,7 @@ def main():
         pop.goto(f"chrome-extension://{ext_id}/popup/popup.html")
         pop.wait_for_timeout(800)
         check("popup-renders", pop.evaluate("!!document.getElementById('dr-site-toggle')"))
-        check("popup-version-shown", (pop.evaluate("document.getElementById('dr-version').textContent") or "") == "v3.1", pop.evaluate("document.getElementById('dr-version').textContent"))
+        check("popup-version-shown", (pop.evaluate("document.getElementById('dr-version').textContent") or "") == "v3.2", pop.evaluate("document.getElementById('dr-version').textContent"))
         check("popup-github-url", pop.evaluate("document.getElementById('dr-repo-link').href") == "https://github.com/soroush5/Dynamic-RTL")
         # real popup toggle path (popup sends host, like the toolbar click does)
         tog_pop = pop.evaluate(f"new Promise(res => chrome.runtime.sendMessage({{type:'DYNRTL_TOGGLE_CURRENT', tabId:{tab_id}, host:'127.0.0.1'}}, r => res(r)))")

@@ -77,7 +77,7 @@ def run_once(lang):
             opt = ctx.new_page()
             opt.goto(f"chrome-extension://{eid}/options/options.html")
             opt.wait_for_timeout(800)
-            out["options_title"] = opt.evaluate("document.querySelector('.do-card-title').textContent")
+            out["options_title"] = opt.evaluate("document.querySelector('#do-whatsnew + section .do-card-title').textContent")
             out["opt_dir"] = opt.evaluate("document.dir")
             try:
                 out["uilang"] = opt.evaluate("chrome.i18n.getUILanguage()")
@@ -141,7 +141,7 @@ try:
             ("options", f"chrome-extension://{ext}/options/options.html",
              {"defaultMode": "حالت پیش‌فرض", "add": "افزودن", "export": "خروجی فهرست"})]:
             sels = {"tagline": ".dr-tagline", "toggle": ".dr-toggle-label", "mode": ".dr-card-title",
-                    "defaultMode": ".do-card-title", "add": "#do-add-btn", "export": "#do-list-export"}
+                    "defaultMode": "#do-whatsnew + section .do-card-title", "add": "#do-add-btn", "export": "#do-list-export"}
             picks = {k: sels[k] for k in expected};
             pg = ctx.new_page()
             pg.goto(url)

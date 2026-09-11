@@ -67,6 +67,7 @@ function makeEnv(storageData, opts = {}) {
       sendMessage: (m, cb) => { if (cb) cb(); },
       onMessage: { addListener: () => {} } },
     storage: { local: { get: (k, cb) => cb(Object.assign({}, storageData)) },
+      sync: { get: (k, cb) => cb({}) },
       onChanged: { addListener: () => {} } } };
   const sandbox = { window: win, document: doc, chrome, location: { hostname: 'example.com' },
     performance: { now: () => Date.now() }, MutationObserver: class { constructor(cb) { this.cb = cb; } observe() {} disconnect() {} },

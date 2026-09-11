@@ -4,6 +4,7 @@
 .DS_Store
 Thumbs.db
 node_modules/
+__pycache__/
 
 # Build artifacts (we keep the prebuilt zips in releases/ on purpose)
 *.crx
