@@ -13,6 +13,33 @@ const DEFAULTS = {
   debug: false
 };
 
+function t(key, subs) {
+  try {
+    const m = api.i18n ? api.i18n.getMessage(key, subs) : '';
+    if (m) return m;
+  } catch (_) {}
+  return '';
+}
+// Static English stays in the HTML as fallback; this swaps in the UI locale
+// and mirrors the page when the browser speaks a RTL language.
+function applyI18n() {
+  try {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const m = t(el.getAttribute('data-i18n'));
+      if (m) el.textContent = m;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const m = t(el.getAttribute('data-i18n-html'));
+      if (m) el.innerHTML = m;
+    });
+    let rtl = false;
+    try { rtl = /^fa\b/i.test((api.i18n && api.i18n.getUILanguage && api.i18n.getUILanguage()) || ''); } catch (_) {}
+    document.dir = rtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = rtl ? 'fa' : 'en';
+  } catch (_) {}
+}
+
+
 const $ = (id) => document.getElementById(id);
 
 const els = {
@@ -106,12 +133,12 @@ function applyPreviewFont(settings) {
 
 function explainCustomFontStatus(settings) {
   if (settings.font === 'custom' && settings.customFontDataUrl) {
-    return 'Using custom font: ' + (settings.customFontName || 'unnamed');
+    return t('fontStatusUsing', [settings.customFontName || 'unnamed']) || ('Using custom font: ' + (settings.customFontName || 'unnamed'));
   }
   if (settings.customFontDataUrl) {
-    return 'Custom font loaded but not active (selection set to Vazirmatn).';
+    return t('fontStatusIdle') || 'Custom font loaded but not active (selection set to Vazirmatn).';
   }
-  return 'No custom font uploaded.';
+  return t('fontStatusNone') || 'No custom font uploaded.';
 }
 
 function normalizeHost(h) {
@@ -157,15 +184,15 @@ function buildRow(host, state) {
   stateEl.dataset.host = host;
   stateEl.dataset.state = state;
   stateEl.textContent = state;
-  stateEl.title = 'Click to flip on/off';
+  stateEl.title = t('flipTitle') || 'Click to flip on/off';
   stateEl.addEventListener('click', () => toggleEntry(host));
   row.appendChild(stateEl);
 
   const del = document.createElement('button');
   del.type = 'button';
   del.className = 'do-row-del';
-  del.title = 'Remove from list';
-  del.setAttribute('aria-label', 'Remove ' + host);
+  del.title = t('delTitle') || 'Remove from list';
+  del.setAttribute('aria-label', (t('delTitle') || 'Remove from list') + ' ' + host);
   del.textContent = '\u00D7';
   del.addEventListener('click', () => deleteEntry(host));
   row.appendChild(del);
@@ -192,11 +219,11 @@ async function addEntry() {
   const host = normalizeHost(els.addDomain.value);
   const state = els.addState.value === 'off' ? 'off' : 'on';
   if (!host) {
-    flash(els.listStatus, 'Enter a domain first.', false);
+    flash(els.listStatus, t('msgEnterDomain') || 'Enter a domain first.', false);
     return;
   }
   if (!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(host)) {
-    flash(els.listStatus, 'That doesn\'t look like a valid domain.', false);
+    flash(els.listStatus, t('msgInvalidDomain') || 'That doesn\'t look like a valid domain.', false);
     return;
   }
   const settings = await loadSettings();
@@ -204,7 +231,7 @@ async function addEntry() {
   overrides[host] = state;
   await saveSettings({ siteOverrides: overrides });
   els.addDomain.value = '';
-  flash(els.listStatus, `Added ${host}*${state}.`);
+  flash(els.listStatus, t('msgAdded', [host, state]) || `Added ${host}*${state}.`);
 }
 
 // Init
@@ -234,12 +261,12 @@ els.fontFile.addEventListener('change', async () => {
   if (!f) return;
   const MAX = 8 * 1024 * 1024;
   if (f.size > MAX) {
-    flash(els.fontStatus, `Font is too large (${(f.size/1024/1024).toFixed(1)} MB > 8 MB).`, false);
+    flash(els.fontStatus, t('msgFontTooLarge', [(f.size/1024/1024).toFixed(1)]) || `Font is too large (${(f.size/1024/1024).toFixed(1)} MB > 8 MB).`, false);
     els.fontFile.value = '';
     return;
   }
   try {
-    flash(els.fontStatus, 'Reading font...');
+    flash(els.fontStatus, t('msgReadingFont') || 'Reading font...');
     const dataUrl = await fileToDataUrl(f);
     await saveSettings({
       customFontDataUrl: dataUrl,
@@ -248,9 +275,9 @@ els.fontFile.addEventListener('change', async () => {
       font: 'custom'
     });
     els.fontFile.value = '';
-    flash(els.fontStatus, `Loaded ${f.name} (${(f.size/1024).toFixed(0)} KB).`);
+    flash(els.fontStatus, t('msgFontLoaded', [f.name, (f.size/1024).toFixed(0)]) || `Loaded ${f.name} (${(f.size/1024).toFixed(0)} KB).`);
   } catch (e) {
-    flash(els.fontStatus, 'Failed to read font: ' + (e && e.message || e), false);
+    flash(els.fontStatus, (t('msgFontReadFail') || 'Failed to read font') + ': ' + (e && e.message || e), false);
   }
 });
 
@@ -261,7 +288,7 @@ els.clearFont.addEventListener('click', async () => {
     customFontFormat: '',
     font: 'vazirmatn'
   });
-  flash(els.fontStatus, 'Custom font removed.');
+  flash(els.fontStatus, t('msgFontRemoved') || 'Custom font removed.');
 });
 
 
@@ -281,7 +308,7 @@ els.listExport.addEventListener('click', async () => {
   a.download = 'dynamic-rtl-sites.json';
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 5000);
-  flash(els.listStatus, 'List exported.');
+  flash(els.listStatus, t('msgExported') || 'List exported.');
 });
 
 els.listImport.addEventListener('click', () => els.listImportFile.click());
@@ -316,18 +343,18 @@ els.listImportFile.addEventListener('change', async () => {
       count++;
     }
     await saveSettings({ siteOverrides: overrides });
-    flash(els.listStatus, `Imported ${count} entr${count === 1 ? 'y' : 'ies'}.`);
+    flash(els.listStatus, count === 1 ? (t('msgImportedOne') || 'Imported 1 entry.') : (t('msgImportedMany', [String(count)]) || `Imported ${count} entries.`));
   } catch (e) {
-    flash(els.listStatus, 'Import failed: ' + (e && e.message || e), false);
+    flash(els.listStatus, (t('msgImportFail') || 'Import failed') + ': ' + (e && e.message || e), false);
   } finally {
     els.listImportFile.value = '';
   }
 });
 
 els.listClear.addEventListener('click', async () => {
-  if (!confirm('Clear the entire list?')) return;
+  if (!confirm(t('msgConfirmClear') || 'Clear the entire list?')) return;
   await saveSettings({ siteOverrides: {} });
-  flash(els.listStatus, 'List cleared.');
+  flash(els.listStatus, t('msgCleared') || 'List cleared.');
 });
 
 api.storage.onChanged.addListener((changes, area) => {
@@ -335,3 +362,5 @@ api.storage.onChanged.addListener((changes, area) => {
 });
 
 document.addEventListener('DOMContentLoaded', refresh);
+
+applyI18n();

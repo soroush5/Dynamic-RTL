@@ -1,0 +1,198 @@
+{
+  "tagline": {
+    "message": "راست‌چین خودکار و فونت فارسی"
+  },
+  "toggleLabel": {
+    "message": "فعال در این سایت"
+  },
+  "modeHintUnsupported": {
+    "message": "در این صفحه در دسترس نیست"
+  },
+  "modeHintOpenRegular": {
+    "message": "برای تغییر وضعیت، یک سایت معمولی باز کنید."
+  },
+  "modeHintOn": {
+    "message": "در این صفحه فعال است"
+  },
+  "modeHintOff": {
+    "message": "در این صفحه غیرفعال است"
+  },
+  "modeHintExplicitOn": {
+    "message": "اینجا فعال است (خودتان روشن کرده‌اید)"
+  },
+  "modeHintExplicitOff": {
+    "message": "اینجا غیرفعال است (خودتان خاموش کرده‌اید)"
+  },
+  "modeHintAutoSkip": {
+    "message": "به‌صورت پیش‌فرض خاموش است، چون سایت فارسی/عربی است"
+  },
+  "globalMode": {
+    "message": "حالت کلی"
+  },
+  "modeEnableAll": {
+    "message": "فعال در همه سایت‌ها"
+  },
+  "modeDisableAll": {
+    "message": "غیرفعال در همه سایت‌ها"
+  },
+  "explainerEnable": {
+    "message": "در همه‌جا اعمال می‌شود به‌جز سایت‌های فهرست خاموش."
+  },
+  "explainerDisable": {
+    "message": "به‌صورت پیش‌فرض خاموش است. با کلید بالا برای هر سایت روشن کنید."
+  },
+  "settingsBtn": {
+    "message": "تنظیمات و فونت سفارشی"
+  },
+  "github": {
+    "message": "گیت‌هاب"
+  },
+  "defaultMode": {
+    "message": "حالت پیش‌فرض"
+  },
+  "defaultModeHint": {
+    "message": "رفتار افزونه در سایت‌هایی که ورودی مشخصی در فهرست زیر ندارند. با آیکن نوار ابزار در هر صفحه می‌توانید ورودی اضافه یا به‌روز کنید. سایت‌هایی که خودشان فارسی یا عربی هستند به‌صورت پیش‌فرض خاموش می‌مانند."
+  },
+  "fontTitle": {
+    "message": "فونت"
+  },
+  "activeFont": {
+    "message": "فونت فعال"
+  },
+  "activeFontHint": {
+    "message": "به فونت سفارشی که پایین بارگذاری می‌کنید تغییر دهید."
+  },
+  "fontVazir": {
+    "message": "وزیرمتن (پیش‌فرض)"
+  },
+  "fontCustom": {
+    "message": "فونت سفارشی"
+  },
+  "uploadTitle": {
+    "message": "بارگذاری فونت سفارشی"
+  },
+  "clearFont": {
+    "message": "حذف فونت سفارشی"
+  },
+  "fontStatusUsing": {
+    "message": "فونت سفارشی فعال است: $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontStatusIdle": {
+    "message": "فونت سفارشی بارگذاری شده ولی فعال نیست (انتخاب روی وزیرمتن است)."
+  },
+  "fontStatusNone": {
+    "message": "فونت سفارشی بارگذاری نشده است."
+  },
+  "listTitle": {
+    "message": "فهرست شخصی سایت‌ها"
+  },
+  "listEmpty": {
+    "message": "هنوز سایتی نیست. روی آیکن داینامیک RTL در هر صفحه کلیک کنید تا اضافه شود."
+  },
+  "addBtn": {
+    "message": "افزودن"
+  },
+  "exportBtn": {
+    "message": "خروجی فهرست"
+  },
+  "importBtn": {
+    "message": "ورود فهرست"
+  },
+  "clearBtn": {
+    "message": "پاک کردن فهرست"
+  },
+  "msgEnterDomain": {
+    "message": "اول یک دامنه وارد کنید."
+  },
+  "msgInvalidDomain": {
+    "message": "این شبیه دامنه معتبر نیست."
+  },
+  "msgAdded": {
+    "message": "$1*$2 اضافه شد.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      },
+      "state": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgFontTooLarge": {
+    "message": "فونت خیلی بزرگ است ($1 مگابایت بیشتر از سقف ۸ مگابایت).",
+    "placeholders": {
+      "size": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgReadingFont": {
+    "message": "در حال خواندن فونت..."
+  },
+  "msgFontLoaded": {
+    "message": "$1 بارگذاری شد ($2 کیلوبایت).",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "kb": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgFontReadFail": {
+    "message": "خواندن فونت ناموفق بود."
+  },
+  "msgFontRemoved": {
+    "message": "فونت سفارشی حذف شد."
+  },
+  "msgExported": {
+    "message": "فهرست خروجی گرفته شد."
+  },
+  "msgImportedOne": {
+    "message": "۱ ورودی وارد شد."
+  },
+  "msgImportedMany": {
+    "message": "$1 ورودی وارد شد.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgImportFail": {
+    "message": "ورود ناموفق بود."
+  },
+  "msgConfirmClear": {
+    "message": "کل فهرست پاک شود؟"
+  },
+  "msgCleared": {
+    "message": "فهرست پاک شد."
+  },
+  "modeHintFollow": {
+    "message": "تابع حالت کلی"
+  },
+  "defaultModeHintHtml": {
+    "message": "رفتار افزونه در سایت‌هایی که ورودی مشخصی در فهرست زیر ندارند. با آیکن نوار ابزار در هر صفحه می‌توانید ورودی اضافه یا به‌روز کنید. سایت‌های فارسی یا عربی به‌صورت پیش‌فرض خاموش می‌مانند."
+  },
+  "fontHintHtml": {
+    "message": "فونت پیش‌فرض وزیرمتن است و همراه افزونه ارائه می‌شود. به اینترنت نیازی نیست."
+  },
+  "uploadHintHtml": {
+    "message": "فایل‌های متغیر woff2. توصیه می‌شوند. فایل‌های ثابت هم پذیرفته می‌شوند."
+  },
+  "listHintHtml": {
+    "message": "هر سایتی که از نوار ابزار تغییر دهید اینجا ثبت می‌شود. زیردامنه‌ها خودکار شامل می‌شوند."
+  },
+  "flipTitle": {
+    "message": "برای تغییر روشن/خاموش کلیک کنید"
+  },
+  "delTitle": {
+    "message": "حذف از فهرست"
+  }
+}

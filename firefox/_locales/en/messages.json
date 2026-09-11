@@ -1,0 +1,198 @@
+{
+  "tagline": {
+    "message": "Auto RTL & Persian font"
+  },
+  "toggleLabel": {
+    "message": "Active on this site"
+  },
+  "modeHintUnsupported": {
+    "message": "Not available on this page"
+  },
+  "modeHintOpenRegular": {
+    "message": "Open a regular website to toggle."
+  },
+  "modeHintOn": {
+    "message": "Active on this page"
+  },
+  "modeHintOff": {
+    "message": "Inactive on this page"
+  },
+  "modeHintExplicitOn": {
+    "message": "Active here (you turned it on)"
+  },
+  "modeHintExplicitOff": {
+    "message": "Inactive here (you turned it off)"
+  },
+  "modeHintAutoSkip": {
+    "message": "Off by default · already a Persian/Arabic site"
+  },
+  "globalMode": {
+    "message": "GLOBAL MODE"
+  },
+  "modeEnableAll": {
+    "message": "Enable on all sites"
+  },
+  "modeDisableAll": {
+    "message": "Disable on all sites"
+  },
+  "explainerEnable": {
+    "message": "RTL applies everywhere except the sites listed as off."
+  },
+  "explainerDisable": {
+    "message": "RTL is off by default. Enable it per-site using the switch above."
+  },
+  "settingsBtn": {
+    "message": "Settings & custom font"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "defaultMode": {
+    "message": "Default mode"
+  },
+  "defaultModeHint": {
+    "message": "How Dynamic RTL behaves on sites with no explicit entry below. Use the toolbar icon on any page to add or update an entry instantly. Sites that are already Persian or Arabic stay off by default; turn them on with the toolbar toggle if needed."
+  },
+  "fontTitle": {
+    "message": "Font"
+  },
+  "activeFont": {
+    "message": "Active font"
+  },
+  "activeFontHint": {
+    "message": "Switch to a custom font you upload below."
+  },
+  "fontVazir": {
+    "message": "Vazirmatn (default)"
+  },
+  "fontCustom": {
+    "message": "Custom font"
+  },
+  "uploadTitle": {
+    "message": "Upload a custom font"
+  },
+  "clearFont": {
+    "message": "Remove custom font"
+  },
+  "fontStatusUsing": {
+    "message": "Using custom font: $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontStatusIdle": {
+    "message": "Custom font loaded but not active (selection set to Vazirmatn)."
+  },
+  "fontStatusNone": {
+    "message": "No custom font uploaded."
+  },
+  "listTitle": {
+    "message": "Custom site list"
+  },
+  "listEmpty": {
+    "message": "No sites yet. Click the Dynamic RTL icon on any page to add one."
+  },
+  "addBtn": {
+    "message": "Add"
+  },
+  "exportBtn": {
+    "message": "Export list"
+  },
+  "importBtn": {
+    "message": "Import list"
+  },
+  "clearBtn": {
+    "message": "Clear list"
+  },
+  "msgEnterDomain": {
+    "message": "Enter a domain first."
+  },
+  "msgInvalidDomain": {
+    "message": "That doesn't look like a valid domain."
+  },
+  "msgAdded": {
+    "message": "Added $1*$2.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      },
+      "state": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgFontTooLarge": {
+    "message": "Font is too large ($1 MB over the 8 MB limit).",
+    "placeholders": {
+      "size": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgReadingFont": {
+    "message": "Reading font..."
+  },
+  "msgFontLoaded": {
+    "message": "Loaded $1 ($2 KB).",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "kb": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgFontReadFail": {
+    "message": "Failed to read font."
+  },
+  "msgFontRemoved": {
+    "message": "Custom font removed."
+  },
+  "msgExported": {
+    "message": "List exported."
+  },
+  "msgImportedOne": {
+    "message": "Imported 1 entry."
+  },
+  "msgImportedMany": {
+    "message": "Imported $1 entries.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgImportFail": {
+    "message": "Import failed."
+  },
+  "msgConfirmClear": {
+    "message": "Clear the entire list?"
+  },
+  "msgCleared": {
+    "message": "List cleared."
+  },
+  "modeHintFollow": {
+    "message": "Following global mode"
+  },
+  "defaultModeHintHtml": {
+    "message": "How Dynamic RTL behaves on sites with no explicit entry below. Use the toolbar icon on any page to add or update an entry instantly. Sites that are already Persian or Arabic stay off by default."
+  },
+  "fontHintHtml": {
+    "message": "The default font is Vazirmatn, bundled with the extension. No internet needed."
+  },
+  "uploadHintHtml": {
+    "message": "Variable .woff2 files are recommended. Static .woff2, .ttf and .otf files are also accepted."
+  },
+  "listHintHtml": {
+    "message": "Every site you toggle from the toolbar shows up here. Subdomains inherit automatically."
+  },
+  "flipTitle": {
+    "message": "Click to flip on/off"
+  },
+  "delTitle": {
+    "message": "Remove from list"
+  }
+}

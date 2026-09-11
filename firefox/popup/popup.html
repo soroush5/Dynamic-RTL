@@ -18,8 +18,8 @@
   <section class="dr-card dr-toggle-card">
     <div class="dr-toggle-row">
       <div>
-        <p class="dr-toggle-label">Active on this site</p>
-        <p class="dr-toggle-hint" id="dr-mode-hint">Following global mode</p>
+        <p class="dr-toggle-label" data-i18n="toggleLabel">Active on this site</p>
+        <p class="dr-toggle-hint" id="dr-mode-hint" data-i18n="modeHintFollow">Following global mode</p>
       </div>
       <label class="dr-switch">
         <input type="checkbox" id="dr-site-toggle">
@@ -29,15 +29,15 @@
   </section>
 
   <section class="dr-card">
-    <p class="dr-card-title">Global mode</p>
+    <p class="dr-card-title" data-i18n="globalMode">Global mode</p>
     <div class="dr-segmented" role="radiogroup" aria-label="Global mode">
       <label>
         <input type="radio" name="dr-mode" value="enable_all">
-        <span>Enable on all sites</span>
+        <span data-i18n="modeEnableAll">Enable on all sites</span>
       </label>
       <label>
         <input type="radio" name="dr-mode" value="disable_all">
-        <span>Disable on all sites</span>
+        <span data-i18n="modeDisableAll">Disable on all sites</span>
       </label>
     </div>
     <p class="dr-card-hint" id="dr-mode-explainer">
@@ -47,14 +47,14 @@
 
   <section class="dr-card">
     <button class="dr-btn dr-btn-secondary" id="dr-open-options">
-      Settings &amp; custom font
+      <span data-i18n="settingsBtn">Settings &amp; custom font</span>
     </button>
   </section>
 
   <footer class="dr-footer">
-    <span>v<span id="dr-version">3</span></span>
+    <span>v<span id="dr-version">3.1</span></span>
     <span>&middot;</span>
-    <a href="https://github.com/soroush5/Dynamic-RTL" id="dr-repo-link" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/soroush5/Dynamic-RTL" id="dr-repo-link" target="_blank" rel="noopener"><span data-i18n="github">GitHub</span></a>
   </footer>
 
   <script src="popup.js"></script>

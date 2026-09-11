@@ -15,8 +15,8 @@
   <main class="do-shell">
     <!-- Default mode -->
     <section class="do-card">
-      <h2 class="do-card-title">Default mode</h2>
-      <p class="do-card-hint">
+      <h2 class="do-card-title" data-i18n="defaultMode">Default mode</h2>
+      <p class="do-card-hint" data-i18n-html="defaultModeHintHtml">
         How Dynamic RTL behaves on sites that have no explicit entry in the
         list below. Use the toolbar icon on any page to add or update an
         entry instantly. Sites that are already Persian or Arabic
@@ -40,8 +40,8 @@
 
     <!-- Font -->
     <section class="do-card">
-      <h2 class="do-card-title">Font</h2>
-      <p class="do-card-hint">
+      <h2 class="do-card-title" data-i18n="fontTitle">Font</h2>
+      <p class="do-card-hint" data-i18n-html="fontHintHtml">
         The default font is <strong>Vazirmatn</strong>, designed by
         <a href="https://github.com/rastikerdar/vazirmatn" target="_blank" rel="noopener">Saber Rastikerdar</a>
         and bundled with the extension - no internet required.
@@ -49,26 +49,26 @@
 
       <div class="do-row">
         <div>
-          <p class="do-row-label">Active font</p>
-          <p class="do-row-hint">Switch to a custom font you upload below.</p>
+          <p class="do-row-label" data-i18n="activeFont">Active font</p>
+          <p class="do-row-hint" data-i18n="activeFontHint">Switch to a custom font you upload below.</p>
         </div>
         <div class="do-radio-group">
           <label class="do-radio">
             <input type="radio" name="do-font" value="vazirmatn">
             <span class="do-radio-mark"></span>
-            Vazirmatn (default)
+            <span data-i18n="fontVazir">Vazirmatn (default)</span>
           </label>
           <label class="do-radio">
             <input type="radio" name="do-font" value="custom">
             <span class="do-radio-mark"></span>
-            Custom font
+            <span data-i18n="fontCustom">Custom font</span>
           </label>
         </div>
       </div>
 
       <div class="do-row" style="display:block">
-        <p class="do-row-label">Upload a custom font</p>
-        <p class="do-row-hint">
+        <p class="do-row-label" data-i18n="uploadTitle">Upload a custom font</p>
+        <p class="do-row-hint" data-i18n-html="uploadHintHtml">
           Variable fonts (<code>.woff2</code> with weight axis) are recommended -
           a single file covers every weight, looks crisp at all sizes, and
           keeps memory usage low. Static <code>.woff2</code>, <code>.ttf</code>
@@ -77,7 +77,7 @@
         <div style="margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <input type="file" id="do-font-file" class="do-input"
                  accept=".woff2,.woff,.ttf,.otf,font/woff2,font/woff,font/ttf,font/otf">
-          <button class="do-btn-ghost do-btn" id="do-clear-font">Remove custom font</button>
+          <button class="do-btn-ghost do-btn" id="do-clear-font" data-i18n="clearFont">Remove custom font</button>
         </div>
         <p class="do-status" id="do-font-status"></p>
 
@@ -90,8 +90,8 @@
 
     <!-- Site list -->
     <section class="do-card">
-      <h2 class="do-card-title">Custom site list</h2>
-      <p class="do-card-hint">
+      <h2 class="do-card-title" data-i18n="listTitle">Custom site list</h2>
+      <p class="do-card-hint" data-i18n-html="listHintHtml">
         Every site you toggle from the toolbar shows up here. Each row is an
         explicit override that wins over the default mode. Subdomains
         inherit automatically (e.g. <code>google.com*off</code> covers
@@ -100,7 +100,7 @@
 
       <div class="do-list" id="do-list" aria-live="polite">
         <p class="do-list-empty" id="do-list-empty">
-          No sites yet. Click the Dynamic RTL icon on any page to add one.
+          <span data-i18n="listEmpty">No sites yet. Click the Dynamic RTL icon on any page to add one.</span>
         </p>
       </div>
 
@@ -111,15 +111,15 @@
           <option value="on">on</option>
           <option value="off">off</option>
         </select>
-        <button class="do-btn" id="do-add-btn">Add</button>
+        <button class="do-btn" id="do-add-btn" data-i18n="addBtn">Add</button>
       </div>
       <p class="do-status" id="do-list-status"></p>
 
       <div class="do-actions">
-        <button class="do-btn-ghost do-btn" id="do-list-export">Export list</button>
-        <button class="do-btn-ghost do-btn" id="do-list-import">Import list</button>
+        <button class="do-btn-ghost do-btn" id="do-list-export" data-i18n="exportBtn">Export list</button>
+        <button class="do-btn-ghost do-btn" id="do-list-import" data-i18n="importBtn">Import list</button>
         <input type="file" id="do-list-import-file" accept="application/json,.json,.txt" hidden>
-        <button class="do-btn-danger do-btn" id="do-list-clear">Clear list</button>
+        <button class="do-btn-danger do-btn" id="do-list-clear" data-i18n="clearBtn">Clear list</button>
       </div>
     </section>
 
