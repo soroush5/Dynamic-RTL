@@ -1,6 +1,11 @@
-# داینامیک RTL ‏(نسخه ۳)
+# Dynamic RTL
 
-> متن فارسی و عربی را در صفحه‌های وب به‌صورت خودکار پیدا می‌کند و راست‌چین نمایش می‌دهد؛ با فونت وزیرمتن و پیش از آنکه صفحه دیده شود.
+> Auto-detects Persian and Arabic text on web pages, then instantly applies the right direction (RTL) and a comfortable font - before you even see the page.
+
+[![Version](https://img.shields.io/badge/version-3-5b6cff)](#release)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?logo=googlechrome&logoColor=white)](#install-on-chrome--edge--brave--arc)
+[![Firefox](https://img.shields.io/badge/Firefox-MV3-FF7139?logo=firefox&logoColor=white)](#install-on-firefox)
 
 <p>
   <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-chrome-latest.zip"><img src="https://img.shields.io/badge/Download-Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Download for Chrome"></a>
@@ -8,84 +13,216 @@
   <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-safari-latest.zip"><img src="https://img.shields.io/badge/Download-Safari-000000?style=for-the-badge&logo=safari&logoColor=white" alt="Download for Safari"></a>
 </p>
 
-[English README / توضیحات انگلیسی](README.en.md) · [صفحه Releases](https://github.com/soroush5/Dynamic-RTL/releases)
+[نسخه فارسی](README.fa.md)
+
+
+Dynamic RTL watches every page you open and, the moment it spots Persian or Arabic text - in a paragraph, a chat bubble, a tweet, or even an input field - it switches that element to right-to-left direction and renders it with the **Vazirmatn** variable font.
+
+It is shipped as **three separate builds** that share the same detection logic and default font, but each follows the design language of its host application:
+
+| Build | Target | Manifest |
+| --- | --- | --- |
+| **`chrome/`** | Chrome, Edge, Brave, Arc, Opera (Chromium) | MV3 |
+| **`firefox/`** | Firefox 121 and newer | MV3 |
+| **`safari/`** | Safari 26 and newer (temporary load) | MV3 |
+
+Repository: https://github.com/soroush5/Dynamic-RTL
 
 ---
 
-## معرفی
+## Table of contents
 
-هر صفحه‌ای که باز می‌کنید بررسی می‌شود و به‌محض مشاهده متن فارسی یا عربی (در پاراگراف، پیام چت، توییت یا حتی محل تایپ شما) همان بخش راست‌چین شده و با فونت **وزیرمتن** نمایش داده می‌شود.
+- [What it does](#what-it-does)
+- [Highlights](#highlights)
+- [Install](#install)
+  - [Install on Chrome / Edge / Brave / Arc](#install-on-chrome--edge--brave--arc)
+  - [Install on Firefox](#install-on-firefox)
+  - [Install on Safari](#install-on-safari)
+- [Using the browser extensions](#using-the-browser-extensions)
+- [Custom variable font](#custom-variable-font)
+- [Sites we keep an eye on](#sites-we-keep-an-eye-on)
+- [Performance](#performance)
+- [Privacy](#privacy)
+- [Troubleshooting](#troubleshooting)
+- [Repository layout](#repository-layout)
+- [Building from source](#building-from-source)
+- [Credits](#credits)
+- [License](#license)
 
-این افزونه در سه نسخه عرضه می‌شود که منطق تشخیص یکسانی دارند:
+---
 
-| نسخه | مناسب برای |
+## What it does
+
+When a Dynamic RTL build is active:
+
+1. **Pages**: at `document_start` (before the body is parsed) it injects a stylesheet that registers the bundled Vazirmatn variable font and a CSS class called `.dynrtl-rtl`. As the DOM is parsed and as new content streams in (chat messages, tweets, search results), a `TreeWalker` + `MutationObserver` finds Persian / Arabic text and tags the nearest block ancestor.
+2. **Inputs / contenteditable**: a capture-phase listener flips `dir="auto"` and `text-align` on `<input>`, `<textarea>` and `[contenteditable]` as you type, even on a single Persian character. The CSS class never sets `direction: rtl !important` on editors, which would break editor frameworks like Slate / Lexical / ProseMirror used by Claude, Notion, X, Gemini, etc.
+
+It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unicode blocks (`U+0600-U+06FF`, `U+0750-U+077F`, `U+08A0-U+08FF`, `U+FB50-U+FDFF`, `U+FE70-U+FEFF`).
+
+## Highlights
+
+- **No flash**: in browsers, font and base styles are registered before first paint via a `document_start` content script.
+- **Native look per host**: each build follows the design language of its host:
+  - **Chrome** popup / options use Material 3 (Chrome 130+ tokens): rounded surfaces, sliding switches, pill-shaped chips, primary blue `#0b57d0`, subtle scale + fade entrance.
+  - **Firefox** popup / options use Acorn / Proton (Firefox 130+ tokens): tighter 4-8 px radii, thin-bordered cards, outlined switches and radio rings, accent `#0061e0` / `#00ddff`.
+
+- **Per-site control**: click the toolbar icon to toggle the current site. Choose between two default modes:
+  - *Enable on all sites* (default) - sites you turn off are remembered as `domain*off`.
+  - *Disable on all sites* - sites you turn on are remembered as `domain*on`.
+- **Local font**: Vazirmatn is bundled with every build. No external request, no CDN dependency.
+- **Custom variable font**: upload your own `.woff2 / .woff / .ttf / .otf` file from settings. Variable fonts are recommended (one file, every weight, smaller, sharper).
+- **Live editor support**: works on inputs, textareas and `contenteditable` editors as you type a single character. Uses the W3C `dir="auto"` attribute, never breaks editor internals.
+- **Built for dynamic apps**: ChatGPT, Claude, X.com, Notion, Google services, Gemini - dynamic content gets RTL'd as it streams in.
+- **URL-aware bidi**: inline `cite / code / kbd / samp / var / pre` inside RTL blocks keep their own LTR context, so URLs in Google search results no longer read backwards.
+- **Shadow DOM aware**: the content script descends into open shadow roots, so Web-Component-based UIs get the same treatment as light DOM.
+- **Performance budget**: observer only queues, a debounced flush walks with a 10 ms / 1000-node ceiling, expando flags replace WeakSets, and `all_frames` stays off, tagging never blocks the page.
+- **Diagnostic logging**: a debug toggle prints labelled traces to DevTools.
+
+## Install
+
+> Pre-built bundles for v2.3 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v3.zip`, `dynamic-rtl-firefox-v3.zip` and `dynamic-rtl-safari-v3.zip`. They are also checked in under [`resources/`](./resources) for offline access.
+
+### Install on Chrome / Edge / Brave / Arc
+
+1. Download `dynamic-rtl-chrome-v3.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
+2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`, etc.).
+3. Turn on **Developer mode** in the top-right corner.
+4. Click **Load unpacked** and select the extracted folder.
+5. The Dynamic RTL icon appears in your toolbar. Pin it for quick access. The icon is colored when active on the current site, grayscale when inactive.
+
+> Updating: download the new zip, replace the folder, click the reload icon on the extension card.
+
+### Install on Firefox
+
+Firefox blocks unsigned extensions on the regular release channel. Three supported paths:
+
+**Path A: temporary install (any Firefox):**
+
+1. Download `dynamic-rtl-firefox-v3.zip`.
+2. Open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on...** and select the `manifest.json` file inside the (extracted) zip.
+4. The extension stays installed until you restart Firefox.
+
+**Path B: permanent install (Developer Edition / Nightly / ESR):**
+
+1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
+Rename `dynamic-rtl-firefox-v3.zip` to `dynamic-rtl-firefox-v3.xpi`.
+3. Drag the `.xpi` file into Firefox and click **Add**.
+
+**Path C: regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
+
+### Install on Safari
+
+Safari 26 can load the extension straight from a folder, no Xcode needed:
+
+1. Download `dynamic-rtl-safari-v3.zip` and extract it.
+2. Safari → Settings → Developer tab → **Add Temporary Extension…**, pick the extracted folder, confirm with Touch ID / password.
+3. Settings → Extensions → enable it with Always Allow. Note: it unloads when Safari quits.
+
+## Using the browser extensions
+
+- Click the toolbar icon to open the popup. The icon is **colored** when Dynamic RTL is active on the current page, and **grayscale** when it isn't.
+- The toggle at the top enables / disables RTL on the current site. Each toggle is recorded as an explicit override (`domain*on` or `domain*off`) in the custom site list.
+- Use the segmented control to flip between *Enable on all sites* and *Disable on all sites*. This default applies to sites without an explicit entry. Your custom site list is preserved when you switch modes.
+- Click **Settings & custom font** to open the full options page. There you can edit the custom site list directly, change fonts, and turn on debug logging.
+
+## Custom variable font
+
+Every build ships with **Vazirmatn**: the variable cut, with a continuous `wght` axis from 100 to 900. To replace it, use the **Font** section of the settings page in your build of choice and upload a `.woff2 / .woff / .ttf / .otf` file (up to 8 MB).
+
+> **Why variable fonts?** A single variable font file covers every weight, looks crisp at every size, and uses less memory than shipping nine static cuts.
+
+## Sites we keep an eye on
+
+Special care has been taken to make Dynamic RTL behave on heavy SPAs:
+
+- **ChatGPT** (`chat.openai.com`, `chatgpt.com`): streamed message tokens, ProseMirror composer.
+- **Claude** (`claude.ai`): streamed conversations, prompt editor.
+- **Gemini** (`gemini.google.com`): composer + streamed responses.
+- **X / Twitter** (`x.com`, `twitter.com`): virtualised timelines, replies, the composer.
+- **Notion**: per-block contenteditable, slash menu.
+- **Google services**: Gmail composer (contenteditable), Calendar, Search, YouTube comments. URL / breadcrumb fragments inside RTL search results stay in LTR via `unicode-bidi: isolate`.
+- **Google Docs / Sheets / Slides**: the canvas-rendered document area is intentionally skipped; comments, sidebars and menus are styled normally.
+- **Telegram Web, WhatsApp Web, Discord, Slack, Reddit, Stack Overflow, GitHub, app.kiro.dev**: covered by the generic mutation observer + shadow-DOM walker.
+
+If you hit a site that misbehaves, reload the page, open DevTools and check the console for errors for the bug report.
+
+## Performance
+
+- Tagging is done by adding a single CSS class, never inline styles, so style recalculation is fast and reversible.
+- Touched elements carry a tiny expando flag, so already-tagged subtrees bail out in a few pointer hops with zero GC pressure.
+- The observer callback only queues dirty roots; a debounced flush walks them with a 10 ms / 1000-node budget, then yields the thread.
+- While the page is still parsing, the first flush runs pre-paint (no idle wait), so pages render with RTL already applied; idle scheduling only applies after load.
+- The text walk is a single `TreeWalker` pass that also discovers open shadow roots and rejects `<script>`, `<style>`, `<code>`, `<pre>`, canvas editors and contenteditable subtrees.
+- `all_frames` is off, so ads and iframes cost nothing.
+- The font uses a `unicode-range` limited to Arabic-script blocks, so English-only pages never download it.
+
+## Privacy
+
+Dynamic RTL does not call the network. Ever.
+
+- The Vazirmatn font is bundled inside every build.
+- Per-site list, custom font, and other preferences live in `chrome.storage.local` on your machine.
+- There is no telemetry, no analytics, and no remote configuration.
+
+The browser builds request `storage`, `tabs` and `activeTab` permission, plus host permission for `http://*/*` and `https://*/*`. The host permission is required because the extension needs to run a content script on every site you visit to detect Persian / Arabic text.
+
+## Troubleshooting
+
+The content script stays silent by design. If something looks wrong, work through these:
+
+Common fixes:
+
+| Symptom | Try |
 | --- | --- |
-| `chrome/` | کروم، اج، بریو، آرک و اپرا (مرورگرهای کرومیوم) |
-| `firefox/` | فایرفاکس ۱۲۱ و بالاتر |
-| `safari/` | سافاری ۲۶ و بالاتر (بارگذاری موقت) |
+| Font does not change but direction is correct | Make sure the toolbar icon is colored (active). Reload the page once to give the font cache a chance. |
+| A specific site looks wrong | Click the toolbar icon to toggle it off. The site is recorded in your custom site list. |
+| Custom font does not load | The file must be `.woff2`, `.woff`, `.ttf` or `.otf` and smaller than 8 MB. Variable fonts must include the `wght` axis. |
+| Nothing happens at all | Open the options page, check the default mode and the custom site list. Then open DevTools and look for errors. |
 
-## نصب
 
-### کروم / اج / بریو / آرک
+## Repository layout
 
-1. فایل `dynamic-rtl-chrome-v3.zip` را از صفحه [Releases](https://github.com/soroush5/Dynamic-RTL/releases) دانلود و از حالت فشرده خارج کنید.
-2. وارد آدرس `chrome://extensions` شوید و **Developer mode** (حالت توسعه‌دهنده) را فعال کنید.
-3. روی **Load unpacked** کلیک کنید و پوشه استخراج‌شده را انتخاب نمایید.
-4. آیکن افزونه در نوار ابزار ظاهر می‌شود. در سایت‌هایی که افزونه فعال است آیکن رنگی و در غیر این صورت خاکستری نمایش داده می‌شود.
+```
+.
++-- chrome/                     Chrome MV3 build (use this for Chromium browsers)
+|   +-- manifest.json
+|   +-- background/service-worker.js
+|   +-- content/                early-inject.js, main.js
+|   +-- popup/                  popup.html / popup.css / popup.js  (Material 3)
+|   +-- options/                options.html / options.css / options.js
+|   +-- fonts/                  Vazirmatn-Variable.woff2
+|   +-- icons/                  active + inactive icons (16 / 32 / 48 / 128)
++-- firefox/                    Firefox MV3 build (Acorn / Proton styling)
++-- safari/                     Safari MV3 build (same code as chrome/, load as Temporary Extension)
++-- resources/                  Pre-built zip packages for all three builds
++-- scripts/build-zips.sh       Re-create the release packages
++-- LICENSE
++-- README.md
+```
 
-### فایرفاکس
+## Building from source
 
-نسخه معمولی فایرفاکس افزونه امضانشده را قبول نمی‌کند. سه روش پشتیبانی می‌شود:
-
-**روش اول: نصب موقت (همه نسخه‌های فایرفاکس):**
-
-1. فایل `dynamic-rtl-firefox-v3.zip` را دانلود کنید.
-2. وارد آدرس `about:debugging#/runtime/this-firefox` شوید.
-3. روی **Load Temporary Add-on...** کلیک کنید و فایل `manifest.json` داخل پوشه استخراج‌شده را انتخاب نمایید.
-4. افزونه تا زمان بستن فایرفاکس فعال می‌ماند.
-
-**روش دوم: نصب دائمی (Developer Edition / Nightly / ESR):**
-
-1. در صفحه `about:config` گزینه `xpinstall.signatures.required` را `false` کنید.
-2. نام فایل زیپ را به `dynamic-rtl-firefox-v3.xpi` تغییر دهید و آن را داخل فایرفاکس بکشید.
-
-### سافاری
-
-سافاری ۲۶ پوشه افزونه را مستقیم بارگذاری می‌کند و نیازی به Xcode نیست:
-
-1. فایل `dynamic-rtl-safari-v3.zip` را دانلود و از حالت فشرده خارج کنید.
-2. در سافاری وارد Settings → تب Developer شوید، روی **Add Temporary Extension…** کلیک کنید، پوشه را انتخاب نمایید و با اثر انگشت یا گذرواژه تأیید کنید.
-3. در بخش Settings → Extensions افزونه را با گزینه Always Allow فعال کنید. توجه داشته باشید که با بستن سافاری، افزونه غیرفعال می‌شود.
-
-## استفاده
-
-- با کلیک روی آیکن نوار ابزار، پنجره افزونه باز می‌شود. کلید بالای آن، افزونه را برای همان سایت روشن یا خاموش می‌کند.
-- دو حالت کلی وجود دارد: *فعال در همه سایت‌ها* (پیش‌فرض) یا *غیرفعال در همه سایت‌ها*. سایت‌هایی که به‌صورت دستی تغییر می‌دهید در فهرست شخصی شما ذخیره می‌شوند.
-- سایت‌هایی که خودشان فارسی هستند (مانند `lang="fa"`) به‌صورت پیش‌فرض بدون تغییر می‌مانند؛ در صورت نیاز می‌توانید با همان کلید آن‌ها را فعال کنید.
-- با دکمه **Settings & custom font** وارد صفحه تنظیمات کامل می‌شوید: فهرست سایت‌ها، انتخاب فونت و حذف فونت سفارشی.
-
-## فونت سفارشی
-
-فونت پیش‌فرض **وزیرمتن** همراه خود افزونه ارائه می‌شود و به اینترنت نیازی ندارد. در صورت تمایل می‌توانید از بخش تنظیمات، فونت دلخواه خود را بارگذاری کنید (`.woff2` / `.woff` / `.ttf` / `.otf` تا سقف ۸ مگابایت). استفاده از فونت متغیر (Variable) توصیه می‌شود، زیرا یک فایل واحد همه وزن‌ها را پوشش می‌دهد.
-
-## حریم خصوصی
-
-افزونه هیچ ارتباطی با اینترنت برقرار نمی‌کند. فهرست سایت‌ها و فونت سفارشی صرفا در حافظه محلی دستگاه شما (`chrome.storage.local`) ذخیره می‌شوند. هیچ‌گونه آمار یا ردیابی وجود ندارد.
-
-## ساخت از روی سورس
-
-به مرحله بیلد نیازی نیست. برای بازسازی فایل‌های زیپ:
+You do not need a build step. To recreate the release zips:
 
 ```bash
 ./scripts/build-zips.sh
 ```
 
-## لینک‌ها
+This produces:
 
-- [گزارش خطا و پیشنهاد](https://github.com/soroush5/Dynamic-RTL/issues)
-- سازنده: [soroush5](https://github.com/soroush5)
-- فونت پیش‌فرض: [وزیرمتن](https://github.com/rastikerdar/vazirmatn)
+```text
+resources/dynamic-rtl-chrome-v3.zip
+resources/dynamic-rtl-firefox-v3.zip
+resources/dynamic-rtl-safari-v3.zip
+```
 
-## لایسنس
+## Credits
 
-این پروژه تحت [MIT](LICENSE) منتشر شده است. فونت وزیرمتن تحت لایسنس SIL Open Font License 1.1 قرار دارد.
+- **Developer:** [soroush5](https://github.com/soroush5)
+- **Default font:** [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar (Open Font License)
+
+## License
+
+Dynamic RTL is released under the [MIT License](LICENSE). The bundled Vazirmatn font is licensed under the SIL Open Font License 1.1.
