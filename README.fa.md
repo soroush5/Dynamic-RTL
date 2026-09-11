@@ -1,0 +1,91 @@
+# داینامیک RTL ‏(نسخه ۳)
+
+> متن فارسی و عربی را در صفحه‌های وب به‌صورت خودکار پیدا می‌کند و راست‌چین نمایش می‌دهد؛ با فونت وزیرمتن و پیش از آنکه صفحه دیده شود.
+
+<p>
+  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-chrome-latest.zip"><img src="https://img.shields.io/badge/Download-Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Download for Chrome"></a>
+  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-firefox-latest.zip"><img src="https://img.shields.io/badge/Download-Firefox-FF7139?style=for-the-badge&logo=firefox&logoColor=white" alt="Download for Firefox"></a>
+  <a href="https://github.com/soroush5/Dynamic-RTL/releases/latest/download/dynamic-rtl-safari-latest.zip"><img src="https://img.shields.io/badge/Download-Safari-000000?style=for-the-badge&logo=safari&logoColor=white" alt="Download for Safari"></a>
+</p>
+
+[English README](README.md) · [صفحه Releases](https://github.com/soroush5/Dynamic-RTL/releases)
+
+---
+
+## معرفی
+
+هر صفحه‌ای که باز می‌کنید بررسی می‌شود و به‌محض مشاهده متن فارسی یا عربی (در پاراگراف، پیام چت، توییت یا حتی محل تایپ شما) همان بخش راست‌چین شده و با فونت **وزیرمتن** نمایش داده می‌شود.
+
+این افزونه در سه نسخه عرضه می‌شود که منطق تشخیص یکسانی دارند:
+
+| نسخه | مناسب برای |
+| --- | --- |
+| `chrome/` | کروم، اج، بریو، آرک و اپرا (مرورگرهای کرومیوم) |
+| `firefox/` | فایرفاکس ۱۲۱ و بالاتر |
+| `safari/` | سافاری ۲۶ و بالاتر (بارگذاری موقت) |
+
+## نصب
+
+### کروم / اج / بریو / آرک
+
+1. فایل `dynamic-rtl-chrome-v3.zip` را از صفحه [Releases](https://github.com/soroush5/Dynamic-RTL/releases) دانلود و از حالت فشرده خارج کنید.
+2. وارد آدرس `chrome://extensions` شوید و **Developer mode** (حالت توسعه‌دهنده) را فعال کنید.
+3. روی **Load unpacked** کلیک کنید و پوشه استخراج‌شده را انتخاب نمایید.
+4. آیکن افزونه در نوار ابزار ظاهر می‌شود. در سایت‌هایی که افزونه فعال است آیکن رنگی و در غیر این صورت خاکستری نمایش داده می‌شود.
+
+### فایرفاکس
+
+نسخه معمولی فایرفاکس افزونه امضانشده را قبول نمی‌کند. سه روش پشتیبانی می‌شود:
+
+**روش اول: نصب موقت (همه نسخه‌های فایرفاکس):**
+
+1. فایل `dynamic-rtl-firefox-v3.zip` را دانلود کنید.
+2. وارد آدرس `about:debugging#/runtime/this-firefox` شوید.
+3. روی **Load Temporary Add-on...** کلیک کنید و فایل `manifest.json` داخل پوشه استخراج‌شده را انتخاب نمایید.
+4. افزونه تا زمان بستن فایرفاکس فعال می‌ماند.
+
+**روش دوم: نصب دائمی (Developer Edition / Nightly / ESR):**
+
+1. در صفحه `about:config` گزینه `xpinstall.signatures.required` را `false` کنید.
+2. نام فایل زیپ را به `dynamic-rtl-firefox-v3.xpi` تغییر دهید و آن را داخل فایرفاکس بکشید.
+
+### سافاری
+
+سافاری ۲۶ پوشه افزونه را مستقیم بارگذاری می‌کند و نیازی به Xcode نیست:
+
+1. فایل `dynamic-rtl-safari-v3.zip` را دانلود و از حالت فشرده خارج کنید.
+2. در سافاری وارد Settings → تب Developer شوید، روی **Add Temporary Extension…** کلیک کنید، پوشه را انتخاب نمایید و با اثر انگشت یا گذرواژه تأیید کنید.
+3. در بخش Settings → Extensions افزونه را با گزینه Always Allow فعال کنید. توجه داشته باشید که با بستن سافاری، افزونه غیرفعال می‌شود.
+
+## استفاده
+
+- با کلیک روی آیکن نوار ابزار، پنجره افزونه باز می‌شود. کلید بالای آن، افزونه را برای همان سایت روشن یا خاموش می‌کند.
+- دو حالت کلی وجود دارد: *فعال در همه سایت‌ها* (پیش‌فرض) یا *غیرفعال در همه سایت‌ها*. سایت‌هایی که به‌صورت دستی تغییر می‌دهید در فهرست شخصی شما ذخیره می‌شوند.
+- سایت‌هایی که خودشان فارسی هستند (مانند `lang="fa"`) به‌صورت پیش‌فرض بدون تغییر می‌مانند؛ در صورت نیاز می‌توانید با همان کلید آن‌ها را فعال کنید.
+- با دکمه **Settings & custom font** وارد صفحه تنظیمات کامل می‌شوید: فهرست سایت‌ها، انتخاب فونت و حذف فونت سفارشی.
+
+## فونت سفارشی
+
+فونت پیش‌فرض **وزیرمتن** همراه خود افزونه ارائه می‌شود و به اینترنت نیازی ندارد. در صورت تمایل می‌توانید از بخش تنظیمات، فونت دلخواه خود را بارگذاری کنید (`.woff2` / `.woff` / `.ttf` / `.otf` تا سقف ۸ مگابایت). استفاده از فونت متغیر (Variable) توصیه می‌شود، زیرا یک فایل واحد همه وزن‌ها را پوشش می‌دهد.
+
+## حریم خصوصی
+
+افزونه هیچ ارتباطی با اینترنت برقرار نمی‌کند. فهرست سایت‌ها و فونت سفارشی صرفا در حافظه محلی دستگاه شما (`chrome.storage.local`) ذخیره می‌شوند. هیچ‌گونه آمار یا ردیابی وجود ندارد.
+
+## ساخت از روی سورس
+
+به مرحله بیلد نیازی نیست. برای بازسازی فایل‌های زیپ:
+
+```bash
+./scripts/build-zips.sh
+```
+
+## لینک‌ها
+
+- [گزارش خطا و پیشنهاد](https://github.com/soroush5/Dynamic-RTL/issues)
+- سازنده: [soroush5](https://github.com/soroush5)
+- فونت پیش‌فرض: [وزیرمتن](https://github.com/rastikerdar/vazirmatn)
+
+## لایسنس
+
+این پروژه تحت [MIT](LICENSE) منتشر شده است. فونت وزیرمتن تحت لایسنس SIL Open Font License 1.1 قرار دارد.
