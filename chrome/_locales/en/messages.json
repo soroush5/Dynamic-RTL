@@ -194,5 +194,62 @@
   },
   "delTitle": {
     "message": "Remove from list"
+  },
+  "welcomeTitle": {
+    "message": "Welcome to Dynamic RTL"
+  },
+  "welcomeSub": {
+    "message": "Persian and Arabic pages, automatically right-to-left with a beautiful font."
+  },
+  "welcomeStep1": {
+    "message": "Pin the icon: open the extensions menu (puzzle piece) and pin Dynamic RTL to the toolbar."
+  },
+  "welcomeStep2": {
+    "message": "Toggle any site: click the icon on a page to turn RTL on or off just for that site."
+  },
+  "welcomeStep3": {
+    "message": "Fine-tune: open Settings for the site list, custom fonts and the keyboard shortcut."
+  },
+  "welcomeOpenSettings": {
+    "message": "Open Settings"
+  },
+  "welcomeShortcutHint": {
+    "message": "Tip: press Ctrl+Shift+Y (Command+Shift+Y on Mac) on any page to toggle it instantly."
+  },
+  "ctxToggle": {
+    "message": "Dynamic RTL: toggle this site"
+  },
+  "searchPlaceholder": {
+    "message": "Search sites..."
+  },
+  "searchNoMatch": {
+    "message": "No sites match your search."
+  },
+  "reportBtn": {
+    "message": "Report broken site"
+  },
+  "whatsNewTitle": {
+    "message": "What's new"
+  },
+  "whatsNewBodyHtml": {
+    "message": "Settings now sync across your devices. This page also gained site search, a keyboard shortcut display, and the popup gained a broken-site reporter. Enjoy!"
+  },
+  "whatsNewDismiss": {
+    "message": "Got it"
+  },
+  "shortcutTitle": {
+    "message": "Keyboard shortcut"
+  },
+  "shortcutNone": {
+    "message": "not set"
+  },
+  "shortcutHintChrome": {
+    "message": "Change it at chrome://extensions/shortcuts (paste into the address bar)."
+  },
+  "shortcutHintFirefox": {
+    "message": "Change it in the Add-ons Manager: gear menu > Manage Extension Shortcuts."
+  },
+  "shortcutHintSafari": {
+    "message": "Change it in Safari Settings > Extensions > Keyboard Shortcuts."
   }
 }

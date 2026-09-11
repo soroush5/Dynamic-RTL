@@ -194,5 +194,62 @@
   },
   "delTitle": {
     "message": "حذف از فهرست"
+  },
+  "welcomeTitle": {
+    "message": "به داینامیک RTL خوش آمدی"
+  },
+  "welcomeSub": {
+    "message": "صفحه‌های فارسی و عربی، خودکار راست‌چین با یه فونت قشنگ."
+  },
+  "welcomeStep1": {
+    "message": "آیکن رو سنجاق کن: منوی افزونه‌ها (تکه پازل) رو باز کن و داینامیک RTL رو به نوار ابزار سنجاق کن."
+  },
+  "welcomeStep2": {
+    "message": "هر سایت رو جدا تاگل کن: روی هر صفحه روی آیکن بزن تا راست‌چین فقط برای همون سایت روشن یا خاموش بشه."
+  },
+  "welcomeStep3": {
+    "message": "دقیقش کن: برای فهرست سایت‌ها، فونت دلخواه و شورت‌کات صفحه‌کلید برو به تنظیمات."
+  },
+  "welcomeOpenSettings": {
+    "message": "باز کردن تنظیمات"
+  },
+  "welcomeShortcutHint": {
+    "message": "نکته: روی هر صفحه Ctrl+Shift+Y (در مک Command+Shift+Y) رو بزن تا فوری تاگل بشه."
+  },
+  "ctxToggle": {
+    "message": "داینامیک RTL: تغییر وضعیت این سایت"
+  },
+  "searchPlaceholder": {
+    "message": "جست‌وجو در سایت‌ها..."
+  },
+  "searchNoMatch": {
+    "message": "سایتی با این جست‌وجو پیدا نشد."
+  },
+  "reportBtn": {
+    "message": "گزارش خرابی سایت"
+  },
+  "whatsNewTitle": {
+    "message": "تازه‌ها"
+  },
+  "whatsNewBodyHtml": {
+    "message": "تنظیمات از این به بعد بین دستگاه‌هات همگام میشه. جست‌وجو در فهرست سایت‌ها، نمایش شورت‌کات صفحه‌کلید و دکمه گزارش خرابی سایت هم اضافه شد. خوش بگذره!"
+  },
+  "whatsNewDismiss": {
+    "message": "فهمیدم"
+  },
+  "shortcutTitle": {
+    "message": "شورت‌کات صفحه‌کلید"
+  },
+  "shortcutNone": {
+    "message": "تنظیم نشده"
+  },
+  "shortcutHintChrome": {
+    "message": "برای تغییرش این رو توی نوار آدرس بذار: chrome://extensions/shortcuts"
+  },
+  "shortcutHintFirefox": {
+    "message": "برای تغییرش برو به مدیریت افزودنی‌ها: منوی چرخ‌دنده > Manage Extension Shortcuts."
+  },
+  "shortcutHintSafari": {
+    "message": "برای تغییرش برو به تنظیمات سافاری > Extensions > Keyboard Shortcuts."
   }
 }
