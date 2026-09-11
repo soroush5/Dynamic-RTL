@@ -1,16 +1,21 @@
 {
   "manifest_version": 3,
   "name": "Dynamic RTL",
-  "version": "3",
+  "version": "3.1",
   "description": "Auto-detects Persian and Arabic text on web pages and applies right-to-left direction with the Vazirmatn font (customizable).",
   "author": "soroush5",
   "homepage_url": "https://github.com/soroush5/Dynamic-RTL",
   "browser_specific_settings": {
     "gecko": {
       "id": "dynamic-rtl@soroush5.github.io",
-      "strict_min_version": "121.0"
+      "strict_min_version": "121.0",
+      "data_collection_permissions": {
+        "required": [],
+        "optional": []
+      }
     }
   },
+  "default_locale": "en",
   "icons": {
     "16": "icons/icon-active-16.png",
     "32": "icons/icon-active-32.png",
@@ -36,9 +41,17 @@
   },
   "permissions": [
     "storage",
-    "tabs",
     "activeTab"
   ],
+  "commands": {
+    "toggle-site": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Toggle Dynamic RTL on this site"
+    }
+  },
   "host_permissions": [
     "http://*/*",
     "https://*/*"

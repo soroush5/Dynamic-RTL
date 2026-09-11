@@ -19,6 +19,29 @@ const DEFAULTS = {
   siteOverrides: {}
 };
 
+function t(key, subs) {
+  try {
+    const m = api.i18n ? api.i18n.getMessage(key, subs) : '';
+    if (m) return m;
+  } catch (_) {}
+  return '';
+}
+// Static English stays in the HTML as fallback; this swaps in the UI locale
+// and mirrors the page when the browser speaks a RTL language.
+function applyI18n() {
+  try {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const m = t(el.getAttribute('data-i18n'));
+      if (m) el.textContent = m;
+    });
+    let rtl = false;
+    try { rtl = /^fa\b/i.test((api.i18n && api.i18n.getUILanguage && api.i18n.getUILanguage()) || ''); } catch (_) {}
+    document.dir = rtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = rtl ? 'fa' : 'en';
+  } catch (_) {}
+}
+
+
 function normalizeHost(h) { return (h || '').toLowerCase().replace(/^www\./, ''); }
 
 function findOverride(overrides, host) {
@@ -86,10 +109,10 @@ function setModeUI(mode) {
   for (const r of els.modeRadios) r.checked = (r.value === mode);
   if (mode === 'enable_all') {
     els.modeExplainer.textContent =
-      'RTL applies everywhere except the sites listed as off.';
+      (t('explainerEnable') || 'RTL applies everywhere except the sites listed as off.');
   } else {
     els.modeExplainer.textContent =
-      'RTL is off by default. Enable it per-site using the switch above.';
+      (t('explainerDisable') || 'RTL is off by default. Enable it per-site using the switch above.');
   }
 }
 
@@ -109,10 +132,10 @@ async function refresh() {
   } catch (_) {}
 
   if (!supported) {
-    els.host.textContent = 'Not available on this page';
+    els.host.textContent = t('modeHintUnsupported') || 'Not available on this page';
     els.toggle.checked = false;
     els.toggle.disabled = true;
-    els.modeHint.textContent = 'Open a regular website to toggle.';
+    els.modeHint.textContent = t('modeHintOpenRegular') || 'Open a regular website to toggle.';
     els.status.classList.remove('is-active');
     els.status.classList.add('is-disabled');
     return;
@@ -139,21 +162,26 @@ async function refresh() {
   const override = findOverride(settings.siteOverrides, host);
   if (override) {
     els.modeHint.textContent = enabled
-      ? 'Active here (you turned it on)'
-      : 'Inactive here (you turned it off)';
+      ? (t('modeHintExplicitOn') || 'Active here (you turned it on)')
+      : (t('modeHintExplicitOff') || 'Inactive here (you turned it off)');
   } else if (autoSkipped) {
-    els.modeHint.textContent = 'Off by default · already a Persian/Arabic site';
+    els.modeHint.textContent = (t('modeHintAutoSkip') || 'Off by default · already a Persian/Arabic site');
   } else {
-    els.modeHint.textContent = enabled ? 'Active on this page' : 'Inactive on this page';
+    els.modeHint.textContent = enabled ? (t('modeHintOn') || 'Active on this page') : (t('modeHintOff') || 'Inactive on this page');
   }
 }
 
 els.toggle.addEventListener('change', async () => {
   const tab = await getCurrentTab();
   if (!tab || !tab.id) return;
+  let host = '';
+  try {
+    const u = new URL(tab.url);
+    if (/^https?:/.test(u.protocol)) host = u.hostname;
+  } catch (_) {}
   // Show the new state right away; refresh confirms it.
   els.status.classList.toggle('is-active', els.toggle.checked);
-  api.runtime.sendMessage({ type: 'DYNRTL_TOGGLE_CURRENT', tabId: tab.id }, () => {
+  api.runtime.sendMessage({ type: 'DYNRTL_TOGGLE_CURRENT', tabId: tab.id, host }, () => {
     refresh();
   });
 });
@@ -182,3 +210,5 @@ try {
   const vn = document.getElementById('dr-version');
   if (vn && api.runtime.getManifest) vn.textContent = 'v' + api.runtime.getManifest().version;
 } catch (_) {}
+
+applyI18n();
