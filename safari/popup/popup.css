@@ -206,7 +206,7 @@ body {
   position: absolute;
   width: 16px;
   height: 16px;
-  left: 0;
+  inset-inline-start: 0;
   top: 50%;
   transform: translateY(-50%);
   background: var(--toggle-off-knob);
@@ -219,6 +219,9 @@ body {
 .dr-switch input:checked + .dr-switch-slider::before {
   transform: translate(18px, -50%);
   background: var(--toggle-on-knob);
+}
+[dir="rtl"] .dr-switch input:checked + .dr-switch-slider::before {
+  transform: translate(-18px, -50%);
 }
 .dr-switch input:disabled + .dr-switch-slider { opacity: .5; }
 .dr-switch input:focus-visible + .dr-switch-slider {

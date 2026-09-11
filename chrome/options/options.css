@@ -293,7 +293,7 @@ input[type="file"].do-input { padding: 7px 10px; cursor: pointer; }
 }
 .do-switch-slider::before {
   content: ""; position: absolute; width: 16px; height: 16px;
-  left: 0; top: 50%;
+  inset-inline-start: 0; top: 50%;
   transform: translateY(-50%);
   background: var(--toggle-off-knob);
   border-radius: 50%;
@@ -305,6 +305,9 @@ input[type="file"].do-input { padding: 7px 10px; cursor: pointer; }
 .do-switch input:checked + .do-switch-slider::before {
   transform: translate(18px, -50%);
   background: var(--toggle-on-knob);
+}
+[dir="rtl"] .do-switch input:checked + .do-switch-slider::before {
+  transform: translate(-18px, -50%);
 }
 .do-switch input:focus-visible + .do-switch-slider {
   outline: 2px solid var(--primary);
@@ -325,8 +328,7 @@ input[type="file"].do-input { padding: 7px 10px; cursor: pointer; }
   border-radius: var(--radius-ctrl);
   background: var(--surface-2);
   border: 1px solid var(--divider);
-  direction: rtl;
-  text-align: right;
+  text-align: start;
   font-family: var(--do-preview-font, 'Vazirmatn DynRTL', 'Vazirmatn', 'Tahoma', sans-serif);
   font-size: 17px;
   line-height: 1.95;

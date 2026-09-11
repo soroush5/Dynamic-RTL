@@ -297,7 +297,7 @@ html, body {
   position: absolute;
   width: 12px;
   height: 12px;
-  left: 2px;
+  inset-inline-start: 2px;
   top: 50%;
   transform: translateY(-50%);
   background: var(--fx-on-surface-soft);
@@ -311,6 +311,9 @@ html, body {
 .do-switch input:checked + .do-switch-slider::before {
   transform: translate(14px, -50%);
   background: var(--fx-on-accent);
+}
+[dir="rtl"] .do-switch input:checked + .do-switch-slider::before {
+  transform: translate(-14px, -50%);
 }
 
 /* ---------- Status / preview ---------- */
@@ -327,8 +330,7 @@ html, body {
   border-radius: var(--fx-radius-card);
   background: var(--fx-bg);
   border: 1px solid var(--fx-border);
-  direction: rtl;
-  text-align: right;
+  text-align: start;
   font-family: var(--do-preview-font, 'Vazirmatn DynRTL', 'Vazirmatn', 'Tahoma', sans-serif);
   font-size: 16px;
   line-height: 1.9;
