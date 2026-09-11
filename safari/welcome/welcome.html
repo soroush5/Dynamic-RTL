@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dynamic RTL - Welcome</title>
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+  <main class="wl-shell">
+    <img class="wl-logo" src="../icons/icon-active-128.png" alt="">
+    <h1 class="wl-title" data-i18n="welcomeTitle">Welcome to Dynamic RTL</h1>
+    <p class="wl-sub" data-i18n="welcomeSub">Persian and Arabic pages, automatically right-to-left with a beautiful font.</p>
+
+    <ol class="wl-steps">
+      <li><span class="wl-num">1</span><span data-i18n="welcomeStep1">Pin the icon: open the extensions menu (puzzle piece) and pin Dynamic RTL to the toolbar.</span></li>
+      <li><span class="wl-num">2</span><span data-i18n="welcomeStep2">Toggle any site: click the icon on a page to turn RTL on or off just for that site.</span></li>
+      <li><span class="wl-num">3</span><span data-i18n="welcomeStep3">Fine-tune: open Settings for the site list, custom fonts and the keyboard shortcut.</span></li>
+    </ol>
+
+    <button class="wl-btn" id="wl-open-settings" data-i18n="welcomeOpenSettings">Open Settings</button>
+    <p class="wl-tip" data-i18n="welcomeShortcutHint">Tip: press Ctrl+Shift+Y (Command+Shift+Y on Mac) on any page to toggle it instantly.</p>
+  </main>
+
+  <script>
+  'use strict';
+  (function () {
+    var api = (typeof chrome !== 'undefined' && chrome.runtime) ? chrome : browser;
+    try {
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var m = '';
+        try { m = api.i18n ? api.i18n.getMessage(el.getAttribute('data-i18n')) : ''; } catch (_) {}
+        if (m) el.textContent = m;
+      });
+      var rtl = false;
+      try { rtl = /^fa\b/i.test((api.i18n && api.i18n.getUILanguage && api.i18n.getUILanguage()) || ''); } catch (_) {}
+      document.dir = rtl ? 'rtl' : 'ltr';
+      document.documentElement.lang = rtl ? 'fa' : 'en';
+    } catch (_) {}
+    document.getElementById('wl-open-settings').addEventListener('click', function () {
+      try {
+        if (api.runtime.openOptionsPage) api.runtime.openOptionsPage();
+        else window.open(api.runtime.getURL('options/options.html'));
+      } catch (_) {}
+    });
+  })();
+  </script>
+</body>
+</html>
