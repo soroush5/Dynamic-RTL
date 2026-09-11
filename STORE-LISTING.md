@@ -31,12 +31,13 @@ variable font. Before you even notice.
 - Per-site toggle from the toolbar, global enable/disable modes, custom site list with import/export.
 - Upload your own variable font, or keep Vazirmatn.
 - Shadow-DOM aware, capped 10 ms work batches, zero cost on English-only pages (font never downloads).
-- No account, no network calls, no telemetry. Settings stay in chrome.storage.local.
+- No account, no network calls, no telemetry. Settings sync across your devices via the browser account (custom font stays on-device).
 
 ## Privacy tab
 - Single purpose: "Apply right-to-left direction and Persian/Arabic font to detected text."
 - Data usage: stores site overrides, mode, font choice and optional uploaded font
-  in chrome.storage.local only. No personal data collected, nothing transmitted.
+  via storage.sync (roams with the browser account) except the uploaded font,
+  which stays local. No personal data collected, nothing transmitted.
 - Host permission justification: content script must run on http/https pages to
   detect Persian/Arabic text. activeTab just lets the popup read the current
   tab's URL for the per-site toggle.

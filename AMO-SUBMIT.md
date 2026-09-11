@@ -13,11 +13,13 @@ Upload `resources/dynamic-rtl-firefox-vX.zip` as-is. It already contains:
 - `UNSAFE_VAR_ASSIGNMENT` (innerHTML): only used to render the extension's own
   bundled `_locales` strings into four static help paragraphs. No user input,
   page content or storage data ever reaches innerHTML (lists use textContent).
-- `MISSING_DATA_COLLECTION_PERMISSIONS`: resolved, key present and empty.
+- `MISSING_DATA_COLLECTION_PERMISSIONS`: intentional — we collect nothing and
+  the validator rejects an empty declaration, so the key is absent by design.
 
 ## Version notes for the reviewer
 - Permissions: `storage` (settings), `activeTab` (read current tab URL for the
-  per-site toggle). No `tabs`, no cookies/history access, no remote hosts.
+  per-site toggle), `contextMenus` (right-click toggle, no warning).
+  No `tabs`, no cookies/history access, no remote hosts.
 - Content scripts match http/https only, `all_frames: false`, `document_start`.
 - No network calls anywhere (content, popup, options, background).
 

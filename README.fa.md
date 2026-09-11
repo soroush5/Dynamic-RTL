@@ -1,4 +1,4 @@
-# داینامیک RTL ‏(نسخه ۳٫۱)
+# داینامیک RTL ‏(نسخه ۳٫۲)
 
 > متن فارسی و عربی را در صفحه‌های وب به‌صورت خودکار پیدا می‌کند و راست‌چین نمایش می‌دهد؛ با فونت وزیرمتن و پیش از آنکه صفحه دیده شود.
 
@@ -28,7 +28,7 @@
 
 ### کروم / اج / بریو / آرک
 
-1. فایل `dynamic-rtl-chrome-v3.1.zip` را از صفحه [Releases](https://github.com/soroush5/Dynamic-RTL/releases) دانلود و از حالت فشرده خارج کنید.
+1. فایل `dynamic-rtl-chrome-v3.2.zip` را از صفحه [Releases](https://github.com/soroush5/Dynamic-RTL/releases) دانلود و از حالت فشرده خارج کنید.
 2. وارد آدرس `chrome://extensions` شوید و **Developer mode** (حالت توسعه‌دهنده) را فعال کنید.
 3. روی **Load unpacked** کلیک کنید و پوشه استخراج‌شده را انتخاب نمایید.
 4. آیکن افزونه در نوار ابزار ظاهر می‌شود. در سایت‌هایی که افزونه فعال است آیکن رنگی و در غیر این صورت خاکستری نمایش داده می‌شود.
@@ -39,7 +39,7 @@
 
 **روش اول: نصب موقت (همه نسخه‌های فایرفاکس):**
 
-1. فایل `dynamic-rtl-firefox-v3.1.zip` را دانلود کنید.
+1. فایل `dynamic-rtl-firefox-v3.2.zip` را دانلود کنید.
 2. وارد آدرس `about:debugging#/runtime/this-firefox` شوید.
 3. روی **Load Temporary Add-on...** کلیک کنید و فایل `manifest.json` داخل پوشه استخراج‌شده را انتخاب نمایید.
 4. افزونه تا زمان بستن فایرفاکس فعال می‌ماند.
@@ -47,13 +47,13 @@
 **روش دوم: نصب دائمی (Developer Edition / Nightly / ESR):**
 
 1. در صفحه `about:config` گزینه `xpinstall.signatures.required` را `false` کنید.
-2. نام فایل زیپ را به `dynamic-rtl-firefox-v3.1.xpi` تغییر دهید و آن را داخل فایرفاکس بکشید.
+2. نام فایل زیپ را به `dynamic-rtl-firefox-v3.2.xpi` تغییر دهید و آن را داخل فایرفاکس بکشید.
 
 ### سافاری
 
 سافاری ۲۶ پوشه افزونه را مستقیم بارگذاری می‌کند و نیازی به Xcode نیست:
 
-1. فایل `dynamic-rtl-safari-v3.1.zip` را دانلود و از حالت فشرده خارج کنید.
+1. فایل `dynamic-rtl-safari-v3.2.zip` را دانلود و از حالت فشرده خارج کنید.
 2. در سافاری وارد Settings → تب Developer شوید، روی **Add Temporary Extension…** کلیک کنید، پوشه را انتخاب نمایید و با اثر انگشت یا گذرواژه تأیید کنید.
 3. در بخش Settings → Extensions افزونه را با گزینه Always Allow فعال کنید. توجه داشته باشید که با بستن سافاری، افزونه غیرفعال می‌شود.
 
@@ -88,6 +88,8 @@
 node tests/unit.js
 python3 tests/browser.py
 python3 tests/i18n.py
+python3 tests/features.py
+python3 tests/shots.py
 ```
 
 ## لینک‌ها
