@@ -310,6 +310,9 @@ body {
 }
 .dr-btn svg { flex-shrink: 0; }
 .dr-btn-secondary:hover { background: var(--hover-tint); box-shadow: var(--shadow-1); }
+.dr-actions { display: flex; flex-direction: column; gap: 8px; }
+.dr-btn-ghost { border-color: transparent; }
+.dr-btn-ghost:hover { background: var(--hover-tint); }
 .dr-btn-primary {
   background: var(--primary);
   color: #fff;

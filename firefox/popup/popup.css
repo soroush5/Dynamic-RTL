@@ -251,6 +251,8 @@ html, body {
   outline: 2px solid var(--fx-accent);
   outline-offset: 1px;
 }
+.dr-btn-ghost { border-color: transparent; background: transparent; }
+.dr-btn-ghost:hover { border-color: var(--fx-border); }
 .dr-btn-primary {
   background: var(--fx-accent);
   color: var(--fx-on-accent);

@@ -11,13 +11,21 @@ const els = {
   modeHint: document.getElementById('dr-mode-hint'),
   modeExplainer: document.getElementById('dr-mode-explainer'),
   modeRadios: document.querySelectorAll('input[name="dr-mode"]'),
-  optionsBtn: document.getElementById('dr-open-options')
+  optionsBtn: document.getElementById('dr-open-options'),
+  reportBtn: document.getElementById('dr-report')
 };
 
 const DEFAULTS = {
   mode: 'enable_all',
   siteOverrides: {}
 };
+// Sync-backed store, shared shape with the background page: everything but a
+// bulky custom font roams via the browser account; local is the fallback.
+const SYNCABLE = ['mode', 'siteOverrides', 'font', 'customFontName', 'customFontFormat', 'debug', 'seenVersion'];
+const hasSync = !!(api.storage && api.storage.sync);
+const rawGet = (area, k) => new Promise((res) => { try { api.storage[area].get(k, (x) => { void api.runtime.lastError; res(x || {}) }) } catch (_) { res({}) } });
+const rawSet = (area, p) => new Promise((res) => { try { api.storage[area].set(p, () => { void api.runtime.lastError; res() }) } catch (_) { res() } });
+const rawDel = (area, k) => new Promise((res) => { try { api.storage[area].remove(k, () => { void api.runtime.lastError; res() }) } catch (_) { res() } });
 
 function t(key, subs) {
   try {
@@ -94,15 +102,23 @@ function setFavicon(tab) {
     img.src = url;
   }
 }
-function loadSettings() {
-  return new Promise(resolve => {
-    api.storage.local.get(null, stored => {
-      resolve(Object.assign({}, DEFAULTS, stored || {}));
-    });
-  });
+async function loadSettings() {
+  if (!hasSync) {
+    const stored = await rawGet('local', null);
+    return Object.assign({}, DEFAULTS, stored || {});
+  }
+  const [sy, lo] = await Promise.all([rawGet('sync', null), rawGet('local', null)]);
+  return Object.assign({}, DEFAULTS, sy || {}, lo || {});
 }
-function saveSettings(patch) {
-  return new Promise(resolve => api.storage.local.set(patch, resolve));
+async function saveSettings(patch) {
+  const s = {}, l = {};
+  for (const k of Object.keys(patch || {})) (SYNCABLE.includes(k) ? s : l)[k] = patch[k];
+  if (!hasSync) { await rawSet('local', patch); return; }
+  if (Object.keys(s).length) {
+    if (JSON.stringify(s).length > 80000) Object.assign(l, s);
+    else { await rawSet('sync', s); await rawDel('local', Object.keys(s)); }
+  }
+  if (Object.keys(l).length) await rawSet('local', l);
 }
 
 function setModeUI(mode) {
@@ -143,6 +159,7 @@ async function refresh() {
 
   setFavicon(tab);
   els.host.textContent = host;
+  lastReportHost = host;
   els.toggle.disabled = false;
   els.status.classList.remove('is-disabled');
 
@@ -202,6 +219,28 @@ for (const r of els.modeRadios) {
 els.optionsBtn.addEventListener('click', () => {
   if (api.runtime.openOptionsPage) api.runtime.openOptionsPage();
   else window.open(api.runtime.getURL('options/options.html'));
+});
+
+// No server needed: opens a pre-filled GitHub issue with the broken host,
+// version and mode already in the body. The user just presses Submit.
+let lastReportHost = '';
+if (els.reportBtn) els.reportBtn.addEventListener('click', async () => {
+  const settings = await loadSettings();
+  let version = '';
+  try { version = (api.runtime.getManifest() || {}).version || ''; } catch (_) {}
+  const title = '[broken-site] ' + (lastReportHost || 'unknown site');
+  const body = ['Host: ' + (lastReportHost || '(unknown)'),
+    'Version: ' + (version || '(unknown)'),
+    'Mode: ' + (settings.mode || '(unknown)'),
+    '',
+    'What looks wrong:',
+    ''].join('\n');
+  const url = 'https://github.com/soroush5/Dynamic-RTL/issues/new?title=' +
+    encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
+  try {
+    if (api.tabs && api.tabs.create) api.tabs.create({ url });
+    else window.open(url, '_blank');
+  } catch (_) { window.open(url, '_blank'); }
 });
 
 document.addEventListener('DOMContentLoaded', refresh);
