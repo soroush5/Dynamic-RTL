@@ -19,6 +19,22 @@
       </div>
     </header>
 
+    <!-- What's new (only until dismissed) -->
+    <section class="do-card" id="do-whatsnew" hidden>
+      <h2 class="do-card-title" data-i18n="whatsNewTitle">What's new</h2>
+      <p class="do-card-hint" data-i18n-html="whatsNewBodyHtml"></p>
+      <div class="do-row">
+        <div>
+          <p class="do-row-label" data-i18n="shortcutTitle">Keyboard shortcut</p>
+          <p class="do-row-hint" id="do-shortcut-hint"></p>
+        </div>
+        <code class="do-shortcut" id="do-shortcut">--</code>
+      </div>
+      <div class="do-actions">
+        <button class="do-btn" id="do-whatsnew-dismiss" data-i18n="whatsNewDismiss">Got it</button>
+      </div>
+    </section>
+
     <!-- Default mode -->
     <section class="do-card">
       <h2 class="do-card-title" data-i18n="defaultMode">Default mode</h2>
@@ -97,9 +113,16 @@
         <code>mail.google.com</code> too).
       </p>
 
+      <div class="do-list-search">
+        <input type="search" id="do-search" class="do-input"
+               placeholder="Search sites..." autocomplete="off" spellcheck="false">
+      </div>
       <div class="do-list" id="do-list" aria-live="polite">
         <p class="do-list-empty" id="do-list-empty">
           <span data-i18n="listEmpty">No sites yet. Click the Dynamic RTL icon on any page to add one.</span>
+        </p>
+        <p class="do-list-empty" id="do-list-nomatch" hidden>
+          <span data-i18n="searchNoMatch">No sites match your search.</span>
         </p>
       </div>
 

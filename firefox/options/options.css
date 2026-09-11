@@ -373,6 +373,23 @@ html, body {
   color: var(--fx-on-surface-soft);
 }
 
+.do-list-empty[hidden] { display: none; }
+
+.do-list-search { margin-block-end: 10px; }
+
+.do-list-search .do-input { inline-size: 100%; }
+
+.do-shortcut {
+  flex: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--fx-border);
+  background: var(--fx-surface-2);
+  white-space: nowrap;
+}
+
 .do-row-item {
   display: grid;
   grid-template-columns: 1fr auto auto;

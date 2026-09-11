@@ -3,6 +3,12 @@
 
 const api = (typeof chrome !== 'undefined' && chrome.runtime) ? chrome : browser;
 
+const SYNCABLE = ['mode', 'siteOverrides', 'font', 'customFontName', 'customFontFormat', 'debug', 'seenVersion'];
+const hasSync = !!(api.storage && api.storage.sync);
+const rawGet = (area, k) => new Promise((resolve) => { try { api.storage[area].get(k, (x) => { void api.runtime.lastError; resolve(x || {}) }) } catch (_) { resolve({}) } });
+const rawSet = (area, p) => new Promise((resolve) => { try { api.storage[area].set(p, () => { void api.runtime.lastError; resolve() }) } catch (_) { resolve() } });
+const rawDel = (area, k) => new Promise((resolve) => { try { api.storage[area].remove(k, () => { void api.runtime.lastError; resolve() }) } catch (_) { resolve() } });
+
 const DEFAULTS = {
   mode: 'enable_all',
   siteOverrides: {},
@@ -59,7 +65,13 @@ const els = {
   listImport: $('do-list-import'),
   listImportFile: $('do-list-import-file'),
   listClear: $('do-list-clear'),
-  version: $('do-version')
+  version: $('do-version'),
+  search: $('do-search'),
+  listNoMatch: $('do-list-nomatch'),
+  whatsnew: $('do-whatsnew'),
+  whatsnewDismiss: $('do-whatsnew-dismiss'),
+  shortcut: $('do-shortcut'),
+  shortcutHint: $('do-shortcut-hint')
 };
 
 function setVersion() {
@@ -69,15 +81,23 @@ function setVersion() {
   } catch (_) {}
 }
 
-function loadSettings() {
-  return new Promise(resolve => {
-    api.storage.local.get(null, stored => {
-      resolve(Object.assign({}, DEFAULTS, stored || {}));
-    });
-  });
+async function loadSettings() {
+  if (!hasSync) {
+    const stored = await rawGet('local', null);
+    return Object.assign({}, DEFAULTS, stored || {});
+  }
+  const [sy, lo] = await Promise.all([rawGet('sync', null), rawGet('local', null)]);
+  return Object.assign({}, DEFAULTS, sy || {}, lo || {});
 }
-function saveSettings(patch) {
-  return new Promise(resolve => api.storage.local.set(patch, resolve));
+async function saveSettings(patch) {
+  const s = {}, l = {};
+  for (const k of Object.keys(patch || {})) (SYNCABLE.includes(k) ? s : l)[k] = patch[k];
+  if (!hasSync) { await rawSet('local', patch); return; }
+  if (Object.keys(s).length) {
+    if (JSON.stringify(s).length > 80000) Object.assign(l, s);
+    else { await rawSet('sync', s); await rawDel('local', Object.keys(s)); }
+  }
+  if (Object.keys(l).length) await rawSet('local', l);
 }
 
 function flash(el, msg, ok = true) {
@@ -174,6 +194,23 @@ function renderList(overrides) {
     frag.appendChild(buildRow(host, state));
   }
   els.list.appendChild(frag);
+  applyFilter();
+}
+
+// Live search over the rendered rows.
+function applyFilter() {
+  if (!els.search) return;
+  const q = (els.search.value || '').trim().toLowerCase();
+  const rows = Array.from(els.list.querySelectorAll('.do-row-item'));
+  let visible = 0;
+  for (const row of rows) {
+    const hit = !q || (row.dataset.host || '').toLowerCase().includes(q);
+    row.style.display = hit ? '' : 'none';
+    if (hit) visible++;
+  }
+  const hasRows = rows.length > 0;
+  if (els.listNoMatch) els.listNoMatch.hidden = !(hasRows && visible === 0);
+  if (els.listEmpty && hasRows) els.listEmpty.style.display = 'none';
 }
 
 function buildRow(host, state) {
@@ -252,6 +289,8 @@ async function refresh() {
   els.fontStatus.textContent = explainCustomFontStatus(settings);
   applyPreviewFont(settings);
   renderList(settings.siteOverrides || {});
+  if (els.search) els.search.placeholder = t('searchPlaceholder') || 'Search sites...';
+  await refreshWhatsnew(settings);
 }
 
 for (const r of els.modeRadios) {
@@ -304,6 +343,13 @@ els.clearFont.addEventListener('click', async () => {
 els.addBtn.addEventListener('click', addEntry);
 els.addDomain.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); addEntry(); }
+});
+if (els.search) els.search.addEventListener('input', applyFilter);
+if (els.whatsnewDismiss) els.whatsnewDismiss.addEventListener('click', async () => {
+  let cur = '';
+  try { cur = (api.runtime.getManifest() || {}).version || ''; } catch (_) {}
+  if (cur) await saveSettings({ seenVersion: cur });
+  if (els.whatsnew) els.whatsnew.hidden = true;
 });
 
 els.listExport.addEventListener('click', async () => {
@@ -367,7 +413,7 @@ els.listClear.addEventListener('click', async () => {
 });
 
 api.storage.onChanged.addListener((changes, area) => {
-  if (area === 'local') refresh();
+  if (area === 'local' || area === 'sync') refresh();
 });
 
 document.addEventListener('DOMContentLoaded', refresh);
