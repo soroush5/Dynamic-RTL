@@ -52,8 +52,8 @@ function autoSkipped(){if(findOv(S.siteOverrides,location.hostname))return!1;if(
 function computeActive(){const o=findOv(S.siteOverrides,location.hostname);if(o==='on')return!0;if(o==='off')return!1;if(S.mode!=='enable_all')return!1;if(docIsRtl())return!1;return!0}
 function report(en){if(!top)return;try{api.runtime.sendMessage({type:'DYNRTL_REPORT_STATE',active:!!en,autoSkipped:autoSkipped()},()=>void api.runtime.lastError)}catch(_){}}
 function reconcile(){const en=computeActive();if(en&&!on)activate();else if(!en&&on)deactivate();else if(en&&on)applyFont();report(en)}
-function loadS(){return new Promise((res)=>{try{api.storage.local.get(null,(st)=>{S=Object.assign({},DEF,st||{});res(S)})}catch(_){res(S)}})}
-api.storage.onChanged.addListener((ch,area)=>{if(area!=='local')return;let t=!1;for(const k of Object.keys(ch)){if(k in DEF){S[k]=ch[k].newValue!==undefined?ch[k].newValue:DEF[k];t=!0}}if(t)reconcile()});
+function loadS(){return new Promise((res)=>{try{const sy=api.storage&&api.storage.sync;const rd=(ar,cb)=>{try{api.storage[ar].get(null,(x)=>{void api.runtime.lastError;cb(x||{})})}catch(_){cb({})}};if(!sy){rd('local',(st)=>{S=Object.assign({},DEF,st||{});res(S)});return}rd('sync',(a)=>{rd('local',(b)=>{S=Object.assign({},DEF,a||{},b||{});res(S)})})}catch(_){res(S)}})}
+api.storage.onChanged.addListener((ch,area)=>{if(area!=='local'&&area!=='sync')return;let t=!1;for(const k of Object.keys(ch)){if(k in DEF){S[k]=ch[k].newValue!==undefined?ch[k].newValue:DEF[k];t=!0}}if(t)reconcile()});
 api.runtime.onMessage.addListener((msg,sender,sendResponse)=>{if(!msg||!msg.type)return;if(msg.type==='DYNRTL_GET_STATE'){if(!top)return;sendResponse({host:location.hostname,active:on,autoSkipped:autoSkipped(),settings:S});return!0}if(msg.type==='DYNRTL_RECONCILE'){loadS().then(reconcile);sendResponse({ok:!0});return!0}});
 function boot(){if(boot.done)return;boot.done=!0;reconcile()}
 // Tag right away with defaults; settings arrive a moment later and correct us.
