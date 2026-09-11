@@ -2,7 +2,7 @@
 
 > Auto-detects Persian and Arabic text on web pages, then instantly applies the right direction (RTL) and a comfortable font - before you even see the page.
 
-[![Version](https://img.shields.io/badge/version-3-5b6cff)](#release)
+[![Version](https://img.shields.io/badge/version-3.1-5b6cff)](#release)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?logo=googlechrome&logoColor=white)](#install-on-chrome--edge--brave--arc)
 [![Firefox](https://img.shields.io/badge/Firefox-MV3-FF7139?logo=firefox&logoColor=white)](#install-on-firefox)
@@ -81,11 +81,11 @@ It supports **Persian (fa)**, **Arabic (ar)** and any script in the Arabic Unico
 
 ## Install
 
-> Pre-built bundles for v2.3 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v3.zip`, `dynamic-rtl-firefox-v3.zip` and `dynamic-rtl-safari-v3.zip`. They are also checked in under [`resources/`](./resources) for offline access.
+> Pre-built bundles for v3.1 live on the [Releases page](https://github.com/soroush5/Dynamic-RTL/releases) as `dynamic-rtl-chrome-v3.1.zip`, `dynamic-rtl-firefox-v3.1.zip` and `dynamic-rtl-safari-v3.1.zip`. They are also checked in under [`resources/`](./resources) for offline access.
 
 ### Install on Chrome / Edge / Brave / Arc
 
-1. Download `dynamic-rtl-chrome-v3.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
+1. Download `dynamic-rtl-chrome-v3.1.zip` and extract it (for example to `~/Extensions/dynamic-rtl-chrome`).
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`, etc.).
 3. Turn on **Developer mode** in the top-right corner.
 4. Click **Load unpacked** and select the extracted folder.
@@ -99,7 +99,7 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 
 **Path A: temporary install (any Firefox):**
 
-1. Download `dynamic-rtl-firefox-v3.zip`.
+1. Download `dynamic-rtl-firefox-v3.1.zip`.
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on...** and select the `manifest.json` file inside the (extracted) zip.
 4. The extension stays installed until you restart Firefox.
@@ -107,7 +107,7 @@ Firefox blocks unsigned extensions on the regular release channel. Three support
 **Path B: permanent install (Developer Edition / Nightly / ESR):**
 
 1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
-Rename `dynamic-rtl-firefox-v3.zip` to `dynamic-rtl-firefox-v3.xpi`.
+Rename `dynamic-rtl-firefox-v3.1.zip` to `dynamic-rtl-firefox-v3.1.xpi`.
 3. Drag the `.xpi` file into Firefox and click **Add**.
 
 **Path C: regular Firefox (recommended once published):** install from `https://addons.mozilla.org/` once the build is signed by Mozilla.
@@ -116,7 +116,7 @@ Rename `dynamic-rtl-firefox-v3.zip` to `dynamic-rtl-firefox-v3.xpi`.
 
 Safari 26 can load the extension straight from a folder, no Xcode needed:
 
-1. Download `dynamic-rtl-safari-v3.zip` and extract it.
+1. Download `dynamic-rtl-safari-v3.1.zip` and extract it.
 2. Safari → Settings → Developer tab → **Add Temporary Extension…**, pick the extracted folder, confirm with Touch ID / password.
 3. Settings → Extensions → enable it with Always Allow. Note: it unloads when Safari quits.
 
@@ -213,9 +213,20 @@ You do not need a build step. To recreate the release zips:
 This produces:
 
 ```text
-resources/dynamic-rtl-chrome-v3.zip
-resources/dynamic-rtl-firefox-v3.zip
-resources/dynamic-rtl-safari-v3.zip
+resources/dynamic-rtl-chrome-v3.1.zip
+resources/dynamic-rtl-firefox-v3.1.zip
+resources/dynamic-rtl-safari-v3.1.zip
+```
+
+## Tests
+
+Unit tests need nothing but node. The browser suites need Python with Playwright
+and a Chrome-for-Testing binary (`playwright install chromium`):
+
+```bash
+node tests/unit.js
+python3 tests/browser.py
+python3 tests/i18n.py
 ```
 
 ## Credits
