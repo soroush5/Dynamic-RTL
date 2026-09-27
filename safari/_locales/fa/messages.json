@@ -1,255 +1,154 @@
 {
-  "tagline": {
-    "message": "راست‌چین خودکار و فونت فارسی"
+  "lang": {
+    "message": "fa"
   },
-  "toggleLabel": {
-    "message": "فعال در این سایت"
+  "dir": {
+    "message": "rtl"
   },
-  "modeHintUnsupported": {
-    "message": "در این صفحه در دسترس نیست"
+  "extDescription": {
+    "message": "متن فارسی و عربی را در هر سایتی راست‌چین و با فونت وزیرمتن نمایش می‌دهد."
   },
-  "modeHintOpenRegular": {
-    "message": "برای تغییر وضعیت، یک سایت معمولی باز کنید."
+  "commandToggle": {
+    "message": "روشن یا خاموش کردن برای این سایت"
   },
-  "modeHintOn": {
-    "message": "در این صفحه فعال است"
+  "menuToggle": {
+    "message": "Dynamic RTL: روشن یا خاموش برای این سایت"
   },
-  "modeHintOff": {
-    "message": "در این صفحه غیرفعال است"
+  "settings": {
+    "message": "تنظیمات"
   },
-  "modeHintExplicitOn": {
-    "message": "اینجا فعال است (خودتان روشن کرده‌اید)"
+  "report": {
+    "message": "گزارش مشکل"
   },
-  "modeHintExplicitOff": {
-    "message": "اینجا غیرفعال است (خودتان خاموش کرده‌اید)"
+  "statusOn": {
+    "message": "فعال"
   },
-  "modeHintAutoSkip": {
-    "message": "به‌صورت پیش‌فرض خاموش است، چون سایت فارسی/عربی است"
+  "statusOff": {
+    "message": "خاموش"
   },
-  "globalMode": {
-    "message": "حالت کلی"
+  "statusAuto": {
+    "message": "خاموش، سایت خودش راست‌چین است"
   },
-  "modeEnableAll": {
+  "statusReload": {
+    "message": "برای اعمال، صفحه را دوباره بارگذاری کنید"
+  },
+  "unavailable": {
+    "message": "این‌جا در دسترس نیست"
+  },
+  "unavailableHint": {
+    "message": "فقط روی سایت‌های معمولی کار می‌کند"
+  },
+  "allSites": {
     "message": "فعال در همه سایت‌ها"
   },
-  "modeDisableAll": {
-    "message": "غیرفعال در همه سایت‌ها"
+  "allSitesHint": {
+    "message": "اگر خاموش باشد، فقط روی سایت‌هایی که روشن کرده‌اید کار می‌کند."
   },
-  "explainerEnable": {
-    "message": "در همه‌جا اعمال می‌شود به‌جز سایت‌های فهرست خاموش."
+  "shortcut": {
+    "message": "میان‌بر صفحه‌کلید"
   },
-  "explainerDisable": {
-    "message": "به‌صورت پیش‌فرض خاموش است. با کلید بالا برای هر سایت روشن کنید."
+  "shortcutNone": {
+    "message": "تنظیم نشده"
   },
-  "settingsBtn": {
-    "message": "تنظیمات و فونت سفارشی"
+  "shortcutChrome": {
+    "message": "از chrome://extensions/shortcuts عوضش کنید"
   },
-  "github": {
-    "message": "گیت‌هاب"
+  "shortcutFirefox": {
+    "message": "از صفحه افزونه‌ها، منوی چرخ‌دنده، Manage Extension Shortcuts"
   },
-  "defaultMode": {
-    "message": "حالت پیش‌فرض"
+  "shortcutSafari": {
+    "message": "از تنظیمات سیستم، صفحه‌کلید، میان‌برها"
   },
-  "defaultModeHint": {
-    "message": "رفتار افزونه در سایت‌هایی که ورودی مشخصی در فهرست زیر ندارند. با آیکن نوار ابزار در هر صفحه می‌توانید ورودی اضافه یا به‌روز کنید. سایت‌هایی که خودشان فارسی یا عربی هستند به‌صورت پیش‌فرض خاموش می‌مانند."
-  },
-  "fontTitle": {
+  "font": {
     "message": "فونت"
   },
-  "activeFont": {
-    "message": "فونت فعال"
+  "fontHint": {
+    "message": "یک فایل woff2، woff، ttf یا otf تا ۸ مگابایت بارگذاری کنید."
   },
-  "activeFontHint": {
-    "message": "به فونت سفارشی که پایین بارگذاری می‌کنید تغییر دهید."
+  "fontPick": {
+    "message": "بارگذاری"
   },
-  "fontVazir": {
-    "message": "وزیرمتن (پیش‌فرض)"
+  "fontReset": {
+    "message": "برگشت به وزیرمتن"
   },
-  "fontCustom": {
-    "message": "فونت سفارشی"
+  "fontTooBig": {
+    "message": "حجم این فایل بیشتر از ۸ مگابایت است."
   },
-  "uploadTitle": {
-    "message": "بارگذاری فونت سفارشی"
+  "fontBad": {
+    "message": "این فایل فونتی نیست که مرورگر بتواند بخواند."
   },
-  "clearFont": {
-    "message": "حذف فونت سفارشی"
+  "sites": {
+    "message": "سایت‌ها"
   },
-  "fontStatusUsing": {
-    "message": "فونت سفارشی فعال است: $1",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
+  "sitesHint": {
+    "message": "سایت‌هایی که از نوار ابزار روشن یا خاموش می‌کنید این‌جا می‌آیند. هر قانون زیردامنه‌ها را هم شامل می‌شود."
   },
-  "fontStatusIdle": {
-    "message": "فونت سفارشی بارگذاری شده ولی فعال نیست (انتخاب روی وزیرمتن است)."
+  "sitePlaceholder": {
+    "message": "افزودن یا جست‌وجو، مثلا example.com"
   },
-  "fontStatusNone": {
-    "message": "فونت سفارشی بارگذاری نشده است."
-  },
-  "listTitle": {
-    "message": "فهرست شخصی سایت‌ها"
-  },
-  "listEmpty": {
-    "message": "هنوز سایتی نیست. روی آیکن داینامیک RTL در هر صفحه کلیک کنید تا اضافه شود."
-  },
-  "addBtn": {
+  "add": {
     "message": "افزودن"
   },
-  "exportBtn": {
-    "message": "خروجی فهرست"
+  "invalidSite": {
+    "message": "دامنه‌ای مثل example.com وارد کنید"
   },
-  "importBtn": {
-    "message": "ورود فهرست"
+  "sitesEmpty": {
+    "message": "هنوز سایتی اضافه نشده."
   },
-  "clearBtn": {
-    "message": "پاک کردن فهرست"
+  "sitesNoMatch": {
+    "message": "سایتی پیدا نشد."
   },
-  "msgEnterDomain": {
-    "message": "اول یک دامنه وارد کنید."
+  "import": {
+    "message": "ورود"
   },
-  "msgInvalidDomain": {
-    "message": "این شبیه دامنه معتبر نیست."
+  "export": {
+    "message": "خروجی"
   },
-  "msgAdded": {
-    "message": "$1*$2 اضافه شد.",
-    "placeholders": {
-      "host": {
-        "content": "$1"
-      },
-      "state": {
-        "content": "$2"
-      }
-    }
+  "clear": {
+    "message": "پاک کردن همه"
   },
-  "msgFontTooLarge": {
-    "message": "فونت خیلی بزرگ است ($1 مگابایت بیشتر از سقف ۸ مگابایت).",
-    "placeholders": {
-      "size": {
-        "content": "$1"
-      }
-    }
+  "clearConfirm": {
+    "message": "همه سایت‌ها از فهرست حذف شوند؟"
   },
-  "msgReadingFont": {
-    "message": "در حال خواندن فونت..."
-  },
-  "msgFontLoaded": {
-    "message": "$1 بارگذاری شد ($2 کیلوبایت).",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      },
-      "kb": {
-        "content": "$2"
-      }
-    }
-  },
-  "msgFontReadFail": {
-    "message": "خواندن فونت ناموفق بود."
-  },
-  "msgFontRemoved": {
-    "message": "فونت سفارشی حذف شد."
-  },
-  "msgExported": {
-    "message": "فهرست خروجی گرفته شد."
-  },
-  "msgImportedOne": {
-    "message": "۱ ورودی وارد شد."
-  },
-  "msgImportedMany": {
-    "message": "$1 ورودی وارد شد.",
+  "imported": {
+    "message": "$COUNT$ سایت وارد شد.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-  "msgImportFail": {
-    "message": "ورود ناموفق بود."
+  "on": {
+    "message": "روشن"
   },
-  "msgConfirmClear": {
-    "message": "کل فهرست پاک شود؟"
+  "off": {
+    "message": "خاموش"
   },
-  "msgCleared": {
-    "message": "فهرست پاک شد."
+  "flip": {
+    "message": "روشن یا خاموش کردن"
   },
-  "modeHintFollow": {
-    "message": "تابع حالت کلی"
+  "remove": {
+    "message": "حذف"
   },
-  "defaultModeHintHtml": {
-    "message": "رفتار افزونه در سایت‌هایی که ورودی مشخصی در فهرست زیر ندارند. با آیکن نوار ابزار در هر صفحه می‌توانید ورودی اضافه یا به‌روز کنید. سایت‌های فارسی یا عربی به‌صورت پیش‌فرض خاموش می‌مانند."
-  },
-  "fontHintHtml": {
-    "message": "فونت پیش‌فرض وزیرمتن است و همراه افزونه ارائه می‌شود. به اینترنت نیازی نیست."
-  },
-  "uploadHintHtml": {
-    "message": "فایل‌های متغیر woff2. توصیه می‌شوند. فایل‌های ثابت هم پذیرفته می‌شوند."
-  },
-  "listHintHtml": {
-    "message": "هر سایتی که از نوار ابزار تغییر دهید اینجا ثبت می‌شود. زیردامنه‌ها خودکار شامل می‌شوند."
-  },
-  "flipTitle": {
-    "message": "برای تغییر روشن/خاموش کلیک کنید"
-  },
-  "delTitle": {
-    "message": "حذف از فهرست"
+  "credit": {
+    "message": "فونت وزیرمتن، اثر صابر راستی‌کردار."
   },
   "welcomeTitle": {
-    "message": "به داینامیک RTL خوش آمدی"
+    "message": "Dynamic RTL آماده است"
   },
-  "welcomeSub": {
-    "message": "صفحه‌های فارسی و عربی، خودکار راست‌چین با یه فونت قشنگ."
+  "welcomeText": {
+    "message": "از این به بعد متن فارسی و عربی در هر سایتی راست‌چین و با فونت وزیرمتن نمایش داده می‌شود."
   },
-  "welcomeStep1": {
-    "message": "آیکن رو سنجاق کن: منوی افزونه‌ها (تکه پازل) رو باز کن و داینامیک RTL رو به نوار ابزار سنجاق کن."
+  "welcomePin": {
+    "message": "آیکون را از منوی افزونه‌ها سنجاق کنید."
   },
-  "welcomeStep2": {
-    "message": "هر سایت رو جدا تاگل کن: روی هر صفحه روی آیکن بزن تا راست‌چین فقط برای همون سایت روشن یا خاموش بشه."
+  "welcomeToggle": {
+    "message": "با کلیک روی آن، هر سایت را روشن یا خاموش کنید."
   },
-  "welcomeStep3": {
-    "message": "دقیقش کن: برای فهرست سایت‌ها، فونت دلخواه و شورت‌کات صفحه‌کلید برو به تنظیمات."
+  "welcomeShortcut": {
+    "message": "یا Ctrl+Shift+Y را بزنید (در مک Command+Shift+Y)."
   },
-  "welcomeOpenSettings": {
+  "openSettings": {
     "message": "باز کردن تنظیمات"
-  },
-  "welcomeShortcutHint": {
-    "message": "نکته: روی هر صفحه Ctrl+Shift+Y (در مک Command+Shift+Y) رو بزن تا فوری تاگل بشه."
-  },
-  "ctxToggle": {
-    "message": "داینامیک RTL: تغییر وضعیت این سایت"
-  },
-  "searchPlaceholder": {
-    "message": "جست‌وجو در سایت‌ها..."
-  },
-  "searchNoMatch": {
-    "message": "سایتی با این جست‌وجو پیدا نشد."
-  },
-  "reportBtn": {
-    "message": "گزارش خرابی سایت"
-  },
-  "whatsNewTitle": {
-    "message": "تازه‌ها"
-  },
-  "whatsNewBodyHtml": {
-    "message": "تنظیمات از این به بعد بین دستگاه‌هات همگام میشه. جست‌وجو در فهرست سایت‌ها، نمایش شورت‌کات صفحه‌کلید و دکمه گزارش خرابی سایت هم اضافه شد. خوش بگذره!"
-  },
-  "whatsNewDismiss": {
-    "message": "فهمیدم"
-  },
-  "shortcutTitle": {
-    "message": "شورت‌کات صفحه‌کلید"
-  },
-  "shortcutNone": {
-    "message": "تنظیم نشده"
-  },
-  "shortcutHintChrome": {
-    "message": "برای تغییرش این رو توی نوار آدرس بذار: chrome://extensions/shortcuts"
-  },
-  "shortcutHintFirefox": {
-    "message": "برای تغییرش برو به مدیریت افزودنی‌ها: منوی چرخ‌دنده > Manage Extension Shortcuts."
-  },
-  "shortcutHintSafari": {
-    "message": "برای تغییرش برو به تنظیمات سافاری > Extensions > Keyboard Shortcuts."
   }
 }

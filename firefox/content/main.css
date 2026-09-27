@@ -1,0 +1,35 @@
+/* Only elements the content script marks are touched.
+   :not(#_) adds id-level weight so site rules with !important don't win. */
+[data-dynrtl=r]:not(#_), [data-dynrtl=c]:not(#_), [data-dynrtl=l]:not(#_) { direction: rtl !important; }
+[data-dynrtl=r]:not(#_) { text-align: right !important; }
+
+[data-dynrtl=r]:not(#_), [data-dynrtl=c]:not(#_), [data-dynrtl=f]:not(#_), [data-dynrtl-in]:not(#_) {
+  font-family: "Vazirmatn DynRTL", var(--dynrtl-f, system-ui, sans-serif) !important;
+}
+
+/* Lists: mirror the padding so markers stay inside. */
+[data-dynrtl=l]:not(#_) {
+  padding-inline-start: var(--dynrtl-ps) !important;
+  padding-inline-end: var(--dynrtl-pe) !important;
+}
+
+/* Code and URLs keep their own direction inside RTL text. */
+[data-dynrtl] code:not(#_), [data-dynrtl] kbd:not(#_), [data-dynrtl] samp:not(#_),
+[data-dynrtl] var:not(#_), [data-dynrtl] tt:not(#_), [data-dynrtl] pre:not(#_) {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+}
+[data-dynrtl] pre:not(#_) { text-align: left !important; }
+[data-dynrtl=r] a:not(#_), [data-dynrtl=c] a:not(#_) { unicode-bidi: plaintext !important; }
+[data-dynrtl] input:not(#_), [data-dynrtl] textarea:not(#_) { unicode-bidi: plaintext; }
+
+/* Inputs and editors: each line picks its own direction. */
+[data-dynrtl-in]:not(#_) { unicode-bidi: plaintext !important; }
+[data-dynrtl-in=""]:not(#_) { text-align: start !important; }
+[data-dynrtl-in] p:not(#_), [data-dynrtl-in] div:not(#_), [data-dynrtl-in] li:not(#_),
+[data-dynrtl-in] h1:not(#_), [data-dynrtl-in] h2:not(#_), [data-dynrtl-in] h3:not(#_),
+[data-dynrtl-in] h4:not(#_), [data-dynrtl-in] h5:not(#_), [data-dynrtl-in] h6:not(#_),
+[data-dynrtl-in] blockquote:not(#_) {
+  unicode-bidi: plaintext !important;
+  text-align: start !important;
+}

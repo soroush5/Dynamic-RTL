@@ -1,35 +1,32 @@
 {
   "manifest_version": 3,
   "name": "Dynamic RTL",
-  "version": "3.2",
-  "description": "Auto-detects Persian and Arabic text on web pages and applies right-to-left direction with the Vazirmatn font (customizable).",
+  "version": "4.0",
+  "description": "__MSG_extDescription__",
   "author": "soroush5",
   "homepage_url": "https://github.com/soroush5/Dynamic-RTL",
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "dynamic-rtl@soroush5.github.io",
-      "strict_min_version": "121.0"
-    }
-  },
   "default_locale": "en",
   "icons": {
-    "16": "icons/icon-active-16.png",
-    "32": "icons/icon-active-32.png",
-    "48": "icons/icon-active-48.png",
-    "128": "icons/icon-active-128.png"
+    "16": "icons/on-16.png",
+    "32": "icons/on-32.png",
+    "48": "icons/on-48.png",
+    "128": "icons/on-128.png"
   },
   "action": {
     "default_title": "Dynamic RTL",
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "icons/icon-active-16.png",
-      "32": "icons/icon-active-32.png",
-      "48": "icons/icon-active-48.png",
-      "128": "icons/icon-active-128.png"
+      "16": "icons/on-16.png",
+      "32": "icons/on-32.png",
+      "48": "icons/on-48.png",
+      "128": "icons/on-128.png"
     }
   },
   "background": {
-    "scripts": ["background/service-worker.js"]
+    "scripts": [
+      "lib/store.js",
+      "background.js"
+    ]
   },
   "options_ui": {
     "page": "options/options.html",
@@ -46,31 +43,49 @@
         "default": "Ctrl+Shift+Y",
         "mac": "Command+Shift+Y"
       },
-      "description": "Toggle Dynamic RTL on this site"
+      "description": "__MSG_commandToggle__"
     }
   },
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
-  ],
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
       "js": [
-        "content/early-inject.js",
         "content/main.js"
       ],
-      "run_at": "document_start",
-      "all_frames": false,
-      "match_about_blank": false
+      "css": [
+        "content/main.css"
+      ],
+      "run_at": "document_start"
     }
   ],
   "web_accessible_resources": [
     {
       "resources": [
-        "fonts/Vazirmatn-Variable.woff2"
+        "fonts/vazirmatn.woff2",
+        "content/main.css"
       ],
-      "matches": ["http://*/*", "https://*/*"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
     }
-  ]
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dynamic-rtl@soroush5.github.io",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  }
 }

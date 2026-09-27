@@ -3,161 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dynamic RTL - Settings</title>
+  <title>Dynamic RTL</title>
+  <link rel="stylesheet" href="../ui/base.css">
   <link rel="stylesheet" href="options.css">
 </head>
-<body data-browser="safari">
-  <div class="do-topbar">
-    <img class="do-topbar-logo" src="../icons/icon-active-128.png" alt="">
-    <h1 class="do-topbar-title">Dynamic RTL</h1>
-  </div>
+<body>
+  <main>
+    <header>
+      <img src="../icons/on-48.png" width="24" height="24" alt="">
+      <h1>Dynamic RTL</h1>
+      <span class="version muted"></span>
+    </header>
 
-  <main class="do-shell">
-    <!-- What's new (only until dismissed) -->
-    <section class="do-card" id="do-whatsnew" hidden>
-      <h2 class="do-card-title" data-i18n="whatsNewTitle">What's new</h2>
-      <p class="do-card-hint" data-i18n-html="whatsNewBodyHtml"></p>
-      <div class="do-row">
-        <div>
-          <p class="do-row-label" data-i18n="shortcutTitle">Keyboard shortcut</p>
-          <p class="do-row-hint" id="do-shortcut-hint"></p>
-        </div>
-        <code class="do-shortcut" id="do-shortcut">--</code>
-      </div>
-      <div class="do-actions">
-        <button class="do-btn" id="do-whatsnew-dismiss" data-i18n="whatsNewDismiss">Got it</button>
-      </div>
-    </section>
-
-    <!-- Default mode -->
-    <section class="do-card">
-      <h2 class="do-card-title" data-i18n="defaultMode">Default mode</h2>
-      <p class="do-card-hint" data-i18n-html="defaultModeHintHtml">
-        How Dynamic RTL behaves on sites that have no explicit entry in the
-        list below. Use the toolbar icon on any page to add or update an
-        entry instantly. Sites that are already Persian or Arabic
-        (<code>&lt;html lang="fa"&gt;</code> / <code>lang="ar"</code>, or
-        <code>dir="rtl"</code>) stay off by default &mdash; turn them on with
-        the toolbar toggle if you ever need to.
-      </p>
-      <div class="do-radio-group">
-        <label class="do-radio">
-          <input type="radio" name="do-mode" value="enable_all">
-          <span class="do-radio-mark"></span>
-          Enable on all sites
-        </label>
-        <label class="do-radio">
-          <input type="radio" name="do-mode" value="disable_all">
-          <span class="do-radio-mark"></span>
-          Disable on all sites
-        </label>
+    <section>
+      <label class="row">
+        <span class="row-text">
+          <span data-i18n="allSites">Enable on all sites</span>
+          <span class="hint" data-i18n="allSitesHint">When off, it only runs on sites you turn on.</span>
+        </span>
+        <input class="switch" type="checkbox" role="switch" id="mode">
+      </label>
+      <div class="row">
+        <span class="row-text">
+          <span data-i18n="shortcut">Keyboard shortcut</span>
+          <span class="hint" id="shortcut-hint"></span>
+        </span>
+        <kbd id="shortcut"></kbd>
       </div>
     </section>
 
-    <!-- Font -->
-    <section class="do-card">
-      <h2 class="do-card-title" data-i18n="fontTitle">Font</h2>
-      <p class="do-card-hint" data-i18n-html="fontHintHtml">
-        The default font is <strong>Vazirmatn</strong>, designed by
-        <a href="https://github.com/rastikerdar/vazirmatn" target="_blank" rel="noopener">Saber Rastikerdar</a>
-        and bundled with the extension - no internet required.
-      </p>
-
-      <div class="do-row">
-        <div>
-          <p class="do-row-label" data-i18n="activeFont">Active font</p>
-          <p class="do-row-hint" data-i18n="activeFontHint">Switch to a custom font you upload below.</p>
-        </div>
-        <div class="do-radio-group">
-          <label class="do-radio">
-            <input type="radio" name="do-font" value="vazirmatn">
-            <span class="do-radio-mark"></span>
-            <span data-i18n="fontVazir">Vazirmatn (default)</span>
-          </label>
-          <label class="do-radio">
-            <input type="radio" name="do-font" value="custom">
-            <span class="do-radio-mark"></span>
-            <span data-i18n="fontCustom">Custom font</span>
-          </label>
-        </div>
+    <section>
+      <h2 data-i18n="font">Font</h2>
+      <div class="row">
+        <span class="row-text">
+          <span id="font-name">Vazirmatn</span>
+          <span class="hint" id="font-hint" data-i18n="fontHint">Upload a .woff2, .woff, .ttf or .otf file, up to 8 MB.</span>
+        </span>
+        <span class="actions">
+          <button class="btn" id="font-pick" data-i18n="fontPick">Upload</button>
+          <button class="link" id="font-reset" data-i18n="fontReset" hidden>Use Vazirmatn</button>
+        </span>
+        <input type="file" id="font-file" accept=".woff2,.woff,.ttf,.otf" hidden>
       </div>
+      <p class="preview" id="preview" dir="rtl">این یک متن نمونه است. سلام دنیا، ۱۲۳۴۵۶۷۸۹۰</p>
+    </section>
 
-      <div class="do-row" style="display:block">
-        <p class="do-row-label" data-i18n="uploadTitle">Upload a custom font</p>
-        <p class="do-row-hint" data-i18n-html="uploadHintHtml">
-          Variable fonts (<code>.woff2</code> with weight axis) are recommended -
-          a single file covers every weight, looks crisp at all sizes, and
-          keeps memory usage low. Static <code>.woff2</code>, <code>.ttf</code>
-          and <code>.otf</code> files are also accepted.
-        </p>
-        <div style="margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-          <input type="file" id="do-font-file" class="do-input"
-                 accept=".woff2,.woff,.ttf,.otf,font/woff2,font/woff,font/ttf,font/otf">
-          <button class="do-btn-ghost do-btn" id="do-clear-font" data-i18n="clearFont">Remove custom font</button>
-        </div>
-        <p class="do-status" id="do-font-status"></p>
-
-        <div class="do-preview" id="do-preview">
-          نمونه متن فارسی - این یک پیش‌نمایش از فونت انتخاب‌شده است.
-          The quick brown fox jumps over the lazy dog. ١٢٣٤٥٦٧٨٩٠
-        </div>
+    <section>
+      <h2 data-i18n="sites">Sites</h2>
+      <p class="hint" data-i18n="sitesHint">Sites you toggle from the toolbar show up here. Rules cover subdomains too.</p>
+      <form class="add" id="add">
+        <input type="text" id="site" autocomplete="off" spellcheck="false" dir="auto"
+               data-i18n-placeholder="sitePlaceholder" placeholder="Add or search, e.g. example.com">
+        <button class="btn" type="submit" data-i18n="add">Add</button>
+      </form>
+      <p class="hint error" id="site-error" hidden></p>
+      <ul class="list" id="list"></ul>
+      <p class="hint empty" id="empty" data-i18n="sitesEmpty">No sites yet.</p>
+      <div class="actions">
+        <button class="link" id="import" data-i18n="import">Import</button>
+        <button class="link" id="export" data-i18n="export">Export</button>
+        <button class="link danger" id="clear" data-i18n="clear">Clear all</button>
+        <input type="file" id="import-file" accept=".json,.txt,application/json,text/plain" hidden>
       </div>
     </section>
 
-    <!-- Site list -->
-    <section class="do-card">
-      <h2 class="do-card-title" data-i18n="listTitle">Custom site list</h2>
-      <p class="do-card-hint" data-i18n-html="listHintHtml">
-        Every site you toggle from the toolbar shows up here. Each row is an
-        explicit override that wins over the default mode. Subdomains
-        inherit automatically (e.g. <code>google.com*off</code> covers
-        <code>mail.google.com</code> too).
-      </p>
-
-      <div class="do-list-search">
-        <input type="search" id="do-search" class="do-input"
-               placeholder="Search sites..." autocomplete="off" spellcheck="false">
-      </div>
-      <div class="do-list" id="do-list" aria-live="polite">
-        <p class="do-list-empty" id="do-list-empty">
-          <span data-i18n="listEmpty">No sites yet. Click the Dynamic RTL icon on any page to add one.</span>
-        </p>
-        <p class="do-list-empty" id="do-list-nomatch" hidden>
-          <span data-i18n="searchNoMatch">No sites match your search.</span>
-        </p>
-      </div>
-
-      <div class="do-add-row">
-        <input type="text" id="do-add-domain" class="do-input"
-               placeholder="example.com" autocomplete="off" spellcheck="false">
-        <select id="do-add-state" class="do-input do-select">
-          <option value="on">on</option>
-          <option value="off">off</option>
-        </select>
-        <button class="do-btn" id="do-add-btn" data-i18n="addBtn">Add</button>
-      </div>
-      <p class="do-status" id="do-list-status"></p>
-
-      <div class="do-actions">
-        <button class="do-btn-ghost do-btn" id="do-list-export" data-i18n="exportBtn">Export list</button>
-        <button class="do-btn-ghost do-btn" id="do-list-import" data-i18n="importBtn">Import list</button>
-        <input type="file" id="do-list-import-file" accept="application/json,.json,.txt" hidden>
-        <button class="do-btn-danger do-btn" id="do-list-clear" data-i18n="clearBtn">Clear list</button>
-      </div>
-    </section>
-
-    <footer class="do-footer">
-      <p class="do-credit">
-        Default font: <strong>Vazirmatn</strong> by Saber Rastikerdar -
-        <a href="https://github.com/rastikerdar/vazirmatn" target="_blank" rel="noopener">vazirmatn</a>
-      </p>
-      <p class="do-credit">
-        Developer: <strong>soroush5</strong> -
-        <a href="https://github.com/soroush5/Dynamic-RTL" target="_blank" rel="noopener">github.com/soroush5/Dynamic-RTL</a>
-      </p>
+    <footer class="hint">
+      <span data-i18n="credit">Vazirmatn font by Saber Rastikerdar.</span>
+      <a href="https://github.com/soroush5/Dynamic-RTL" target="_blank" rel="noopener">GitHub</a>
     </footer>
   </main>
 
+  <script src="../lib/store.js"></script>
+  <script src="../ui/ui.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

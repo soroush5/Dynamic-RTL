@@ -1,255 +1,154 @@
 {
-  "tagline": {
-    "message": "Auto RTL & Persian font"
+  "lang": {
+    "message": "en"
   },
-  "toggleLabel": {
-    "message": "Active on this site"
+  "dir": {
+    "message": "ltr"
   },
-  "modeHintUnsupported": {
-    "message": "Not available on this page"
+  "extDescription": {
+    "message": "Shows Persian and Arabic text right to left, in the Vazirmatn font, on any site."
   },
-  "modeHintOpenRegular": {
-    "message": "Open a regular website to toggle."
+  "commandToggle": {
+    "message": "Turn on or off for this site"
   },
-  "modeHintOn": {
-    "message": "Active on this page"
+  "menuToggle": {
+    "message": "Dynamic RTL: turn on or off for this site"
   },
-  "modeHintOff": {
-    "message": "Inactive on this page"
+  "settings": {
+    "message": "Settings"
   },
-  "modeHintExplicitOn": {
-    "message": "Active here (you turned it on)"
+  "report": {
+    "message": "Report a problem"
   },
-  "modeHintExplicitOff": {
-    "message": "Inactive here (you turned it off)"
+  "statusOn": {
+    "message": "Active"
   },
-  "modeHintAutoSkip": {
-    "message": "Off by default · already a Persian/Arabic site"
+  "statusOff": {
+    "message": "Off"
   },
-  "globalMode": {
-    "message": "GLOBAL MODE"
+  "statusAuto": {
+    "message": "Off, the site is already right to left"
   },
-  "modeEnableAll": {
+  "statusReload": {
+    "message": "Reload the page to apply"
+  },
+  "unavailable": {
+    "message": "Not available here"
+  },
+  "unavailableHint": {
+    "message": "Works on regular websites only"
+  },
+  "allSites": {
     "message": "Enable on all sites"
   },
-  "modeDisableAll": {
-    "message": "Disable on all sites"
+  "allSitesHint": {
+    "message": "When off, it only runs on sites you turn on."
   },
-  "explainerEnable": {
-    "message": "RTL applies everywhere except the sites listed as off."
+  "shortcut": {
+    "message": "Keyboard shortcut"
   },
-  "explainerDisable": {
-    "message": "RTL is off by default. Enable it per-site using the switch above."
+  "shortcutNone": {
+    "message": "Not set"
   },
-  "settingsBtn": {
-    "message": "Settings & custom font"
+  "shortcutChrome": {
+    "message": "Change it at chrome://extensions/shortcuts"
   },
-  "github": {
-    "message": "GitHub"
+  "shortcutFirefox": {
+    "message": "Change it in Add-ons, gear menu, Manage Extension Shortcuts"
   },
-  "defaultMode": {
-    "message": "Default mode"
+  "shortcutSafari": {
+    "message": "Change it in System Settings, Keyboard, Keyboard Shortcuts"
   },
-  "defaultModeHint": {
-    "message": "How Dynamic RTL behaves on sites with no explicit entry below. Use the toolbar icon on any page to add or update an entry instantly. Sites that are already Persian or Arabic stay off by default; turn them on with the toolbar toggle if needed."
-  },
-  "fontTitle": {
+  "font": {
     "message": "Font"
   },
-  "activeFont": {
-    "message": "Active font"
+  "fontHint": {
+    "message": "Upload a .woff2, .woff, .ttf or .otf file, up to 8 MB."
   },
-  "activeFontHint": {
-    "message": "Switch to a custom font you upload below."
+  "fontPick": {
+    "message": "Upload"
   },
-  "fontVazir": {
-    "message": "Vazirmatn (default)"
+  "fontReset": {
+    "message": "Use Vazirmatn"
   },
-  "fontCustom": {
-    "message": "Custom font"
+  "fontTooBig": {
+    "message": "That file is over 8 MB."
   },
-  "uploadTitle": {
-    "message": "Upload a custom font"
+  "fontBad": {
+    "message": "That file is not a font this browser can read."
   },
-  "clearFont": {
-    "message": "Remove custom font"
+  "sites": {
+    "message": "Sites"
   },
-  "fontStatusUsing": {
-    "message": "Using custom font: $1",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
+  "sitesHint": {
+    "message": "Sites you toggle from the toolbar show up here. A rule also covers its subdomains."
   },
-  "fontStatusIdle": {
-    "message": "Custom font loaded but not active (selection set to Vazirmatn)."
+  "sitePlaceholder": {
+    "message": "Add or search, e.g. example.com"
   },
-  "fontStatusNone": {
-    "message": "No custom font uploaded."
-  },
-  "listTitle": {
-    "message": "Custom site list"
-  },
-  "listEmpty": {
-    "message": "No sites yet. Click the Dynamic RTL icon on any page to add one."
-  },
-  "addBtn": {
+  "add": {
     "message": "Add"
   },
-  "exportBtn": {
-    "message": "Export list"
+  "invalidSite": {
+    "message": "Enter a domain like example.com"
   },
-  "importBtn": {
-    "message": "Import list"
+  "sitesEmpty": {
+    "message": "No sites yet."
   },
-  "clearBtn": {
-    "message": "Clear list"
+  "sitesNoMatch": {
+    "message": "No matching sites."
   },
-  "msgEnterDomain": {
-    "message": "Enter a domain first."
+  "import": {
+    "message": "Import"
   },
-  "msgInvalidDomain": {
-    "message": "That doesn't look like a valid domain."
+  "export": {
+    "message": "Export"
   },
-  "msgAdded": {
-    "message": "Added $1*$2.",
-    "placeholders": {
-      "host": {
-        "content": "$1"
-      },
-      "state": {
-        "content": "$2"
-      }
-    }
+  "clear": {
+    "message": "Clear all"
   },
-  "msgFontTooLarge": {
-    "message": "Font is too large ($1 MB over the 8 MB limit).",
-    "placeholders": {
-      "size": {
-        "content": "$1"
-      }
-    }
+  "clearConfirm": {
+    "message": "Remove every site from the list?"
   },
-  "msgReadingFont": {
-    "message": "Reading font..."
-  },
-  "msgFontLoaded": {
-    "message": "Loaded $1 ($2 KB).",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      },
-      "kb": {
-        "content": "$2"
-      }
-    }
-  },
-  "msgFontReadFail": {
-    "message": "Failed to read font."
-  },
-  "msgFontRemoved": {
-    "message": "Custom font removed."
-  },
-  "msgExported": {
-    "message": "List exported."
-  },
-  "msgImportedOne": {
-    "message": "Imported 1 entry."
-  },
-  "msgImportedMany": {
-    "message": "Imported $1 entries.",
+  "imported": {
+    "message": "Imported $COUNT$ sites.",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-  "msgImportFail": {
-    "message": "Import failed."
+  "on": {
+    "message": "on"
   },
-  "msgConfirmClear": {
-    "message": "Clear the entire list?"
+  "off": {
+    "message": "off"
   },
-  "msgCleared": {
-    "message": "List cleared."
+  "flip": {
+    "message": "Switch on or off"
   },
-  "modeHintFollow": {
-    "message": "Following global mode"
+  "remove": {
+    "message": "Remove"
   },
-  "defaultModeHintHtml": {
-    "message": "How Dynamic RTL behaves on sites with no explicit entry below. Use the toolbar icon on any page to add or update an entry instantly. Sites that are already Persian or Arabic stay off by default."
-  },
-  "fontHintHtml": {
-    "message": "The default font is Vazirmatn, bundled with the extension. No internet needed."
-  },
-  "uploadHintHtml": {
-    "message": "Variable .woff2 files are recommended. Static .woff2, .ttf and .otf files are also accepted."
-  },
-  "listHintHtml": {
-    "message": "Every site you toggle from the toolbar shows up here. Subdomains inherit automatically."
-  },
-  "flipTitle": {
-    "message": "Click to flip on/off"
-  },
-  "delTitle": {
-    "message": "Remove from list"
+  "credit": {
+    "message": "Vazirmatn font by Saber Rastikerdar."
   },
   "welcomeTitle": {
-    "message": "Welcome to Dynamic RTL"
+    "message": "Dynamic RTL is ready"
   },
-  "welcomeSub": {
-    "message": "Persian and Arabic pages, automatically right-to-left with a beautiful font."
+  "welcomeText": {
+    "message": "Persian and Arabic text on any site now reads right to left, in Vazirmatn."
   },
-  "welcomeStep1": {
-    "message": "Pin the icon: open the extensions menu (puzzle piece) and pin Dynamic RTL to the toolbar."
+  "welcomePin": {
+    "message": "Pin the icon from the extensions menu."
   },
-  "welcomeStep2": {
-    "message": "Toggle any site: click the icon on a page to turn RTL on or off just for that site."
+  "welcomeToggle": {
+    "message": "Click it to turn a site on or off."
   },
-  "welcomeStep3": {
-    "message": "Fine-tune: open Settings for the site list, custom fonts and the keyboard shortcut."
+  "welcomeShortcut": {
+    "message": "Or press Ctrl+Shift+Y (Command+Shift+Y on Mac)."
   },
-  "welcomeOpenSettings": {
-    "message": "Open Settings"
-  },
-  "welcomeShortcutHint": {
-    "message": "Tip: press Ctrl+Shift+Y (Command+Shift+Y on Mac) on any page to toggle it instantly."
-  },
-  "ctxToggle": {
-    "message": "Dynamic RTL: toggle this site"
-  },
-  "searchPlaceholder": {
-    "message": "Search sites..."
-  },
-  "searchNoMatch": {
-    "message": "No sites match your search."
-  },
-  "reportBtn": {
-    "message": "Report broken site"
-  },
-  "whatsNewTitle": {
-    "message": "What's new"
-  },
-  "whatsNewBodyHtml": {
-    "message": "Settings now sync across your devices. This page also gained site search, a keyboard shortcut display, and the popup gained a broken-site reporter. Enjoy!"
-  },
-  "whatsNewDismiss": {
-    "message": "Got it"
-  },
-  "shortcutTitle": {
-    "message": "Keyboard shortcut"
-  },
-  "shortcutNone": {
-    "message": "not set"
-  },
-  "shortcutHintChrome": {
-    "message": "Change it at chrome://extensions/shortcuts (paste into the address bar)."
-  },
-  "shortcutHintFirefox": {
-    "message": "Change it in the Add-ons Manager: gear menu > Manage Extension Shortcuts."
-  },
-  "shortcutHintSafari": {
-    "message": "Change it in Safari Settings > Extensions > Keyboard Shortcuts."
+  "openSettings": {
+    "message": "Open settings"
   }
 }
