@@ -1,6 +1,6 @@
 # Site test results
 
-`tests/sites.py`, run on 2026-09-27 with v4.0 in Chromium. 153 of 153 sites pass. No content script errors on any site.
+Run on 2026-09-27 with v4.0 in Chromium. 153 of 153 sites pass. No content script errors on any site.
 
 Each non-RTL site gets a sample Persian reply (paragraph, list, inline code, an English line) plus a copy of one of its own paragraphs. The test checks direction, marks at first paint, font (including which font Chrome actually drew the glyphs with), lists, code and, where there is a visible text box, typing Persian into it. Nothing is submitted and no account is used.
 

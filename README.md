@@ -33,7 +33,7 @@ Shows Persian and Arabic text right to left, in the Vazirmatn font, on any websi
 - Shadow DOM and streamed chat replies are followed without re-reading styles on every token.
 - New minimal popup and settings page, with dark mode.
 - Toggling a site back to its default removes the rule instead of storing it.
-- Tested on 150+ real sites. See [Tests](#tests).
+- Tested on 153 real sites. See [SITES.md](SITES.md).
 
 ## Install
 
@@ -73,7 +73,7 @@ The content script is built to cost nothing on pages that have no Persian or Ara
 - The font file is only fetched when a page actually has Arabic script.
 - The background worker sleeps. Pages only message it when their state differs from the default icon.
 
-Main-thread script time added by the extension, median of 7 loads (`tests/bench.py`, Chromium, Apple M-series):
+Main-thread script time added by the extension, median of 7 loads (Chromium, Apple M-series):
 
 | Page | 3.2 | 4.0 |
 | --- | --- | --- |
@@ -93,7 +93,6 @@ No network requests, no analytics, nothing leaves your browser. Settings sync th
 src/            the extension source (one copy for all browsers)
 scripts/build.sh    builds chrome/, firefox/ and safari/ from src/ and zips them
 chrome/ firefox/ safari/    generated, ready to load unpacked
-tests/          browser tests (Playwright)
 resources/      release zips
 ```
 
@@ -101,19 +100,7 @@ Edit files in `src/`, then run `./scripts/build.sh`.
 
 ## Tests
 
-Needs Python with Playwright and its Chromium (`pip install playwright && playwright install chromium`).
-
-```bash
-./scripts/build.sh --no-zip
-python3 tests/core.py      # behavior on local pages
-python3 tests/sites.py     # 150+ real sites, AI chats and big sites
-python3 tests/bench.py none chrome
-python3 tests/shots.py     # screenshots for the store
-```
-
-Latest real-site results: [tests/SITES.md](tests/SITES.md) (153 of 153 pass, median 4.7 ms of script time per site).
-
-`tests/sites.py` only reads pages. It adds a sample Persian reply to the DOM, types into the main input without sending, and checks direction, font (down to the glyphs Chrome actually drew), lists, code and inputs. It never signs in or submits anything.
+Tested on 153 real sites: AI chats, big sites like X, Instagram and YouTube, English pages with real Persian content, and sites that are already right to left. All 153 pass, with a median of 4.7 ms of script time per site. Results: [SITES.md](SITES.md).
 
 ## Credits
 

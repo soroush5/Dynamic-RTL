@@ -11,5 +11,6 @@ __pycache__/
 *.pem
 *.xpi.unsigned
 
-# Test output
-tests/out/
+# No Python files in this repo
+*.py
+tests/
