@@ -2,7 +2,7 @@
 
 Shows Persian and Arabic text right to left, in the Vazirmatn font, on any website. Works with AI chats (ChatGPT, Claude, Gemini and others), X, Instagram and any page that mixes English with Persian or Arabic.
 
-[![Version](https://img.shields.io/badge/version-4.0-e39a12)](#install)
+[![Version](https://img.shields.io/badge/version-4.0.1-e39a12)](#install)
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 <p>
@@ -27,6 +27,7 @@ Shows Persian and Arabic text right to left, in the Vazirmatn font, on any websi
 
 ## What's new in 4.0
 
+- 4.0.1: Persian text now gets the font on sites that set their own font on inner spans, like YouTube comments, X and Instagram.
 - Much lighter. On a page with no Persian or Arabic the script does one native text check and goes quiet. Measured against 3.2 it uses 2 to 9 times less script time (see [Performance](#performance)).
 - The font no longer loads late. It is registered at `document_start` and warmed up the moment Arabic script appears.
 - Smarter direction: decided per block from the mix of letters, lists get mirrored padding so markers stay inside, centered text stays centered, flex rows with icons are not flipped.
@@ -41,7 +42,7 @@ Download the zip for your browser from the [Releases page](https://github.com/so
 
 **Chrome, Edge, Brave, Arc, Opera**
 
-1. Unzip `dynamic-rtl-chrome-v4.0.zip`.
+1. Unzip `dynamic-rtl-chrome-v4.0.1.zip`.
 2. Open `chrome://extensions` and turn on Developer mode.
 3. Click Load unpacked and pick the folder.
 
@@ -52,7 +53,7 @@ Download the zip for your browser from the [Releases page](https://github.com/so
 
 **Safari** (26 or newer)
 
-Unzip `dynamic-rtl-safari-v4.0.zip`, then Settings, Developer, Add Temporary Extension and pick the folder. Enable it under Settings, Extensions. It unloads when Safari quits.
+Unzip `dynamic-rtl-safari-v4.0.1.zip`, then Settings, Developer, Add Temporary Extension and pick the folder. Enable it under Settings, Extensions. It unloads when Safari quits.
 
 ## Use
 

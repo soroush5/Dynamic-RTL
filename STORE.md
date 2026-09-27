@@ -54,7 +54,7 @@ Collects nothing. Privacy policy: https://github.com/soroush5/Dynamic-RTL/blob/m
 
 ## Firefox (AMO)
 
-Upload `resources/dynamic-rtl-firefox-v4.0.zip`. It has a fixed add-on ID and `data_collection_permissions: none`. The source is plain, unminified JavaScript, so no separate source upload is needed.
+Upload `resources/dynamic-rtl-firefox-v4.0.1.zip`. It has a fixed add-on ID and `data_collection_permissions: none`. The source is plain, unminified JavaScript, so no separate source upload is needed.
 
 ## Reviewer notes
 
