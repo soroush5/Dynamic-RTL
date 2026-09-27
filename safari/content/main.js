@@ -376,7 +376,7 @@
     if (!texts.length && !rechecks.size) return;
     if (face?.status === 'unloaded') warm('\u0633');
     const blocks = new Map();   // block -> has text directly inside
-    const inline = new Map();   // text parent -> its block
+    const inline = new Map();   // inline text parent -> its block
     const editors = new Set();
     const seen = new Set();
 
@@ -426,13 +426,6 @@
         ops.push([b, null]);
       }
     }
-    for (const [p, b] of inline) {
-      fontDone.add(p);
-      if (p.hasAttribute(ATTR) || blocks.has(p)) continue;
-      const ff = getComputedStyle(p).fontFamily;
-      if (b && ff === getComputedStyle(b).fontFamily) continue;
-      ops.push([p, 'f', ff]);
-    }
     const fields = [];
     for (const h of editors) {
       const cs = getComputedStyle(h);
@@ -441,7 +434,18 @@
 
     for (const [el, flag, a, b] of ops) mark(el, flag, a, b);
     for (const [el, align, ff] of fields) markField(el, align, ff);
-    if (S.font === 'custom' && !customFace && (ops.length || fields.length)) loadCustomFont();
+
+    // A span can set its own font (YouTube comments do) and ignore the block's.
+    // Only after marking can we tell inherited from explicit, so check once more.
+    const own = [];
+    for (const p of inline.keys()) {
+      fontDone.add(p);
+      if (p.hasAttribute(ATTR) || blocks.has(p) || !p.isConnected) continue;
+      const ff = getComputedStyle(p).fontFamily;
+      if (!ff.includes(FAMILY)) own.push([p, ff]);
+    }
+    for (const [p, ff] of own) mark(p, 'f', ff);
+    if (S.font === 'custom' && !customFace && (ops.length || fields.length || own.length)) loadCustomFont();
   }
 
   function blockOf(el) {
