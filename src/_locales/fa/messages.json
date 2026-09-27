@@ -1,0 +1,154 @@
+{
+  "lang": {
+    "message": "fa"
+  },
+  "dir": {
+    "message": "rtl"
+  },
+  "extDescription": {
+    "message": "متن فارسی و عربی را در هر سایتی راست‌چین و با فونت وزیرمتن نمایش می‌دهد."
+  },
+  "commandToggle": {
+    "message": "روشن یا خاموش کردن برای این سایت"
+  },
+  "menuToggle": {
+    "message": "Dynamic RTL: روشن یا خاموش برای این سایت"
+  },
+  "settings": {
+    "message": "تنظیمات"
+  },
+  "report": {
+    "message": "گزارش مشکل"
+  },
+  "statusOn": {
+    "message": "فعال"
+  },
+  "statusOff": {
+    "message": "خاموش"
+  },
+  "statusAuto": {
+    "message": "خاموش، سایت خودش راست‌چین است"
+  },
+  "statusReload": {
+    "message": "برای اعمال، صفحه را دوباره بارگذاری کنید"
+  },
+  "unavailable": {
+    "message": "این‌جا در دسترس نیست"
+  },
+  "unavailableHint": {
+    "message": "فقط روی سایت‌های معمولی کار می‌کند"
+  },
+  "allSites": {
+    "message": "فعال در همه سایت‌ها"
+  },
+  "allSitesHint": {
+    "message": "اگر خاموش باشد، فقط روی سایت‌هایی که روشن کرده‌اید کار می‌کند."
+  },
+  "shortcut": {
+    "message": "میان‌بر صفحه‌کلید"
+  },
+  "shortcutNone": {
+    "message": "تنظیم نشده"
+  },
+  "shortcutChrome": {
+    "message": "از chrome://extensions/shortcuts عوضش کنید"
+  },
+  "shortcutFirefox": {
+    "message": "از صفحه افزونه‌ها، منوی چرخ‌دنده، Manage Extension Shortcuts"
+  },
+  "shortcutSafari": {
+    "message": "از تنظیمات سیستم، صفحه‌کلید، میان‌برها"
+  },
+  "font": {
+    "message": "فونت"
+  },
+  "fontHint": {
+    "message": "یک فایل woff2، woff، ttf یا otf تا ۸ مگابایت بارگذاری کنید."
+  },
+  "fontPick": {
+    "message": "بارگذاری"
+  },
+  "fontReset": {
+    "message": "برگشت به وزیرمتن"
+  },
+  "fontTooBig": {
+    "message": "حجم این فایل بیشتر از ۸ مگابایت است."
+  },
+  "fontBad": {
+    "message": "این فایل فونتی نیست که مرورگر بتواند بخواند."
+  },
+  "sites": {
+    "message": "سایت‌ها"
+  },
+  "sitesHint": {
+    "message": "سایت‌هایی که از نوار ابزار روشن یا خاموش می‌کنید این‌جا می‌آیند. هر قانون زیردامنه‌ها را هم شامل می‌شود."
+  },
+  "sitePlaceholder": {
+    "message": "افزودن یا جست‌وجو، مثلا example.com"
+  },
+  "add": {
+    "message": "افزودن"
+  },
+  "invalidSite": {
+    "message": "دامنه‌ای مثل example.com وارد کنید"
+  },
+  "sitesEmpty": {
+    "message": "هنوز سایتی اضافه نشده."
+  },
+  "sitesNoMatch": {
+    "message": "سایتی پیدا نشد."
+  },
+  "import": {
+    "message": "ورود"
+  },
+  "export": {
+    "message": "خروجی"
+  },
+  "clear": {
+    "message": "پاک کردن همه"
+  },
+  "clearConfirm": {
+    "message": "همه سایت‌ها از فهرست حذف شوند؟"
+  },
+  "imported": {
+    "message": "$COUNT$ سایت وارد شد.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "on": {
+    "message": "روشن"
+  },
+  "off": {
+    "message": "خاموش"
+  },
+  "flip": {
+    "message": "روشن یا خاموش کردن"
+  },
+  "remove": {
+    "message": "حذف"
+  },
+  "credit": {
+    "message": "فونت وزیرمتن، اثر صابر راستی‌کردار."
+  },
+  "welcomeTitle": {
+    "message": "Dynamic RTL آماده است"
+  },
+  "welcomeText": {
+    "message": "از این به بعد متن فارسی و عربی در هر سایتی راست‌چین و با فونت وزیرمتن نمایش داده می‌شود."
+  },
+  "welcomePin": {
+    "message": "آیکون را از منوی افزونه‌ها سنجاق کنید."
+  },
+  "welcomeToggle": {
+    "message": "با کلیک روی آن، هر سایت را روشن یا خاموش کنید."
+  },
+  "welcomeShortcut": {
+    "message": "یا Ctrl+Shift+Y را بزنید (در مک Command+Shift+Y)."
+  },
+  "openSettings": {
+    "message": "باز کردن تنظیمات"
+  }
+}

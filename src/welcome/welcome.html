@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dynamic RTL</title>
+  <link rel="stylesheet" href="../ui/base.css">
+  <style>
+    main { max-width: 440px; margin: 0 auto; padding: 72px 20px; font-size: 14px; }
+    h1 { margin: 16px 0 6px; font-size: 22px; font-weight: 600; }
+    ol { margin: 24px 0; padding-inline-start: 18px; line-height: 1.9; }
+    .demo { margin: 0; padding: 12px 14px; border-radius: 8px; background: var(--hover); font-size: 16px; line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="../icons/on-128.png" width="48" height="48" alt="">
+    <h1 data-i18n="welcomeTitle">Dynamic RTL is ready</h1>
+    <p class="muted" data-i18n="welcomeText">Persian and Arabic text on any site now reads right to left, in Vazirmatn.</p>
+    <p class="demo" dir="rtl">سلام! این متن نمونه با فونت وزیرمتن نمایش داده می‌شود.</p>
+    <ol>
+      <li data-i18n="welcomePin">Pin the icon from the extensions menu.</li>
+      <li data-i18n="welcomeToggle">Click it to turn a site on or off.</li>
+      <li data-i18n="welcomeShortcut">Or press Ctrl+Shift+Y (Command+Shift+Y on Mac).</li>
+    </ol>
+    <button class="btn" id="settings" data-i18n="openSettings">Open settings</button>
+  </main>
+  <script src="../lib/store.js"></script>
+  <script src="../ui/ui.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

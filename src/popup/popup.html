@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dynamic RTL</title>
+  <link rel="stylesheet" href="../ui/base.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/on-32.png" width="16" height="16" alt="">
+    <span class="name">Dynamic RTL</span>
+    <span class="version muted"></span>
+  </header>
+
+  <main>
+    <label class="site">
+      <span class="site-text">
+        <span class="host" id="host"></span>
+        <span class="status muted" id="status"></span>
+      </span>
+      <input class="switch" type="checkbox" role="switch" id="toggle" disabled>
+    </label>
+  </main>
+
+  <footer>
+    <button class="link" id="settings" data-i18n="settings">Settings</button>
+    <button class="link" id="report" data-i18n="report">Report a problem</button>
+  </footer>
+
+  <script src="../lib/store.js"></script>
+  <script src="../ui/ui.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dynamic RTL</title>
+  <link rel="stylesheet" href="../ui/base.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../icons/on-48.png" width="24" height="24" alt="">
+      <h1>Dynamic RTL</h1>
+      <span class="version muted"></span>
+    </header>
+
+    <section>
+      <label class="row">
+        <span class="row-text">
+          <span data-i18n="allSites">Enable on all sites</span>
+          <span class="hint" data-i18n="allSitesHint">When off, it only runs on sites you turn on.</span>
+        </span>
+        <input class="switch" type="checkbox" role="switch" id="mode">
+      </label>
+      <div class="row">
+        <span class="row-text">
+          <span data-i18n="shortcut">Keyboard shortcut</span>
+          <span class="hint" id="shortcut-hint"></span>
+        </span>
+        <kbd id="shortcut"></kbd>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="font">Font</h2>
+      <div class="row">
+        <span class="row-text">
+          <span id="font-name">Vazirmatn</span>
+          <span class="hint" id="font-hint" data-i18n="fontHint">Upload a .woff2, .woff, .ttf or .otf file, up to 8 MB.</span>
+        </span>
+        <span class="actions">
+          <button class="btn" id="font-pick" data-i18n="fontPick">Upload</button>
+          <button class="link" id="font-reset" data-i18n="fontReset" hidden>Use Vazirmatn</button>
+        </span>
+        <input type="file" id="font-file" accept=".woff2,.woff,.ttf,.otf" hidden>
+      </div>
+      <p class="preview" id="preview" dir="rtl">این یک متن نمونه است. سلام دنیا، ۱۲۳۴۵۶۷۸۹۰</p>
+    </section>
+
+    <section>
+      <h2 data-i18n="sites">Sites</h2>
+      <p class="hint" data-i18n="sitesHint">Sites you toggle from the toolbar show up here. Rules cover subdomains too.</p>
+      <form class="add" id="add">
+        <input type="text" id="site" autocomplete="off" spellcheck="false" dir="auto"
+               data-i18n-placeholder="sitePlaceholder" placeholder="Add or search, e.g. example.com">
+        <button class="btn" type="submit" data-i18n="add">Add</button>
+      </form>
+      <p class="hint error" id="site-error" hidden></p>
+      <ul class="list" id="list"></ul>
+      <p class="hint empty" id="empty" data-i18n="sitesEmpty">No sites yet.</p>
+      <div class="actions">
+        <button class="link" id="import" data-i18n="import">Import</button>
+        <button class="link" id="export" data-i18n="export">Export</button>
+        <button class="link danger" id="clear" data-i18n="clear">Clear all</button>
+        <input type="file" id="import-file" accept=".json,.txt,application/json,text/plain" hidden>
+      </div>
+    </section>
+
+    <footer class="hint">
+      <span data-i18n="credit">Vazirmatn font by Saber Rastikerdar.</span>
+      <a href="https://github.com/soroush5/Dynamic-RTL" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+  </main>
+
+  <script src="../lib/store.js"></script>
+  <script src="../ui/ui.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

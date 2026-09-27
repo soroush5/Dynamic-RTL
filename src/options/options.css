@@ -1,0 +1,137 @@
+body { font-size: 14px; }
+
+main {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 48px 20px 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+h1 { margin: 0; font-size: 20px; font-weight: 600; }
+header .version { font-size: 12px; }
+
+section {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+h2 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+label.row { cursor: pointer; }
+.row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.hint { color: var(--muted); font-size: 12.5px; margin: 0; }
+.error { color: var(--danger); }
+#site-error { margin-top: 6px; }
+
+kbd {
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font: 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+  direction: ltr;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+section > .actions { margin-top: 12px; font-size: 13px; }
+.danger:hover { color: var(--danger); }
+
+.preview {
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--hover);
+  font-family: "Preview", "Vazirmatn UI", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.add {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.add input {
+  flex: 1;
+  min-width: 0;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  outline: none;
+}
+.add input:focus { border-color: var(--accent); }
+
+.list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.list li:last-child { border-bottom: 0; }
+.list .host {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: ltr;
+  text-align: start;
+  unicode-bidi: plaintext;
+}
+.state {
+  min-width: 44px;
+  height: 22px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--hover);
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.state.on { background: var(--accent); color: #fff; }
+.remove {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.remove:hover { background: var(--hover); color: var(--fg); }
+.empty { margin-top: 10px; }
+
+footer {
+  display: flex;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
