@@ -6,7 +6,10 @@ Thumbs.db
 node_modules/
 __pycache__/
 
-# Build artifacts (we keep the prebuilt zips in releases/ on purpose)
+# Build artifacts (release zips in resources/ are kept on purpose)
 *.crx
 *.pem
 *.xpi.unsigned
+
+# Test output
+tests/out/

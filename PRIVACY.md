@@ -1,83 +1,35 @@
-# Privacy Policy for Dynamic RTL
+# Privacy Policy
 
-> Last updated: 2026-05-23
+Last updated: 2026-09-27
 
-Dynamic RTL is a browser extension that auto-detects
-Persian and Arabic text on web pages and applies right-to-left
-direction with the bundled Vazirmatn font.
+Dynamic RTL shows Persian and Arabic text right to left on web pages. It collects no data and makes no network requests.
 
-## What Data We Collect
+## What it reads
 
-Dynamic RTL collects **no personal data**. Specifically, it does not record:
+The content script reads the text of the page you are on to find Persian or Arabic script, and the text you type into inputs to decide their direction. This happens inside your browser only. Nothing is copied, stored or sent anywhere.
 
-- Browsing history or URLs you visit
-- Page content (it only reads text on the current page in order to apply RTL
-  direction; the text is never copied, stored, or transmitted)
-- Form data or anything you type into inputs (the live RTL on inputs operates
-  on the value transiently — nothing is persisted)
-- IP address, device identifiers or other identifiers
-- Analytics or telemetry of any kind
+## What it stores
 
-## What We Store Locally
+| Item | Where |
+| --- | --- |
+| On for all sites or only chosen ones | Browser sync storage |
+| Your site list (for example `example.com: off`) | Browser sync storage |
+| Font choice and the name of an uploaded font | Browser sync storage |
+| The uploaded font file itself | Local storage on this device |
 
-The extension stores the following on **your own device only**, in
-`chrome.storage.local`. None of it leaves the device.
+Sync storage is handled by your browser and only syncs if you have browser sync turned on. The extension has no server.
 
-| Stored item | Why |
-|-------------|-----|
-| Default mode (`enable_all` / `disable_all`) | Remembers whether RTL applies on every site by default or only on the sites you opted in. |
-| Custom site list | Per-host overrides you toggled from the toolbar (`google.com -> on`, `gmail.com -> off`, etc.). |
-| Font choice and the optional uploaded font file | When you upload a custom font from the options page, the file's bytes are stored locally so the extension can `@font-face` it. The file is never uploaded anywhere. |
+## Permissions
 
+- `storage`: saves the settings above.
+- `activeTab`: lets the popup, shortcut and right-click menu see the address of the tab you use them on.
+- `contextMenus`: adds the right-click toggle.
+- Access to `http` and `https` pages: needed to run the content script that finds Persian and Arabic text.
 
-## What Leaves Your Device
+## Removing data
 
-**Nothing.** The extension never makes a network call. The Vazirmatn font
-ships inside the extension package and is loaded from disk. There is no
-analytics endpoint, no remote config, no third-party SDK, no crash reporter.
-
-## Permissions Used
-
-- **`storage`**: stores your preferences locally (see the table above).
-- **`tabs`**: reads the URL of the active tab so the toolbar popup knows which
-  hostname to toggle. The URL is used in-memory and not stored.
-- **`activeTab`**: enables the toolbar action under Chrome's "On click" host
-  access mode.
-- **Host permissions** for `http://*/*` and `https://*/*`: required to inject
-  the content script that detects Persian / Arabic text and applies the RTL
-  CSS class. The script never reads form inputs, cookies, local storage, or
-  any other site data.
-
-## Third-Party Services
-
-Dynamic RTL does not use any third-party services, SDKs, analytics or APIs.
-
-## Data Sharing
-
-Dynamic RTL does not share any data with anyone, because it does not collect
-any data in the first place. The "user-private" data you create (custom site
-list, uploaded font) stays in your browser profile.
-
-## Data Retention and Deletion
-
-- Per-site list, font choice and the optional custom font live in your
-  browser profile. Removing the extension removes them with it.
-- You can also clear the custom site list and remove the uploaded font from
-  the extension's Options page at any time.
-
-## Children's Privacy
-
-Dynamic RTL is not directed at children under 13 and does not knowingly
-collect any data from anyone, including children.
-
-## Changes to This Policy
-
-If the privacy practices ever change (for example, if a future version adds
-a feature that requires a network call), this document will be updated and
-the change will be noted in the Chrome Web Store version history. The
-"Last updated" date at the top of this document will be bumped accordingly.
+Uninstalling the extension removes everything. You can also clear the site list and remove an uploaded font from the settings page.
 
 ## Contact
 
-Issues, questions, or privacy reports: please open an issue at
 https://github.com/soroush5/Dynamic-RTL/issues
