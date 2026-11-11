@@ -2,7 +2,7 @@
 
 Shows Persian and Arabic text right to left, in the Vazirmatn font, on any website. Works with AI chats (ChatGPT, Claude, Gemini and others), X, Instagram and any page that mixes English with Persian or Arabic.
 
-[![Version](https://img.shields.io/badge/version-4.0.2-e39a12)](#install)
+[![Version](https://img.shields.io/badge/version-4.0.3-e39a12)](#install)
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 <p>
@@ -27,6 +27,7 @@ Shows Persian and Arabic text right to left, in the Vazirmatn font, on any websi
 
 ## What's new in 4.0
 
+- 4.0.3: The font is built from bytes bundled in the extension instead of loaded from an extension URL, which some pages (YouTube) refused with an error. Pages can no longer probe the extension's files. Shadow DOM content that was sometimes skipped on page load is now always handled.
 - 4.0.2: Firefox build gets its own add-on ID for addons.mozilla.org and needs Firefox 140 or newer.
 - 4.0.1: Persian text now gets the font on sites that set their own font on inner spans, like YouTube comments, X and Instagram.
 - Much lighter. On a page with no Persian or Arabic the script does one native text check and goes quiet. Measured against 3.2 it uses 2 to 9 times less script time (see [Performance](#performance)).
@@ -43,7 +44,7 @@ Download the zip for your browser from the [Releases page](https://github.com/so
 
 **Chrome, Edge, Brave, Arc, Opera**
 
-1. Unzip `dynamic-rtl-chrome-v4.0.2.zip`.
+1. Unzip `dynamic-rtl-chrome-v4.0.3.zip`.
 2. Open `chrome://extensions` and turn on Developer mode.
 3. Click Load unpacked and pick the folder.
 
@@ -53,7 +54,7 @@ Install it from [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/dynam
 
 **Safari** (26 or newer)
 
-Unzip `dynamic-rtl-safari-v4.0.2.zip`, then Settings, Developer, Add Temporary Extension and pick the folder. Enable it under Settings, Extensions. It unloads when Safari quits.
+Unzip `dynamic-rtl-safari-v4.0.3.zip`, then Settings, Developer, Add Temporary Extension and pick the folder. Enable it under Settings, Extensions. It unloads when Safari quits.
 
 ## Use
 
