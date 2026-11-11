@@ -18,7 +18,8 @@
   const RTL_LANGS = new Set(['fa', 'ar', 'ur', 'ps', 'ckb', 'sd', 'ug', 'he', 'yi']);
   const OBSERVE = { childList: true, subtree: true, characterData: true };
   const host = location.hostname.replace(/^www\./, '');
-  const defaultFont = `url("${api.runtime.getURL('fonts/vazirmatn.woff2')}") format("woff2")`;
+  // Font bytes and page CSS, bundled by the build into content/assets.js.
+  const assets = globalThis.__dynrtlAssets || {};
 
   let S = null;             // settings, null until loaded
   let on = false;
@@ -36,7 +37,6 @@
   let spent = 0;
   let windowStart = 0;
   let sheet = null;
-  let sheetText = null;
   // Per text parent: its block, null (none), or SKIPPED. Keeps streamed
   // tokens from reading styles again and again.
   const SKIPPED = {};
@@ -50,20 +50,37 @@
 
   // Font
 
-  function setFace(src) {
+  // The face is made from bytes, only once a page shows Arabic script.
+  // Loading it from an extension URL instead fails on some pages.
+  function setFace(buf) {
     try {
-      const f = new FontFace(FAMILY, src, { weight: '100 900', unicodeRange: RANGE, display: 'fallback' });
+      const f = new FontFace(FAMILY, buf, { weight: '100 900', unicodeRange: RANGE, display: 'fallback' });
       if (face) document.fonts.delete(face);
       document.fonts.add(f);
       face = f;
     } catch {}
   }
 
-  // Start loading as soon as Arabic script shows up, so it is ready by first paint.
-  function warm(text) {
-    if (!face || face.status !== 'unloaded' || !AR.test(text)) return;
+  function decode(b64) {
+    if (Uint8Array.fromBase64) return Uint8Array.fromBase64(b64);
+    const bin = atob(b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  function defaultFace() {
+    if (assets.font) setFace(decode(assets.font).buffer);
+  }
+
+  function ensureFace() {
+    if (face) return;
+    defaultFace();
     if (S?.font === 'custom') loadCustomFont();
-    else face.load().catch(() => {});
+  }
+
+  function warm(text) {
+    if (!face && AR.test(text)) ensureFace();
   }
 
   async function loadCustomFont() {
@@ -72,10 +89,7 @@
     try {
       const { customFontDataUrl: url } = await api.storage.local.get('customFontDataUrl');
       if (url && S?.font === 'custom') {
-        const bin = atob(url.slice(url.indexOf(',') + 1));
-        const buf = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-        setFace(buf.buffer);
+        setFace(decode(url.slice(url.indexOf(',') + 1)).buffer);
         customFace = true;
       }
     } catch {}
@@ -85,10 +99,10 @@
   function syncFont() {
     if (S.font === 'custom') {
       customFace = false;
-      if (document.querySelector(`[${ATTR}],[${IN}]`)) loadCustomFont();
+      if (face) loadCustomFont();
     } else if (customFace) {
       customFace = false;
-      setFace(defaultFont);
+      defaultFace();
     }
   }
 
@@ -147,7 +161,9 @@
   // Watching
 
   function hostsPass() {
-    if (on) findHosts(document.documentElement);
+    if (!on) return;
+    findHosts(document.documentElement);
+    schedule();
   }
 
   function start() {
@@ -192,7 +208,7 @@
       full = true;
     }
     const collect = !full || walker;
-    const cold = face?.status === 'unloaded';
+    const cold = !face;
     for (let i = 0; collect && i < list.length; i++) {
       const m = list[i];
       if (m.type === 'characterData') {
@@ -283,6 +299,8 @@
         queue.clear();
         const root = document.documentElement;
         findHosts(root);
+        // Roots found before this scan were dropped with the queue; scan them too.
+        for (const r of roots) queue.add(r);
         if (AR.test(root.textContent)) walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       }
       if (walker) {
@@ -374,7 +392,7 @@
 
   function apply(texts, rechecks) {
     if (!texts.length && !rechecks.size) return;
-    if (face?.status === 'unloaded') warm('\u0633');
+    ensureFace();
     const blocks = new Map();   // block -> has text directly inside
     const inline = new Map();   // inline text parent -> its block
     const editors = new Set();
@@ -532,22 +550,19 @@
   // The page stylesheet does not reach into shadow roots, so copy it in.
   function styleRoot(el) {
     const root = el.getRootNode();
-    if (root === document || !root.host || styled.has(root)) return;
+    if (root === document || !root.host || styled.has(root) || !assets.css) return;
     styled.add(root);
-    sheetText ??= fetch(api.runtime.getURL('content/main.css')).then((r) => r.text());
-    sheetText.then((css) => {
-      try {
-        if (!sheet) {
-          sheet = new CSSStyleSheet();
-          sheet.replaceSync(css);
-        }
-        root.adoptedStyleSheets = [...root.adoptedStyleSheets, sheet];
-      } catch {
-        const s = document.createElement('style');
-        s.textContent = css;
-        root.append(s);
+    try {
+      if (!sheet) {
+        sheet = new CSSStyleSheet();
+        sheet.replaceSync(assets.css);
       }
-    }).catch(() => {});
+      root.adoptedStyleSheets = [...root.adoptedStyleSheets, sheet];
+    } catch {
+      const st = document.createElement('style');
+      st.textContent = assets.css;
+      root.append(st);
+    }
   }
 
   // Inputs and editors
@@ -563,7 +578,7 @@
     if (data ? AR.test(data) : AR.test(f.value ?? f.textContent)) {
       const cs = getComputedStyle(f);
       markField(f, cs.textAlign.includes('center') ? 'c' : '', cs.fontFamily);
-      if (S.font === 'custom' && !customFace) loadCustomFont();
+      ensureFace();
     }
   }
 
@@ -590,7 +605,7 @@
 
   api.runtime.onMessage.addListener((m, _sender, reply) => {
     if (m?.t === 'state') reply({ host, on, auto });
-    else if (m?.t === 'stats') reply({ ...stats, on, url: location.href, roots: roots.size, font: face?.status });
+    else if (m?.t === 'stats') reply({ ...stats, on, url: location.href, roots: roots.size, font: face ? face.status : 'none' });
   });
 
   api.storage.onChanged.addListener((ch, area) => {
@@ -603,7 +618,6 @@
     });
   });
 
-  setFace(defaultFont);
   mo.observe(document, OBSERVE);
   document.addEventListener('DOMContentLoaded', schedule, { once: true });
   addEventListener('load', hostsPass, { once: true });

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Dynamic RTL",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "__MSG_extDescription__",
   "author": "soroush5",
   "homepage_url": "https://github.com/soroush5/Dynamic-RTL",
@@ -42,15 +42,9 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["content/main.js"],
+      "js": ["content/assets.js", "content/main.js"],
       "css": ["content/main.css"],
       "run_at": "document_start"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["fonts/vazirmatn.woff2", "content/main.css"],
-      "matches": ["http://*/*", "https://*/*"]
     }
   ]
 }
